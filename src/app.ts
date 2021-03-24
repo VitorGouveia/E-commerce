@@ -9,7 +9,7 @@ const app = express()
 dotenv({ path: `${__dirname}/config/.env` })
 
 app.use(express.json())
-app.use(cors({ origin: process.env.APP_PORT }))
+app.use(cors({ origin: process.env.APP_URL }))
 app.use(helmet())
 app.use(router)
 

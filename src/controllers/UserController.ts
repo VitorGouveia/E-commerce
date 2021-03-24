@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 import { Save, Index, FindByEmail } from "../database/models/UserModel"
 import { User } from "../entities/User"
@@ -18,7 +19,10 @@ const UserController = {
 
       Save(user)
 
-      return res.json({ auth: true, user })
+      const access_token = jwt.sign({ uuid: user.uuid, name, email, password: user.password }, String(process.env.JWT_ACCESS_TOKEN), { expiresIn: "24h" })
+
+      res.header("authorization", access_token)
+      return res.json({ auth: true, user, access_token })
     })
   },
 
