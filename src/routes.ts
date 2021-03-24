@@ -7,6 +7,7 @@ const router = Router()
 
 router.post("/", UserController.create)
 router.post("/login", SessionController.create)
+router.put("/edit", UserController.edit)
 router.get("/", UserController.list)
 
 export { router }

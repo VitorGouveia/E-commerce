@@ -28,4 +28,10 @@ function FindByEmail(email, callbackFunction) {
   })
 }
 
-export { Save, Index, FindByEmail }
+function Update(userNewInformation) {
+  const UpdateUserQuery = `UPDATE users SET name=?, email=?, password=? WHERE uuid=?`
+
+  db.all(UpdateUserQuery, userNewInformation, err => handle(err, "Failed at updating user."))
+}
+
+export { Save, Index, FindByEmail, Update }
