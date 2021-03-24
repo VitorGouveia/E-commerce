@@ -11,11 +11,11 @@ function CreateTableUsers(db) {
     );
   `
 
-  db.run(CreateTableUsersQuery, err => handle(err, "Failed at creating table users"))
+  db.run(CreateTableUsersQuery, err => handle(err, "Failed at creating table users."))
 }
 
 function DropTableUsers(db) {
-  db.run("DROP TABLE users;", err => handle(err, "Failed at dropping table users"))
+  db.run("DROP TABLE users;", err => handle(err, "Failed at dropping table users."))
 }
 
 export { CreateTableUsers, DropTableUsers }

@@ -6,3 +6,5 @@ const db = new Database("./src/database/app.db")
 db.serialize(() => {
   CreateTableUsers(db)
 })
+
+export { db }
