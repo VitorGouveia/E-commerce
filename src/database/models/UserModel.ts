@@ -34,4 +34,10 @@ function Update(userNewInformation) {
   db.all(UpdateUserQuery, userNewInformation, err => handle(err, "Failed at updating user."))
 }
 
-export { Save, Index, FindByEmail, Update }
+function Delete(user) {
+  const DeleteUserQuery = `DELETE FROM users WHERE uuid=? AND password=?`
+
+  db.all(DeleteUserQuery, user, err => handle(err, "Failed at deleting user."))
+}
+
+export { Save, Index, FindByEmail, Update, Delete }
