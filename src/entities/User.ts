@@ -1,4 +1,5 @@
 import { randomBytes } from "crypto"
+import { hashSync } from "bcrypt"
 
 interface CreateUserDTO {
   name: string
@@ -19,6 +20,8 @@ class User {
     this.created_at = new Date(Date.now()).toLocaleDateString()
 
     Object.assign(this, props)
+
+    this.password = hashSync(this.password, 10)
   }
 }
 
