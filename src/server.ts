@@ -1,4 +1,3 @@
-import { app } from "./app"
+import { Cluster } from "./utils/Cluster"
 
-const port = process.env.PORT
-app.listen(port, () => console.log(`http://localhost:${port}`))
+Cluster(true)
