@@ -6,11 +6,12 @@ import { router } from "./routes"
 
 const app = express()
 
+dotenv({ path: `${__dirname}/config/.env` })
+
 app.use(express.json())
-app.use(cors())
+app.use(cors({ origin: process.env.APP_PORT }))
 app.use(helmet())
 app.use(router)
 
-dotenv({ path: `${__dirname}/config/.env` })
 
 export { app }
