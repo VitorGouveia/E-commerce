@@ -28,11 +28,11 @@ function FindByCategory(category, callbackFunction) {
   })
 }
 
-// function Update(userNewInformation) {
-//   const UpdateUserQuery = `UPDATE item SET name=?, email=?, password=? WHERE uuid=?`
+function Update(item) {
+  const UpdateItemQuery = `UPDATE item SET name=?, short_name=?, description=?, price=?, shipping_price=?, discount=?, category=?, image=?, orders=? WHERE uuid=?`
 
-//   db.all(UpdateUserQuery, userNewInformation, err => handle(err, "Failed at updating user."))
-// }
+  db.all(UpdateItemQuery, item, err => handle(err, "Failed at updating user."))
+}
 
 function Delete(uuid) {
   const DeleteItemQuery = `DELETE FROM items WHERE uuid=?`
@@ -40,4 +40,4 @@ function Delete(uuid) {
   db.all(DeleteItemQuery, uuid, err => handle(err, "Failed at deleting item."))
 }
 
-export { Save, Index, FindByCategory, Delete }
+export { Save, Index, FindByCategory, Update, Delete }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { Item } from "../entities/Item"
-import { Save, Index, FindByCategory, Delete } from "../database/models/ItemModel"
+import { Save, Index, FindByCategory, Update, Delete } from "../database/models/ItemModel"
 
 const ItemController = {
   create(req: Request, res: Response) {
@@ -26,7 +26,17 @@ const ItemController = {
     })
   },
 
-  
+  edit(req: Request, res: Response) {
+    let { uuid } = req.body
+  },
+
+  delete(req: Request, res: Response) {
+    let { uuid } = req.body
+
+    Delete(uuid)
+
+    return res.status(200).json("item deleted.")
+  }
 }
 
 export { ItemController }
