@@ -3,6 +3,7 @@ import { Router } from "express"
 import { UserController } from "./controllers/UserController"
 import { ItemController } from "./controllers/ItemController"
 import { SessionController } from "./controllers/SessionController"
+import { DashboardController } from "./controllers/DashboardController"
 
 const router = Router()
 
@@ -13,6 +14,7 @@ router.put("/user/edit", UserController.edit) /* Editing user */
 router.delete("/user/delete", UserController.delete) /* Deleting a user */ 
 
 router.get("/dashboard/user", UserController.list) /* Listing all users */
+router.delete("/dashboard/user", DashboardController.deleteUser) /* Listing all users */
 
 
 
