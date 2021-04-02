@@ -1,9 +1,15 @@
+import { Sidebar } from "./components/Sidebar"
+import { Header } from "./components/Header"
+
 const Home = () => {
   return(
-    <>
-      <h1>Hello World</h1>
-    </>
+    <div id="app">
+      <Sidebar />
+      <main>
+        <Header page="home" />
+      </main>
+    </div>
   )
 }
 
-export { Home }
+export default Home
