@@ -1,14 +1,14 @@
 import { Sidebar } from "./components/Sidebar"
 import { Header } from "./components/Header"
+import { Card } from "./components/Card"
 
 const Home = () => {
   return(
-    <div id="app">
-      <Sidebar />
-      <main>
-        <Header page="home" />
-      </main>
-    </div>
+    <Card
+      title="dwdw"
+      description="wejdw"
+      color="black"
+    />
   )
 }
 
