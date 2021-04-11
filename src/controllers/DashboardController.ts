@@ -3,9 +3,9 @@ import { Delete } from "../database/models/UserModel"
 
 const DashboardController = {
   deleteUser(req: Request, res: Response) {
-    let { uuid, password } = req.body
+    let { uuid } = req.body
 
-    Delete([uuid, password])
+    Delete(uuid)
 
     return res.status(200).json("user deleted.")
   }
