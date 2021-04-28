@@ -3,27 +3,48 @@ import { Request, Response } from "express"
 import { Save, Index, FindByEmail, Update, Delete } from "@database/sqlite/models/UserModel"
 import { User } from "@entities/User"
 import { Save as SaveRequest } from "@utils/SaveRequest"
+import { prisma } from "../prisma"
 
 const UserController = {
-  create(req: Request, res: Response) {
-    SaveRequest(req)
+  async create(req: Request, res: Response) {
+    // SaveRequest(req)
 
-    const { name, email, password } = req.body
+    // const { name, email, password } = req.body
     
-    FindByEmail(email, rows => {
-      if(rows.length > 0) {
-        return res.status(400).json({ auth: false, message: "User with this email already exists." })
+    // FindByEmail(email, rows => {
+    //   if(rows.length > 0) {
+    //     return res.status(400).json({ auth: false, message: "User with this email already exists." })
+    //   }
+
+    //   const user = new User({ name, email, password })
+
+    //   Save(user)
+
+    //   const access_token = jwt.sign({ uuid: user.uuid, name, email, password: user.password }, String(process.env.JWT_ACCESS_TOKEN), { expiresIn: "24h" })
+
+    //   res.header("authorization", access_token)
+    //   return res.status(200).json({ auth: true, user, access_token })
+    // })
+    const user = await prisma.user.create({
+      data: {
+        name: "vitor",
+        last_name: "gouviea",
+        email: "vitor@vitor.com",
+        password: "123",
+        cpf: "53094769896",
+        address: {
+          create: [{
+            postalCode: "392139",
+            city: "São Paulo",
+            state: "SP",
+            street: "Quararibéia",
+            number: "20"
+          }]
+        }
       }
-
-      const user = new User({ name, email, password })
-
-      Save(user)
-
-      const access_token = jwt.sign({ uuid: user.uuid, name, email, password: user.password }, String(process.env.JWT_ACCESS_TOKEN), { expiresIn: "24h" })
-
-      res.header("authorization", access_token)
-      return res.status(200).json({ auth: true, user, access_token })
     })
+
+    return res.json(user)
   },
 
   edit(req: Request, res: Response) {
