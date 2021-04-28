@@ -10,10 +10,10 @@ const router = Router()
 /* User */
 router.post("/user/", UserController.create) /* Create user / Register */
 router.post("/user/login", SessionController.create) /* Authenticate user / Login */ 
-router.put("/user/edit", UserController.edit) /* Editing user */
+router.put("/user/edit", UserController.updateUser) /* Editing user */
 router.delete("/user/delete", UserController.delete) /* Deleting a user */ 
 
-router.get("/dashboard/user", UserController.list) /* Listing all users */
+router.post("/dashboard/user/:page", UserController.list) /* Listing all users */
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deleting a user */
 
 

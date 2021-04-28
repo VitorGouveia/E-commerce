@@ -3,14 +3,28 @@ import { Request, Response } from "express"
 import { Save as SaveRequest } from "@utils/SaveRequest"
 import { prisma } from "../prisma"
 import { User } from "@prisma/client"
+import { hash } from "bcrypt"
 
 const UserController = {
   async create(request: Request, response: Response) {
     SaveRequest(request)
 
-    const { name, email, password }: User  = request.body
+    let { name, email, password }: User  = request.body
+    password = await hash(password, 20)
 
+    const userExists = await prisma.user.findMany({
+      where: {
+        email
+      }
+    })
+
+    if(userExists) {
+      return response.status(400).json({
+        auth: false, message: "User already exists", userExists
+      })
+    }
     try {
+
       const user = await prisma.user.create({
         data: {
           name,
@@ -44,9 +58,9 @@ const UserController = {
     const { id, name, last_name, cpf, email, password, address } = request.body
 
     const authorizationHeader = request.headers.authorization
-    const jwtHeader = jwt.verify(String(authorizationHeader), String(process.env.JWT_REFRESH_TOKEN))
-
+    
     try {
+      const JWTHeader = jwt.verify(String(authorizationHeader), String(process.env.JWT_REFRESH_TOKEN))
       const user = await prisma.user.update({
         where: {
           id
@@ -62,7 +76,7 @@ const UserController = {
         }
       })
 
-      return response.status(200).json({ auth: true, jwtHeader, user, message: "User edited with success!" })
+      return response.status(200).json({ auth: true, JWTHeader, user, message: "User edited with success!" })
 
     } catch (error) {
 
@@ -73,27 +87,53 @@ const UserController = {
     }
   },
 
-  delete(req: Request, res: Response) {
-    SaveRequest(req)
+  async delete(request: Request, response: Response) {
+    SaveRequest(request)
 
-    const authHeader = req.headers.authorization
+    const { id } = request.body
 
+    const authHeader = request.headers.authorization
+    
     try {
-      const jwtHeader = jwt.verify(String(authHeader), String(process.env.JWT_REFRESH_TOKEN))
+      const JWTHeader = jwt.verify(String(authHeader), String(process.env.JWT_REFRESH_TOKEN))
+      const user = await prisma.user.delete({
+        where: {
+          id
+        }
+      })
 
-      Delete(jwtHeader["uuid"])
-      return res.status(200).json({ auth: true, message: "User deleted with success" })
+      return response.status(200).json({ auth: true, JWTHeader, user, message: "User deleted with success!" })
+
     } catch (error) {
-      return res.status(400).json({ auth: false, message: "JWT token invalid, go back to login page" })
+
+      return response.status(400).json({ 
+        auth: false, 
+        message: error.message
+      })
     }
   },
 
-  list(req: Request, res: Response) {
-    SaveRequest(req)
+  async list(request: Request, response: Response) {
+    SaveRequest(request)
 
-    Index((rows: any) => {
-      return res.status(200).json({ users: rows })
-    })
+    const { page } = request.params
+    let { quantity } = request.body
+
+    
+    try {
+      if(!quantity) quantity = 0
+
+      const users = await prisma.user.findMany({
+        take: quantity,
+        skip: (Number(page) * Number(quantity))
+      })
+
+      return response.status(200).json(users)
+
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
   }
 }
 
