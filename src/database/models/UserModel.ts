@@ -1,4 +1,4 @@
-import { handle } from "../../utils/ErrorHandler"
+import { handle } from "@utils/ErrorHandler"
 import { db } from "../sqlite"
 
 function Save(user) {

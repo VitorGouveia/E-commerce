@@ -24,9 +24,9 @@
     "paths": {
       "@controllers/*": ["controllers/*"],
       "@database/*": ["database/*"],
-      "@entities": ["entities/*"],
-      "@tests": ["tests/*"],
-      "@utils": ["utils/*"]
+      "@entities/*": ["entities/*"],
+      "@tests/*": ["tests/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "exclude": [ "node_modules" ],

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { Delete } from "../database/models/UserModel"
+import { Delete } from "@database/models/UserModel"
 
 const DashboardController = {
   deleteUser(req: Request, res: Response) {

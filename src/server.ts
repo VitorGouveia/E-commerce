@@ -1,3 +1,3 @@
-import { Cluster } from "./utils/Cluster"
+import { Cluster } from "@utils/Cluster"
 
 Cluster(true)

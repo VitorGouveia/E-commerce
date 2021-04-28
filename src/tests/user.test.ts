@@ -1,7 +1,7 @@
 import request from "supertest"
 import { app } from "../app"
-import { User } from "../entities/User"
-import { FindByEmail } from "../database/models/UserModel"
+import { User } from "@entities/User"
+import { FindByEmail } from "@database/models/UserModel"
 
 const CreateUserRequest = {
   name: "vitor",
