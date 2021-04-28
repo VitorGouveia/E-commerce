@@ -20,7 +20,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": "./src",
+    "paths": {
+      "@controllers/*": ["controllers/*"],
+      "@database/*": ["database/*"],
+      "@entities": ["entities/*"],
+      "@tests": ["tests/*"],
+      "@utils": ["utils/*"]
+    }
   },
   "exclude": [ "node_modules" ],
   "include": [ "./src/**/*.ts" ]

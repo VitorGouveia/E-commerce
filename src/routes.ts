@@ -1,9 +1,9 @@
 import { Router } from "express"
 
-import { UserController } from "./controllers/UserController"
-import { ItemController } from "./controllers/ItemController"
-import { SessionController } from "./controllers/SessionController"
-import { DashboardController } from "./controllers/DashboardController"
+import { UserController } from "@controllers/UserController"
+import { ItemController } from "@controllers/ItemController"
+import { SessionController } from "@controllers/SessionController"
+import { DashboardController } from "@controllers/DashboardController"
 
 const router = Router()
 
