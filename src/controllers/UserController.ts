@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
-import { Save, Index, FindByEmail, Update, Delete } from "@database/models/UserModel"
+import { Save, Index, FindByEmail, Update, Delete } from "@database/sqlite/models/UserModel"
 import { User } from "@entities/User"
 import { Save as SaveRequest } from "@utils/SaveRequest"
 

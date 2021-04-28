@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { Item } from "@entities/Item"
-import { Save, Index, FindByCategory, FindById, UpdateRating, Update, Delete } from "@database/models/ItemModel"
+import { Save, Index, FindByCategory, FindById, UpdateRating, Update, Delete } from "@database/sqlite/models/ItemModel"
 
 const ItemController = {
   create(req: Request, res: Response) {

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 import { Save as SaveRequest } from "@utils/SaveRequest"
-import { FindByEmail } from "@database/models/UserModel"
+import { FindByEmail } from "@database/sqlite/models/UserModel"
 import { compareSync } from "bcrypt"
 
 const SessionController = {
