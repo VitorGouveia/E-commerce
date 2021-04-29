@@ -1,31 +1,60 @@
 import { Request, Response } from "express"
-import { Item } from "@entities/Item"
+import { prisma } from "prisma"
 import { Save, Index, FindByCategory, FindById, UpdateRating, Update, Delete } from "@database/sqlite/models/ItemModel"
 
 const ItemController = {
-  create(req: Request, res: Response) {
-    let { name, short_name, description, price, shipping_price, discount, category, image, orders, rating } = req.body
+  async create(request: Request, response: Response) {
+    let { name, short_name, description, price, shipping_price, discount, category, image, orders, rating } = request.body
 
-    const item = new Item({ name, short_name, description, price, shipping_price, discount, category,image, orders, rating })
-    rating = rating / 10
-    Save(item)
-    return res.status(200).json(item)
+    var one_star = rating["one_star"]
+    var two_star = rating["two_star"]
+    var three_star = rating["three_star"]
+    var four_star = rating["four_star"]
+    var five_star = rating["five_star"]
+
+    try {
+      const item = await prisma.item.create({
+        data: {
+          name,
+          short_name,
+          description,
+          price: String(price),
+          shipping_price: String(shipping_price),
+          discount: String(discount),
+          category,
+          image: {
+            create: {
+              link: image
+            }
+          },
+          orders: String(orders),
+          rating: {
+            create: {
+              one_star,
+              two_star,
+              three_star,
+              four_star,
+              five_star
+            }
+          }
+        },
+
+        include: {
+          rating: true,
+          image: true
+        }
+      })
+
+      return response.status(200).json({ item })
+
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
   },
 
-  list(req: Request, res: Response) {
-    const { id } = req.params
+  async createImages(request: Request, response: Response) {
 
-    Index((rows: any) => {
-      return res.status(200).json(rows)
-    }, Number(id))
-  },
-
-  findByCategory(req: Request, res: Response) {
-    let { category } = req.params
-
-    FindByCategory(category, (rows: any) => {
-      return res.status(302).json(rows)
-    })
   },
 
   edit(req: Request, res: Response) {
@@ -36,26 +65,99 @@ const ItemController = {
     return res.status(200).json("Item edited.")
   },
 
-  rate(req: Request, res: Response) {
-    let { uuid, rating } = req.body
+  async listRating(request: Request, response: Response) {
+    const { id } = request.body
 
-    rating = rating / 10
+    try {
+      const item = await prisma.item.findUnique({
+        where: {
+          id
+        },
 
-    FindById(uuid, rows => {
+        select: {
+          rating: true
+        }
+      })
 
-      const newRating = rows.rating - rating
-      UpdateRating(newRating, uuid)
-      return res.json(newRating / 2)
-    })
+      return response.status(200).json({
+        ratings: {
+          one_star: item?.rating?.one_star,
+          two_star: item?.rating?.two_star,
+          three_star: item?.rating?.three_star,
+          four_star: item?.rating?.four_star,
+          five_star: item?.rating?.five_star,
+          average: Math.floor(
+            Number(item?.rating?.one_star) + Number(item?.rating?.two_star) + Number(item?.rating?.three_star) + Number(item?.rating?.four_star) + Number(item?.rating?.five_star)
+          ) / 5
+        }
+      })
 
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
   },
 
-  delete(req: Request, res: Response) {
-    let { uuid } = req.body
+  async findByCategory(request: Request, response: Response) {
+    let { category } = request.params
 
-    Delete(uuid)
+    try {
+      const items = await prisma.item.findMany({
+        where: {
+          category
+        }
+      })
 
-    return res.status(200).json("Item deleted.")
+      return response.status(302).json({ items })
+
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
+  },
+
+  async list(request: Request, response: Response) {
+    const { page } = request.params
+    let { quantity } = request.body
+
+    try {
+      if(!quantity || quantity == null || quantity == undefined) {
+        quantity = 0
+      } 
+
+      const items = await prisma.item.findMany({
+        include: {
+          rating: true,
+          image: true
+        },
+        take: quantity,
+        skip: (Number(page) * Number(quantity))
+      })
+
+      return response.status(302).json({ items })
+
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
+  },
+
+  async delete(request: Request, response: Response) {
+    let { id } = request.body
+
+    try {
+      const item = await prisma.item.delete({
+        where: {
+          id
+        }
+      })
+
+      return response.status(500).json({ item })
+      
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
   }
 }
 

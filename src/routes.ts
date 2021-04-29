@@ -22,10 +22,10 @@ router.delete("/dashboard/user", DashboardController.deleteUser) /* Deleting a u
 /* Items */
 router.post("/item", ItemController.create) /* Create item */
 router.put("/item/edit", ItemController.edit) /* Edits item */
-router.patch("/item/rate", ItemController.rate) /* Rates item */
+router.patch("/item/rate", ItemController.listRating) /* Rates item */
 router.delete("/item/delete", ItemController.delete) /* Deletes item */
 
-router.get("/dashboard/item/:id", ItemController.list) /* List all items */
+router.post("/dashboard/item/:page", ItemController.list) /* List all items */
 router.get("/dashboard/item/:category", ItemController.findByCategory) /* List all items by category */
 
 export { router }
