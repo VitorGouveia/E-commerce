@@ -1,8 +1,8 @@
 import { Request } from "express"
-import { readFileSync, writeFileSync } from "fs"
 
-function Save(req: Request) {
-  let { ip, headers, body } = req
+function Save(request: Request) {
+  let { ip, headers, body } = request
+  console.table(headers, body)
 }
 
 export { Save }
