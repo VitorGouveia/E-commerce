@@ -160,7 +160,12 @@ const UserController = {
             name: {
               contains: String(request.query.name)
             }
-          }
+          },
+          include: {
+            address: true
+          },
+          take: quantity,
+          skip: (Number(page) * Number(quantity))
         })
 
         return response.status(200).json({ users })
@@ -171,7 +176,12 @@ const UserController = {
         const users = await prisma.user.findMany({
           orderBy: [{
             name: "desc"
-          }]
+          }],
+          include: {
+            address: true
+          },
+          take: quantity,
+          skip: (Number(page) * Number(quantity))
         })
 
         return response.status(200).json({ users })
@@ -180,7 +190,12 @@ const UserController = {
         const user = await prisma.user.findMany({
           orderBy: [{
             name: "asc"
-          }]
+          }],
+          include: {
+            address: true
+          },
+          take: quantity,
+          skip: (Number(page) * Number(quantity))
         })
 
         return response.status(200).json({ user })
