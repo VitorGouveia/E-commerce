@@ -121,6 +121,31 @@ const ItemController = {
     let { quantity } = request.body
 
     try {
+      if(request.query.name) {
+        // /item?name=headset
+        const items = await prisma.item.findMany({
+          where: {
+            name: {
+              contains: String(request.query.name)
+            }
+          },
+          include: {
+            image: true,
+            rating: true
+          },
+          take: quantity,
+          skip: (Number(page) * Number(quantity))
+        })
+
+        return response.status(200).json({ items })
+      }
+
+      if(request.query.name && request.query.sort == "desc") {
+
+      } else if(request.query.name && request.query.sort == "asc") {
+        // /item?name=headset&sort=asc
+      }
+
       if(!quantity || quantity == null || quantity == undefined) {
         quantity = 0
       } 
