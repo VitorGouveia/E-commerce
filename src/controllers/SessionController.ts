@@ -2,69 +2,68 @@ import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
 import { Save as SaveRequest } from "@utils/SaveRequest"
 import { FindByEmail } from "@database/sqlite/models/UserModel"
-import { compareSync } from "bcrypt"
+import { compare } from "bcrypt"
+import { prisma } from "../prisma"
 
 const SessionController = {
-  create(req: Request, res: Response) {
-    SaveRequest(req)
+  async create(request: Request, response: Response) {
+    SaveRequest(request)
 
-    const { email, password } = req.body
+    const { email, password } = request.body
 
-    const authHeader = req.headers.authorization
+    const authorizationHeader = request.headers.authorization
 
     try {
-      const jwtHeader = jwt.verify(String(authHeader), String(process.env.JWT_ACCESS_TOKEN))
+      const JWTHeader = jwt.verify(String(authorizationHeader), String(process.env.JWT_ACCESS_TOKEN))
       const refresh_token = jwt.sign({
-        uuid: jwtHeader["uuid"],
-        name: jwtHeader["name"],
-        email: jwtHeader["email"],
-        password: jwtHeader["password"]
+        uuid: JWTHeader["id"],
+        name: JWTHeader["name"],
+        email: JWTHeader["email"],
+        password: JWTHeader["password"]
       }, String(process.env.JWT_REFRESH_TOKEN), { expiresIn: "168h" })
 
-      res.header("authorization", refresh_token)
+      response.header("authorization", refresh_token)
 
-      return res.status(302).json({
+      return response.status(302).json({
         auth: true,
         jwt: true,
         user: {
-          uuid: jwtHeader["uuid"],  
-          name: jwtHeader["name"],  
-          email: jwtHeader["email"],  
-          password: jwtHeader["password"],  
+          uuid: JWTHeader["id"],  
+          name: JWTHeader["name"],  
+          email: JWTHeader["email"],  
+          password: JWTHeader["password"],  
         },
         refresh_token
       })
     } catch (error) {
-      FindByEmail(email, users => {
-        if(users.length == 0) {
-          return res.status(404).json({ auth: false, message: "Wrong e-mail" })
-        } else {
-          for(let user of users) {
-            if(compareSync(password, user.password) != true) {
-              return res.status(404).json({ auth: false, message: "Wrong password" })
-            }
-  
-            const refresh_token = jwt.sign({
-              uuid: user.uuid,
-              name: user.name,
-              email: user.email,
-              password: user.password
-            }, String(process.env.JWT_REFRESH_TOKEN), { expiresIn: "168h" })
-  
-            res.header("authorization", refresh_token)
-            return res.status(302).json({
-              auth: true,
-              jwt: false,
-              user: {
-                uuid: user.uuid,
-                name: user.name,
-                email: user.email,
-                password: user.password
-              },
-              refresh_token
-            })
-          }
+      const user = await prisma.user.findMany({
+        where: {
+          email
         }
+      })
+
+      if(user.length == 0) {
+        return response.status(404).json({ auth: false, message: "Wrong e-mail!" })
+      }
+
+      if(await compare(password, user[0].password) != true) {
+        return response.status(404).json({ auth: false, message: "Wrong password!" })
+      }
+
+      const refresh_token = jwt.sign({
+        id: user[0].id,
+        name: user[0].name,
+        email: user[0].email,
+        password: user[0].password
+      }, String(process.env.JWT_REFRESH_TOKEN), { expiresIn: "168h" })
+
+      response.header("authorization", refresh_token)
+
+      return response.status(302).json({
+        auth: true,
+        jwt: false,
+        user,
+        refresh_token
       })
     }
   }

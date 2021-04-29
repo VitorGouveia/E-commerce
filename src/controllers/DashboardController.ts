@@ -1,13 +1,23 @@
 import { Request, Response } from "express"
-import { Delete } from "@database/sqlite/models/UserModel"
+import { prisma } from "../prisma"
 
 const DashboardController = {
-  deleteUser(req: Request, res: Response) {
-    let { uuid } = req.body
+  async deleteUser(request: Request, response: Response) {
+    let { id } = request.body
 
-    Delete(uuid)
+    try {
+      const user = await prisma.user.delete({
+        where: {
+          id
+        }
+      })
 
-    return res.status(200).json("user deleted.")
+      return response.status(200).json({ user, message: "User deleted with success!" })
+      
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
   }
 }
 
