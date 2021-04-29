@@ -155,7 +155,7 @@ const UserController = {
       if(request.query.name) {
         // dashboard/user?name=vitor
         // returns users that contain name vitor
-        const items = await prisma.item.findMany({
+        const users = await prisma.user.findMany({
           where: {
             name: {
               contains: String(request.query.name)
@@ -163,18 +163,27 @@ const UserController = {
           }
         })
 
-        return response.status(200).json({ items })
+        return response.status(200).json({ users })
       }
 
       if(request.query.name && request.query.sort == "desc") {
         // dashboard/user?name=vitor&sort=desc
-        const items = await prisma.item.findMany({
+        const users = await prisma.user.findMany({
           orderBy: [{
             name: "desc"
           }]
         })
 
-        return response.status(200).json({ items })
+        return response.status(200).json({ users })
+      } else if (request.query.name && request.query.sort == "asc") {
+        // dashboard/user?name=vitor&sort=asc
+        const user = await prisma.user.findMany({
+          orderBy: [{
+            name: "asc"
+          }]
+        })
+
+        return response.status(200).json({ user })
       }
 
       if(!quantity) quantity = 0
