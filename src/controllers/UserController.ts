@@ -153,28 +153,25 @@ const UserController = {
     
     try {
       if(request.query.name) {
+        // dashboard/user?name=vitor
+        // returns users that contain name vitor
         const items = await prisma.item.findMany({
           where: {
             name: {
               contains: String(request.query.name)
             }
-          },
-          include: {
-            image: true
           }
         })
 
         return response.status(200).json({ items })
       }
 
-      if(request.query.sort == "desc") {
+      if(request.query.name && request.query.sort == "desc") {
+        // dashboard/user?name=vitor&sort=desc
         const items = await prisma.item.findMany({
           orderBy: [{
             name: "desc"
-          }],
-          include: {
-            image: true
-          }
+          }]
         })
 
         return response.status(200).json({ items })
