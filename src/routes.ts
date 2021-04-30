@@ -9,7 +9,7 @@ const router = Router()
 
 /* User CRUD */
 router.post("/user", UserController.create) /* Creates user */
-router.post("/user/:page", UserController.list) /* Lists users */
+router.post("/user/list", UserController.list) /* Lists users */
 router.patch("/user", UserController.update) /* Updates an especific user */
 router.delete("/user", UserController.delete) /* Deletes an especific user */ 
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deletes a user with admin permissions */

@@ -96,15 +96,21 @@ const UserController = {
     const { userId, postalCode, city, state, street, number } = request.body
 
     try {
-      const address = await prisma.address.create({
+      const address = await prisma.user.update({
+        where: {
+          id: userId
+        },
         data: {
-          userId,
-          postalCode,
-          city,
-          state,
-          street,
-          number          
-        }
+          address: {
+            create: {
+              postalCode,
+              city,
+              state,
+              street,
+              number          
+            }
+          }
+        },
       })
 
       return response.status(200).json({ address })
@@ -146,10 +152,7 @@ const UserController = {
   async list(request: Request, response: Response) {
     SaveRequest(request)
 
-    const { page } = request.params
-    let { quantity } = request.body
-
-    
+    let { page, quantity } = request.body
     
     try {
       if(request.query.name) {

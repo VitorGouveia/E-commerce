@@ -1,66 +1,63 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model Address {
-  id Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id])
-  userId String
+  id         Int     @id @default(autoincrement())
+  userId     String
   postalCode String?
-  city String?
-  state String?
-  street String?
-  number String?
+  city       String?
+  state      String?
+  street     String?
+  number     String?
+  user       User    @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id String @id @default(uuid())
-  created_at DateTime @default(now())
-  name String
-  last_name String?
-  cpf String?
-  email String
-  password String
-  address Address[]
+  id         String    @id @default(uuid())
+  created_at DateTime  @default(now())
+  name       String
+  last_name  String?
+  cpf        String?
+  email      String
+  password   String
+  address    Address[]
 }
 
 model Rating {
-  id Int @id @default(autoincrement())
-  item Item @relation(fields: [itemId], references: [id])
-  itemId String
-  one_star String?
-  two_star String?
+  id         Int     @id @default(autoincrement())
+  itemId     String  @unique
+  one_star   String?
+  two_star   String?
   three_star String?
-  four_star String?
-  five_star String?
+  four_star  String?
+  five_star  String?
+  item       Item    @relation(fields: [itemId], references: [id])
 }
 
 model Image {
-  id Int @id @default(autoincrement())
-  item Item @relation(fields: [itemId], references: [id])
+  id     Int     @id @default(autoincrement())
   itemId String
-  link String?
+  link   String?
+  item   Item    @relation(fields: [itemId], references: [id])
 }
 
 model Item {
-  id String @id @default(uuid())
-  created_at DateTime @default(now())
-  name String
-  short_name String
-  description String
-  price String
+  id             String   @id @default(uuid())
+  created_at     DateTime @default(now())
+  name           String
+  short_name     String
+  description    String
+  price          String
   shipping_price String
-  discount String?
-  category String
-  image Image[]
-  orders String
-  rating Rating?
+  discount       String?
+  category       String
+  orders         String
+  image          Image[]
+  rating         Rating?
 }
