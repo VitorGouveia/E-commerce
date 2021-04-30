@@ -41,6 +41,6 @@ router.delete("/item/image", ItemController.removeImage)
 /* Rating realted */
 router.post("/item/rate", ItemController.rateItem) /* Lists an especific item's ratings */
 router.post("/item/rate/list", ItemController.listRating) /* List all items by category */
-router.post("/item/list/category/:category", ItemController.findByCategory) /* List all items by category */
+router.get("/item/list/category/:category", ItemController.findByCategory) /* List all items by category */
 
 export { router }
