@@ -172,6 +172,10 @@ const ItemController = {
         }
       })
 
+      let allNumberRatings = (Number(item?.rating?.one_star) * 1) + (Number(item?.rating?.two_star) * 2) + (Number(item?.rating?.three_star) * 3) + (Number(item?.rating?.four_star) * 4) + (Number(item?.rating?.five_star) * 5)
+      let allRatings = Number(item?.rating?.one_star) + Number(item?.rating?.two_star) + Number(item?.rating?.three_star) + Number(item?.rating?.four_star)+ Number(item?.rating?.five_star)
+      console.log(`${allNumberRatings}\n${allRatings}`)
+
       return response.status(200).json({
         ratings: {
           one_star: item?.rating?.one_star,
@@ -179,9 +183,7 @@ const ItemController = {
           three_star: item?.rating?.three_star,
           four_star: item?.rating?.four_star,
           five_star: item?.rating?.five_star,
-          average: Math.floor(
-            Number(item?.rating?.one_star) + Number(item?.rating?.two_star) + Number(item?.rating?.three_star) + Number(item?.rating?.four_star) + Number(item?.rating?.five_star)
-          ) / 5
+          average: Math.floor(allNumberRatings / allRatings)  
         }
       })
 
