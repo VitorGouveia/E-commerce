@@ -52,6 +52,44 @@ const ItemController = {
     }
   },
 
+  async rateItem(request: Request, response: Response) {
+    let { itemId, one_star, two_star, three_star, four_star, five_star } = request.body
+
+    try {
+      const oldRating = await prisma.rating.findMany({
+        where: {
+          itemId
+        }
+      })
+
+      one_star = Number(one_star) + Number(oldRating[0].one_star)
+      two_star = Number(two_star) + Number(oldRating[0].two_star)
+      three_star = Number(three_star) + Number(oldRating[0].three_star)
+      four_star = Number(four_star) + Number(oldRating[0].four_star)
+      five_star = Number(five_star) + Number(oldRating[0].five_star)
+
+      const rating = await prisma.rating.updateMany({
+        where: {
+          itemId
+        },
+        data: {
+          itemId,
+          one_star: String(one_star),
+          two_star: String(two_star),
+          three_star: String(three_star),
+          four_star: String(four_star),
+          five_star: String(five_star)
+        }
+      })
+
+      return response.status(200).json({ rating })
+
+    } catch (error) {
+      
+      return response.status(500).json({ message: error.message })
+    }
+  },
+
   async createImage(request: Request, response: Response) {
     const { itemId, link } = request.body
 

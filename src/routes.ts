@@ -38,8 +38,9 @@ router.delete("/item", ItemController.delete) /* Deletes item */
 router.post("/item/image", ItemController.createImage)
 router.delete("/item/image", ItemController.removeImage)
 
-/* Other item listing features */
-router.post("/item/rate", ItemController.listRating) /* Lists an especific item's ratings */
-router.get("/item/list/category/:category", ItemController.findByCategory) /* List all items by category */
+/* Rating realted */
+router.post("/item/rate", ItemController.rateItem) /* Lists an especific item's ratings */
+router.post("/item/rate/list", ItemController.listRating) /* List all items by category */
+router.post("/item/list/category/:category", ItemController.findByCategory) /* List all items by category */
 
 export { router }
