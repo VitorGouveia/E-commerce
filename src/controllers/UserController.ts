@@ -1,14 +1,11 @@
 import { Request, Response } from "express"
 import jwt from "jsonwebtoken"
-import { Save as SaveRequest } from "@utils/SaveRequest"
 import { prisma } from "../prisma"
 import { User } from "@prisma/client"
 import { hash } from "bcrypt"
 
 const UserController = {
   async create(request: Request, response: Response) {
-    SaveRequest(request)
-
     let { name, email, cpf, password }: User  = request.body
 
     try {
@@ -55,8 +52,6 @@ const UserController = {
   },
 
   async update(request: Request, response: Response) {
-    SaveRequest(request)
-
     const { id, name, last_name, cpf, email, password } = request.body
 
     const authorizationHeader = request.headers.authorization
@@ -97,8 +92,6 @@ const UserController = {
   },
 
   async createAddress(request: Request, response: Response) {
-    SaveRequest(request)
-
     const { userId, postalCode, city, state, street, number } = request.body
 
     try {
@@ -122,8 +115,6 @@ const UserController = {
   },
 
   async delete(request: Request, response: Response) {
-    SaveRequest(request)
-
     const { id } = request.body
 
     const authHeader = request.headers.authorization
@@ -155,8 +146,6 @@ const UserController = {
   },
 
   async list(request: Request, response: Response) {
-    SaveRequest(request)
-
     let { page } = request.params
     let { quantity } = request.body
     

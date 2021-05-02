@@ -1,13 +1,10 @@
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
-import { Save as SaveRequest } from "@utils/SaveRequest"
 import { compare } from "bcrypt"
 import { prisma } from "../prisma"
 
 const SessionController = {
   async create(request: Request, response: Response) {
-    SaveRequest(request)
-
     const { email, password } = request.body
 
     const authorizationHeader = request.headers.authorization
