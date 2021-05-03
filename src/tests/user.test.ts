@@ -14,6 +14,9 @@ const user_test = {
   password: "12345"
 }
 
+var access_token = null
+var refresh_token = null
+
 describe("User Register", () => {
   it("should create new user entity", async () => {
     let { name, email, cpf, password } = user_test
@@ -52,7 +55,7 @@ describe("User Register", () => {
       .patch("/user")
       .send({
         id: user_test.id,
-        name: user_test.name,
+        name: "victor",
         last_name: user_test.last_name,
         cpf: user_test.cpf,
         email: user_test.email,
@@ -65,12 +68,27 @@ describe("User Register", () => {
       expect(response.headers.authorization.length > 1).toBe(true)
       jwt.verify(String(authorizationHeader), String(process.env.JWT_REFRESH_TOKEN))
 
+      expect(response.body[0].user.name).toBe("victor")
+
       expect(response.body[0].auth).toBe(true)
       expect(response.status).toBe(200)
     } catch (error) {
        
     }
-    
+
     await prisma.$disconnect()
+  })
+
+  it("should delete user", async () => {
+    const response = await request(app).delete("/user").send({
+      id: user_test.id
+    })
+
+    expect(response.headers.authorization > 1).toBe(true)
+
+    expect(response.body[0].user.name).toBe("victor")
+
+    expect(response.body[0].auth).toBe(true)
+    expect(response.status).toBe(200)
   })
 })
