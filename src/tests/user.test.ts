@@ -10,23 +10,23 @@ const user_test = {
 }
 
 describe("User Register", () => {
-  // it("should create new user entity", async () => {
-  //   let { name, email, cpf, password } = user_test
+  it("should create new user entity", async () => {
+    let { name, email, cpf, password } = user_test
 
-  //   const user = await prisma.user.create({
-  //     data: {
-  //       name,
-  //       email,
-  //       cpf,
-  //       password
-  //     }
-  //   })
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        cpf,
+        password
+      }
+    })
 
-  //   expect(user.name).toEqual(user_test.name)
-  //   expect(user.email).toEqual(user_test.email)
-  //   expect(user.cpf).toEqual(user_test.cpf)
-  //   expect(user.password).toEqual(user_test.password)
-  // })
+    expect(user.name).toEqual(user_test.name)
+    expect(user.email).toEqual(user_test.email)
+    expect(user.cpf).toEqual(user_test.cpf)
+    expect(user.password).toEqual(user_test.password)
+  })
 
   it("should lists all users", async () => {
     const response = await request(app)
@@ -35,7 +35,9 @@ describe("User Register", () => {
         quantity: 1 
       })
 
-    console.log(response.body)
+    expect(response.body[0].name).toBe(user_test.name)
+    expect(response.body[0].email).toBe(user_test.email)
+    expect(response.body[0].password).toBe(user_test.password)
     expect(response.status).toBe(200)
   })
 
