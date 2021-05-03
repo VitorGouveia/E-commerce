@@ -1,8 +1,10 @@
 import { Request, Response } from "express"
+
 import jwt from "jsonwebtoken"
+import { hash } from "bcrypt"
+
 import { prisma } from "../prisma"
 import { User } from "@prisma/client"
-import { hash } from "bcrypt"
 
 const UserController = {
   async create(request: Request, response: Response) {
@@ -64,7 +66,7 @@ const UserController = {
       jwt.verify(String(authorizationHeader), String(process.env.JWT_REFRESH_TOKEN))
       const user = await prisma.user.update({
         where: {
-          id: id
+          id
         },
 
         data: {
@@ -199,7 +201,7 @@ const UserController = {
         return response.status(200).json({ user })
       }
 
-      if (!quantity) quantity = 0
+      if (!quantity) return quantity = 0
 
       const users = await prisma.user.findMany({
         include: {

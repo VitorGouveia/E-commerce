@@ -1,6 +1,8 @@
-import jwt from "jsonwebtoken"
 import { Request, Response } from "express"
+
+import jwt from "jsonwebtoken"
 import { compare } from "bcrypt"
+
 import { prisma } from "../prisma"
 
 const SessionController = {
