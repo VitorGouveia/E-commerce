@@ -1,6 +1,7 @@
 import request from "supertest"
 import { prisma } from "../prisma"
 import { app } from "../app"
+import jwt from "jsonwebtoken"
 
 var user_id = null
 
@@ -57,5 +58,19 @@ describe("User Register", () => {
         email: user_test.email,
         password: user_test.password,
       })
+
+    const authorizationHeader = response.headers.authorization
+
+    try {
+      expect(response.headers.authorization.length > 1).toBe(true)
+      jwt.verify(String(authorizationHeader), String(process.env.JWT_REFRESH_TOKEN))
+
+      expect(response.body[0].auth).toBe(true)
+      expect(response.status).toBe(200)
+    } catch (error) {
+       
+    }
+    
+    await prisma.$disconnect()
   })
 })
