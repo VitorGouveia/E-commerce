@@ -6,10 +6,8 @@
   "author": "VitorGouveia <vitor.gouveia@aluno.etecjrm.com.br>",
   "license": "MIT",
   "scripts": {
-    "complile": "tsc",
-    "database": "ts-node-dev src/database/sqlite.ts",
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify -r tsconfig-paths/register src/server.ts",
-    "test": "jest"
+    "dev": "NODE_ENV=development prisma migrate dev ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify -r tsconfig-paths/register src/server.ts",
+    "test": "NODE_ENV=test prisma migrate reset && jest"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

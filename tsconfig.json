@@ -20,13 +20,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "./src",
+    "rootDir": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@controllers/*": ["controllers/*"],
-      "@tests/*": ["tests/*"],
-      "@utils/*": ["utils/*"]
+      "@controllers/*": ["src/controllers/*"],
+      "@tests/*": ["src/tests/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
-  "exclude": [ "node_modules" ],
-  "include": [ "./src/**/*.ts" ]
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*"]
 }
