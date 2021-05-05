@@ -13,3 +13,17 @@
 .background-highlight span {
   color: rgb(120, 209, 225);
 }
+
+.zsh {
+  width: 100%;
+  background: rgb(39, 41, 53);
+  padding: 1rem;
+}
+
+.zsh code {
+  color: #fafafa;
+}
+
+.zsh code span {
+  color: #50F772;
+}

@@ -198,6 +198,10 @@
   position: relative;
 }
 
+.homeContainer main article h1:not(:first-child) {
+  margin-top: 3rem;
+}
+
 .homeContainer main article h2 {
   overflow-wrap: break-word;
   position: relative;
