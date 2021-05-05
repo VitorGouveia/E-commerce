@@ -16,12 +16,75 @@
 
 .zsh {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: rgb(39, 41, 53);
   padding: 1rem;
 }
 
 .zsh code {
   color: #fafafa;
+}
+
+.zsh button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.zsh button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  stroke: #fafafa;
+  width: 100%;
+}
+
+.zsh button::before {
+  content: '';
+  display: none;
+  position: absolute;
+  z-index: 9998;
+  bottom: 40px;
+  left: 5px;
+  width: 0;
+  height: 0;
+  transform: rotate(180deg);
+  
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(0,0,0,.72);
+}
+
+.zsh button::after {
+  content: 'Copy to Clipboard';
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  bottom: 45px;
+  left: -47px;
+  width: 114px;
+  height: 36px;
+
+  color: #fff;
+  font-size: 10px;
+  line-height: 36px;
+  text-align: center;
+
+  background: rgba(0,0,0,.72);
+  border-radius: 3px;
+}
+
+.zsh button:hover::before, .zsh button:hover::after {
+  display: block
+}
+
+.zsh button:focus::after, .zsh button:active::after {
+  content: 'Copied';
 }
 
 .zsh code span {
