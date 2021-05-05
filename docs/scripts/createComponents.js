@@ -32,7 +32,7 @@ const createComponent = async (component, data) => {
     document.querySelector(".overlay").style.display = "none"
   })
 
-  const clipboardButtons = document.querySelectorAll(".clipboard")
+  const clipboardButtons = document.querySelectorAll("button.clipboard")
   clipboardButtons.forEach(button => {
     button.addEventListener("click", async event => {
       // get text of code element

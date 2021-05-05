@@ -1,57 +1,230 @@
 <header>
   <button class="sidebar-toggle" aria-label="Open Sidebar" type="button">
     <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      stroke-width="2" 
-      stroke-linecap="round" 
-      stroke-linejoin="round" 
-      class="feather feather-menu">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
 </header>
 
 <article>
-  <h1 id="overview">Overview</h1>
-  <p>This is a scalable, easy to use, "batteries included" boilerplate for your e-commerce projects, by using a specific set of technolgies the learning curve is almost flat, write complex SQL queries in no time, feel the power of a simple but yet great authentication system and build your e-commerce now! 🚀</p>
-
-  <h2 id="work-with-complex-data-and-relationships">Work with complex data and relationships</h2>
-  <p>Make SQL joins, queries, searchs all in a matter of seconds! with <a href="https://prisma.io">prisma</a> 
-    everything is possible. We already include multiple types of relationships, such as <a>One-to-Many</a>, 
-    <a>One-to-One</a> and <a>Many-to-Many</a>.</p>
-
-  <h2 id="make-everything-faster-with-cluster">Make everything faster with cluster mode</h2>
-  <p>A <a href="https://nodejs.org">node.js</a> native cluster mode is already implemented, 
-    just change your <a href="#server.ts">server.ts</a> <code class="background-highlight">Cluster(<span>false</span>)</code> function to <code class="background-highlight"><span>true</span></code> 
-    and see the magic happen. More details about node.js cluster mode <a href="#cluster" class="underline">here</a></p>
-
-  <h1 id="installation">Installation</h1>
-  <p>
-    To get started just clone the repository:<br>
+  <div>
+    <h1 id="overview">Overview</h1>
+    <p>This is a scalable, easy to use, "batteries included" boilerplate for your e-commerce projects, by using a specific set of technolgies the learning curve is almost flat, write complex SQL queries in no time, feel the power of a simple but yet great authentication system and build your e-commerce now! 🚀</p>
+  </div>
+  
+  <div>
+    <h2 id="work-with-complex-data-and-relationships">Work with complex data and relationships</h2>
+    <p>Make SQL joins, queries, searchs all in a matter of seconds! with <a href="https://prisma.io">prisma</a> 
+      everything is possible. We already include multiple types of relationships, such as <a>One-to-Many</a>, 
+      <a>One-to-One</a> and <a>Many-to-Many</a>.
+    </p>
+  </div>
+  
+  <div>
+    <h2 id="make-everything-faster-with-cluster">Make everything faster with cluster mode</h2>
+    <p>A <a href="https://nodejs.org">node.js</a> native cluster mode is already implemented, 
+      just change your <a href="#server.ts">server.ts</a> <code class="background-highlight">Cluster(<span>false</span>)</code> function to <code class="background-highlight"><span>true</span></code> 
+      and see the magic happen. More details about node.js cluster mode <a href="#cluster" class="underline">here</a>
+    </p>
+  </div>
+  
+  <div>
+    <h1 id="installation">Installation</h1>
+    <p>To get started just clone the repository:<br></p>
     <div class="zsh">
       <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
       <button class="clipboard">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
       </button>
     </div>
-  </p>
-
-  <!-- <section>
-    <div>
-      <a href="#">
-        <div>
-          <p>Next</p>
-          <h3>Installation</h3>
-        </div>
-        &rAarr;
-      </a>
+  </div>
+  <div>
+    <p>Then, access the project folder:<br></p>
+    <div class="zsh">
+      <code><span>cd</span> E-commerce/</code>
+      <button class="clipboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+      </button>
     </div>
-  </section> -->
-</article>
+  </div>
+  <div>
+    <p>Finally, install all the dependencies:<br></p>
+    <div class="zsh">
+      <code>
+        <span>yarn</span><br>
+        <span class="comment"># or</span><br>
+        <span>npm</span> i
+      </code>
+      <button class="clipboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+      </button>
+    </div>
+  </div>
+  <div>
+    <h1 id="getting-started">Getting Started</h1>
+    <p>
+      Now you will learn how to use our api routes and start your e-commerce, remember that <a>we only provide the back-end</a>, you need to build your own <a>UI</a> of your app
+      <br>
+      <br>
+      Now let's create a user, first call the user creation <a>endpoint</a>
+    </p>
+    <div class="requestContainer">
+      <code><span>POST</span>http://localhost:3333/user</code>
+    </div>
+  </div>
+  <div>
+    <p>
+      Then, supply some information in <a>JSON</a>
+    </p>
+    <div class="requestContainer">
+      <div class="json">
+        <span class="bracket">{</span>
+        <span class="field">"name": <span>"vitor",</span></span>
+        <span class="field">"email": <span>"vitor@vitor.com",</span></span>
+        <span class="field">"cpf": <span>"000.000.000-00",</span></span>
+        <span class="field">"password": <span>"12345"</span></span>
+        <span class="bracket">}</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>
+      Finally, receive your response, also in <a>JSON</a><br>
+      if you want more details on how the user is created, click <a href="#user" class="underline">here</a>
+    </p>
+    <div class="requestContainer">
+      <div class="json">
+        <span class="bracket">{</span>
+        <span class="field">"auth": <span class="boolean">true</span></span>
+        <span class="field">"access_token": <span><a>JWT TOKEN</a></span></span>
+        <span class="field">"user": <span>
+          <span class="bracket">{</span>
+          <span class="field">"id": <span><a>UUID V4,</a></span></span>
+          <span class="field">"created_at": <span><a>TIMESTAMP,</a></span></span>
+          <span class="field">"name": <span>"vitor"</span></span>
+          <span class="field">"last_name": <span class="boolean">null,</span></span>
+          <span class="field">"cpf": <span>"000.000.000-00",</span></span>
+          <span class="field">"email": <span>"vitor@vitor.com",</span></span>
+          <span class="field">"password": <span><a>ENCRYPTED PASSWORD</a></span></span>
+          <span class="bracket">}</span>
+        </span></span>
+        <span class="field">"message": <span>"User created with success!"</span></span>
+        <span class="bracket">}</span>
+      </div>
+    </div>
+  </div>
+    <!-- <div>
+      <h1 id="installation">b</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <h1 id="installation">Installation</h1>
+      <p>To get started just clone the repository:<br></p>
+      <div class="zsh">
+        <code><span>git</span> clone https://github.com/EsquemaFlorescer/E-commerce.git</code>
+        <button class="clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+        </button>
+      </div>
+    </div>
+    
+    <section>
+      <div>
+        <a href="#">
+          <div>
+            <p>Next</p>
+            <h3>Installation</h3>
+          </div>
+          &rAarr;
+        </a>
+      </div>
+    </section> -->
+  </article>

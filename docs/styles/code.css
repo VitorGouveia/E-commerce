@@ -21,10 +21,15 @@
   justify-content: space-between;
   background: rgb(39, 41, 53);
   padding: 1rem;
+  margin-bottom: 16px;
 }
 
 .zsh code {
   color: #fafafa;
+}
+
+.zsh .comment {
+  color: rgb(98, 114, 164);
 }
 
 .zsh button {

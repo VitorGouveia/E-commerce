@@ -198,7 +198,7 @@
   position: relative;
 }
 
-.homeContainer main article h1:not(:first-child) {
+.homeContainer main article div h1:not(#overview) {
   margin-top: 3rem;
 }
 
