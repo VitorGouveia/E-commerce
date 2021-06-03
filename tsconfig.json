@@ -25,7 +25,8 @@
     "paths": {
       "@controllers/*": ["src/controllers/*"],
       "@tests/*": ["src/tests/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@auth/*": ["src/auth/*"]
     }
   },
   "exclude": ["node_modules"],
