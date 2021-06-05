@@ -165,71 +165,84 @@ const UserController = {
   },
   
   async list(request: Request, response: Response) {
-    let { page } = request.params
-    let { quantity } = request.body
-
+    let page = Number(request.query.page)
+    let quantity = Number(request.query.quantity)
+    let name = String(request.query.name)
+    let sort: any = String(request.query.sort) || "desc" || "asc"
+    let created_at = String(request.query.createdAt)
+    
     try {
-      if (request.query.name) {
-        // dashboard/user?name=vitor
-        // returns users that contain name vitor
+      if(!page && !quantity) {
+        const users = await prisma.user.findMany()
+        
+        return response.json(users)
+      }
+
+      if(name != "undefined") {
+
+        if(sort != "undefined") {
+          const users = await prisma.user.findMany({
+            orderBy: [{
+              name: sort
+            }],
+            
+            include: {
+              address: true
+            },
+            
+            take: quantity,
+            skip: (page * quantity)
+          })
+          
+          return response.status(200).json(users)
+        }
+
         const users = await prisma.user.findMany({
           where: {
             name: {
-              contains: String(request.query.name)
+              contains: name
             }
           },
+          
           include: {
             address: true
           },
+          
           take: quantity,
-          skip: (Number(page) * Number(quantity))
+          skip: (page * quantity)
         })
-
-        return response.status(200).json({ users })
+        
+        return response.status(200).json(users)
       }
 
-      if (request.query.name && request.query.sort == "desc") {
-        // dashboard/user?name=vitor&sort=desc
+      if(name == "undefined" && created_at == "true" && sort != "undefined") {
         const users = await prisma.user.findMany({
           orderBy: [{
-            name: "desc"
+            created_at: sort
           }],
+          
           include: {
             address: true
           },
+          
           take: quantity,
-          skip: (Number(page) * Number(quantity))
+          skip: (page * quantity)
         })
-
-        return response.status(200).json({ users })
-      } else if (request.query.name && request.query.sort == "asc") {
-        // dashboard/user?name=vitor&sort=asc
-        const user = await prisma.user.findMany({
-          orderBy: [{
-            name: "asc"
-          }],
-          include: {
-            address: true
-          },
-          take: quantity,
-          skip: (Number(page) * Number(quantity))
-        })
-
-        return response.status(200).json({ user })
+        
+        return response.status(200).json(users)
       }
-
-      if (!quantity) return quantity = 0
 
       const users = await prisma.user.findMany({
         include: {
           address: true
         },
+
         take: quantity,
-        skip: (Number(page) * Number(quantity))
+        skip: page * quantity
       })
-
+      
       return response.status(200).json(users)
-
+      
     } catch (error) {
       return handle.express(500, { message: "failed to list users." }) 
     }
