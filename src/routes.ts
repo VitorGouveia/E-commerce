@@ -9,15 +9,7 @@ const router = Router()
 
 /* User CRUD */
 router.post("/user", UserController.create) /* Creates user */
-router.post("/user/list/:page", UserController.list) /* Lists users */
-// available routes
-// /user/list/page?name=<username>
-// /user/list/page?name=<username>&sort=<direction>
-// use cases
-// /user/list/1?name=vitor                  finds all users that contain "vitor"
-// /user/list/1?name=vitor&sort=desc        finds all users that contain "vitor" and order them DESC
-// /user/list/1?name=vitor&sort=asc         finds all users that contain "vitor" and order them ASC
-
+router.get("/user", UserController.list) /* Lists users */
 router.patch("/user", UserController.update) /* Updates an especific user */
 router.delete("/user", UserController.delete) /* Deletes an especific user */
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deletes a user with admin permissions */
