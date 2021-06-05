@@ -84,10 +84,8 @@ const UserController = {
 
     } catch (error) {
 
-      return response.status(400).json({
-        auth: false,
-        message: error.message
-      })
+      // in case of error send error details
+      return handle.express(400, { auth: false, message: "Failed to update user." })
     }
   },
 
@@ -110,7 +108,8 @@ const UserController = {
 
     } catch (error) {
 
-      return response.status(500).json({ error: error.name, details: { message: error.message } })
+      // in case of error send error details
+      return handle.express(400, { message: "Failed to create address." })
     }
   },
 
@@ -142,7 +141,8 @@ const UserController = {
 
     } catch (error) {
 
-      return response.status(500).json({ error: error.name, details: { message: error.message } })
+      // in case of error send error details
+      return handle.express(500, { auth: false, message: "failed to delete user." })
     }
   },
 
@@ -213,8 +213,7 @@ const UserController = {
       return response.status(200).json(users)
 
     } catch (error) {
-
-      return response.status(500).json({ error: error.name, details: { message: error.message } })
+      return handle.express(500, { message: "failed to list users." }) 
     }
   }
 }
