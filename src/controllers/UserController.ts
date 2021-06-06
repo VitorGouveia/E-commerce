@@ -27,7 +27,7 @@ const UserController = {
       
       // if user with name and hash already exist add 1 to userhash
       if(userHashAlreadyExists) {
-        userhash = Math.floor(Math.random() * (9999 * Number("0001") + 1) + Number("0001"))
+        userhash = generateHash(4)
       }
       
       password = await hash(password, 10)
