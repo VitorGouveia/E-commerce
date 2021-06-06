@@ -52,7 +52,7 @@ const UserController = {
         data: {
           name,
           lastname: "",
-          username: `${name}#${userhash}`,
+          username: `${name}${generateHash(2)}`,
           userhash: String(userhash),
           cpf,
           email,
@@ -77,7 +77,7 @@ const UserController = {
   },
   
   async update(request: Request, response: Response) {
-    const { id, name, lastname, username, cpf, email, password } = request.body
+    const { id, name, lastname, username, userhash, cpf, email, password } = request.body
     
     // searches a JWT authorization token in client's headers
     const authorizationHeader = request.headers.authorization
@@ -86,17 +86,36 @@ const UserController = {
     if (!authorizationHeader) {
       return response.status(400).json({ auth: false, message: "No JWT token was found! Redirect to login" })
     }
-    
+    //serach for user with username and userhash, separate hash from username
     try {
-      const userInfo = await prisma.user.findUnique({
+      const usernameAlreadyExists = await prisma.user.findMany({
         where: {
-          id
+          username,
+          userhash
         },
 
         select: {
+          id: true,
+          username: true,
           userhash: true
         }
       })
+
+      if(usernameAlreadyExists[0]?.username == username) {
+        return response.status(400).json({
+          message: "You took this username"
+        })
+      }
+
+      if(usernameAlreadyExists.length > 0) {
+        return response.status(400).json({ 
+          message: "This username is already taken",
+          available_usernames: [
+            { username: `${username}${generateHash(2)}` },
+            { username: `${name}${generateHash(2)}` }
+          ]
+        })
+      }
 
       // check if JWT authorization token is valid
       auth.verify(authorizationHeader)
@@ -110,7 +129,7 @@ const UserController = {
         data: {
           name,
           lastname,
-          username: `${username}#${userInfo?.userhash}`,
+          username: `${username}`,
           cpf,
           email,
           password
