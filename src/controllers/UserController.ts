@@ -13,6 +13,22 @@ const UserController = {
     let { name, email, cpf, password }: User = request.body
     
     try {
+      // TODO: integrate this with discord user hash
+      let userhash = Math.floor(Math.random() * (9999 * Number("0001") + 1) + Number("0001")) // generates random number between 0001 and 9999
+
+      // searches users with that hash and name
+      const userHashAlreadyExists = await prisma.user.findMany({
+        where: {
+          name,
+          userhash: String(userhash)
+        }
+      })
+
+      // if user with name and hash already exist add 1 to userhash
+      if(userHashAlreadyExists) {
+        userhash = Math.floor(Math.random() * (9999 * Number("0001") + 1) + Number("0001"))
+      }
+      
       password = await hash(password, 10)
       
       // searches users with that e-mail
@@ -23,18 +39,22 @@ const UserController = {
       })
       
       // checks if user with that email already exists
-      if (userAlreadyExists.length > 0) {
+      if (userAlreadyExists.length) {
         return response.status(400).json({
           auth: false, message: "User already exists", user: userAlreadyExists
         })
       }
+
       
       // stores user in the database
       const user = await prisma.user.create({
         data: {
           name,
-          email,
+          last_name: "",
+          username: `${name}#${userhash}`,
+          userhash: String(userhash),
           cpf,
+          email,
           password
         }
       })
