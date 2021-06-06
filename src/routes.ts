@@ -10,6 +10,49 @@ const router = Router()
 /* User CRUD */
 router.post("/user", UserController.create) /* Creates user */
 router.get("/user", UserController.list) /* Lists users */
+
+// todo:
+// GET: /user/{userId}  retrieves user with that id
+// PATCH/PUT: /user/{userId}
+// DELETE: /user/{userId}
+// versioning
+/**
+ * v1: db drivers (sqlite3, pg, mysql)
+ * v2: Query builder (knex.js, prisma)
+ * v3: ORM (MikroORM, Typeorm, Sequelize)
+ * v4: MongoDB
+ * v5: GraphQL
+ * v6: like rocketseat (with classes, services, repositories)
+ */
+/**
+ * TODO:
+ * blog with infinite scroll
+ * send email to users
+ * add gender
+ */
+/**
+ * folder structure
+ *  src/
+ *    api/
+ *      v1/
+ *        controllers/
+ *        database/
+ *        models/
+ *        services/
+ *      v2/
+ *      v3/
+ *      v4/
+ *      v5/
+ *    lib/
+ *      auth/
+ *    tests/
+ *    utils/
+ */
+/**
+ * CREATE A ERROR CODES TABLE
+ * certain errors codes and messages are used with error handler
+ * ERROR 100: invalid input etc
+ */
 router.patch("/user", UserController.update) /* Updates an especific user */
 router.delete("/user", UserController.delete) /* Deletes an especific user */
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deletes a user with admin permissions */
