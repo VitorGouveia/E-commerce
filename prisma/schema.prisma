@@ -8,14 +8,17 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(uuid())
-  created_at DateTime  @default(now())
-  name       String
-  last_name  String
-  cpf        String
-  email      String
-  password   String
-  address    Address[]
+  id            String    @id @default(uuid())
+  created_at    DateTime  @default(now())
+  name          String
+  last_name     String
+  username      String
+  userhash      String
+  cpf           String
+  email         String
+  password      String
+  password_hash String
+  address       Address[]
 }
 
 model Address {
