@@ -12,8 +12,6 @@ router.post("/user", UserController.create) /* Creates user */
 router.get("/user/:id?", UserController.list) /* Lists users */
 
 // todo:
-// GET: /user/{userId}  retrieves user with that id
-// PATCH/PUT: /user/{userId}
 // DELETE: /user/{userId}
 // versioning
 /**
@@ -53,7 +51,7 @@ router.get("/user/:id?", UserController.list) /* Lists users */
  * certain errors codes and messages are used with error handler
  * ERROR 100: invalid input etc
  */
-router.patch("/user", UserController.update) /* Updates an especific user */
+router.patch("/user/:id?", UserController.update) /* Updates an especific user */
 router.delete("/user", UserController.delete) /* Deletes an especific user */
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deletes a user with admin permissions */
 router.post("/user/address", UserController.createAddress) /* Creates an address for an especific user */

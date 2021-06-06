@@ -77,7 +77,8 @@ const UserController = {
   },
   
   async update(request: Request, response: Response) {
-    const { id, name, lastname, username, userhash, cpf, email, password } = request.body
+    const { name, lastname, username, userhash, cpf, email, password } = request.body
+    const { id } = request.params
     
     // searches a JWT authorization token in client's headers
     const authorizationHeader = request.headers.authorization
@@ -86,14 +87,16 @@ const UserController = {
     if (!authorizationHeader) {
       return response.status(400).json({ auth: false, message: "No JWT token was found! Redirect to login" })
     }
-    //serach for user with username and userhash, separate hash from username
+
     try {
+      // searches user with the same username and userhash
       const usernameAlreadyExists = await prisma.user.findMany({
         where: {
           username,
           userhash
         },
 
+        // select less user properties to reduce response time
         select: {
           id: true,
           username: true,
@@ -101,12 +104,14 @@ const UserController = {
         }
       })
 
+      // responds if you choose the same name twice
       if(usernameAlreadyExists[0]?.username == username) {
         return response.status(400).json({
           message: "You took this username"
         })
       }
 
+      // if there is a user with the same username and userhash respond with other available usernames
       if(usernameAlreadyExists.length > 0) {
         return response.status(400).json({ 
           message: "This username is already taken",
