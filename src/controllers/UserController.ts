@@ -190,8 +190,19 @@ const UserController = {
     let name = String(request.query.name)
     let sort: any = String(request.query.sort) || "desc" || "asc"
     let created_at = String(request.query.createdAt)
+    let userId = String(request.params.id)
     
     try {
+      if(userId != "undefined") {
+        const user = await prisma.user.findUnique({
+          where: {
+            id: userId
+          }
+        })
+
+        return response.status(200).json(user)
+      }
+
       if(!page && !quantity) {
         const users = await prisma.user.findMany()
         

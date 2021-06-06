@@ -9,7 +9,7 @@ const router = Router()
 
 /* User CRUD */
 router.post("/user", UserController.create) /* Creates user */
-router.get("/user", UserController.list) /* Lists users */
+router.get("/user/:id?", UserController.list) /* Lists users */
 
 // todo:
 // GET: /user/{userId}  retrieves user with that id
