@@ -52,7 +52,7 @@ router.get("/user/:id?", UserController.list) /* Lists users */
  * ERROR 100: invalid input etc
  */
 router.patch("/user/:id?", UserController.update) /* Updates an especific user */
-router.delete("/user", UserController.delete) /* Deletes an especific user */
+router.delete("/user/:id?", UserController.delete) /* Deletes an especific user */
 router.delete("/dashboard/user", DashboardController.deleteUser) /* Deletes a user with admin permissions */
 router.post("/user/address", UserController.createAddress) /* Creates an address for an especific user */
 

@@ -178,7 +178,7 @@ const UserController = {
   },
   
   async delete(request: Request, response: Response) {
-    const { id } = request.body
+    const { id } = request.params
     
     // searches a JWT authorization token in client's headers
     const authorizationHeader = request.headers.authorization
