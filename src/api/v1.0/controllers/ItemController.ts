@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import { prisma } from "../prisma"
+import { prisma } from "../../../prisma"
 
 const ItemController = {
   async create(request: Request, response: Response) {

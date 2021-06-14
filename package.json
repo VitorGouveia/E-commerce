@@ -10,7 +10,7 @@
     "dev:server": "NODE_ENV=development ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify --exit-child -r tsconfig-paths/register src/server.ts",
     "dev": "npm-run-all dev:*",
     "test:database": "prisma migrate reset",
-    "test:server": "NODE_ENV=test jest",
+    "test:server": "NODE_ENV=test jest --maxWorkers=50%",
     "test": "npm-run-all test:*",
     "build:folder": "rimraf ./build",
     "build:babel": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
@@ -31,6 +31,7 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/sqlite3": "^3.1.7",
     "@types/supertest": "^2.0.10",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "dotenv": "^8.2.0",
@@ -55,6 +56,7 @@
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "pm2": "^4.5.6",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "uuid": "^8.3.2"
   }
 }

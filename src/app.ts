@@ -3,9 +3,12 @@ import compression from "compression"
 import cors from "cors"
 import helmet from "helmet"
 import { config as dotenv } from "dotenv"
-import { router } from "./routes"
+import { router as v1 } from "@api/v1.0/routes"
 
 const app = express()
+
+const router = express.Router()
+router.use("/v1.0", v1)
 
 dotenv({ path: '.env' })
 

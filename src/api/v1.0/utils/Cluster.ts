@@ -1,7 +1,7 @@
 import { isMaster, fork, on } from "cluster"
 import { cpus } from "os"
 
-import { app } from "../app"
+import { app } from "../../../app"
 
 function Cluster(bool: boolean) {
   const port = process.env.PORT

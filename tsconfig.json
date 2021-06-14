@@ -23,10 +23,11 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@controllers/*": ["src/controllers/*"],
+      "@controllers/*": ["src/api/v1.0/controllers/*"],
       "@tests/*": ["src/tests/*"],
-      "@utils/*": ["src/utils/*"],
-      "@auth/*": ["src/auth/*"]
+      "@utils/*": ["src/api/v1.0/utils/*"],
+      "@auth/*": ["src/auth/*"],
+      "@api/*": ["src/api/*"]
     }
   },
   "exclude": ["node_modules"],

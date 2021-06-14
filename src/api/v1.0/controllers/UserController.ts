@@ -2,12 +2,12 @@ import { Request, Response } from "express"
 
 import { hash } from "bcrypt"
 
-import { prisma } from "../prisma"
+import { prisma } from "../../../prisma"
 import { User } from "@prisma/client"
 
 import { auth } from "@auth/JWT"
-import { handle } from "@utils/ErrorHandler"
-import { generateHash } from "@utils/Hash"
+import { handle } from "src/api/v1.0/utils/ErrorHandler"
+import { generateHash } from "src/api/v1.0/utils/Hash"
 
 const UserController = {
   async create(request: Request, response: Response) {
@@ -102,6 +102,7 @@ const UserController = {
           username: true,
           userhash: true
         }
+        //return [...user]
       })
 
       // responds if you choose the same name twice

@@ -1,9 +1,9 @@
 import { Router } from "express"
 
-import { UserController } from "@controllers/UserController"
-import { ItemController } from "@controllers/ItemController"
-import { SessionController } from "@controllers/SessionController"
-import { DashboardController } from "@controllers/DashboardController"
+import { UserController } from "src/api/v1.0/controllers/UserController"
+import { ItemController } from "src/api/v1.0/controllers/ItemController"
+import { SessionController } from "src/api/v1.0/controllers/SessionController"
+import { DashboardController } from "src/api/v1.0/controllers/DashboardController"
 
 const router = Router()
 
@@ -12,7 +12,6 @@ router.post("/user", UserController.create) /* Creates user */
 router.get("/user/:id?", UserController.list) /* Lists users */
 
 // todo:
-// DELETE: /user/{userId}
 // versioning
 /**
  * v1: db drivers (sqlite3, pg, mysql)
