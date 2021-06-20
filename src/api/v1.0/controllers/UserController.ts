@@ -5,7 +5,7 @@ import { hash } from "bcrypt"
 import { prisma } from "../../../prisma"
 import { User } from "@prisma/client"
 
-import { auth } from "@auth/JWT"
+import auth from "@auth"
 import { handle } from "src/api/v1.0/utils/ErrorHandler"
 import { generateHash } from "src/api/v1.0/utils/Hash"
 
