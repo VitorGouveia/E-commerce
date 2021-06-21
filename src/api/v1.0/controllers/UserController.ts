@@ -124,7 +124,7 @@ const UserController = {
       }
 
       // check if JWT authorization token is valid
-      auth.verify()
+      // auth.verify()
       
       // updates user
       const user = await prisma.user.update({
