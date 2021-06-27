@@ -1,7 +1,4 @@
-import { sign, verify } from "jsonwebtoken"
-import { Request } from "express"
-
-let request: Request
+import { sign } from "jsonwebtoken"
 
 type userType = {
   id: string
