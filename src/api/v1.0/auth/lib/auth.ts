@@ -1,6 +1,6 @@
 import { User } from "@prisma/client"
 
-import { createToken, checkAuthHeader, verifyToken } from "./token"
+import { createToken } from "./token"
 
 export const auth = {
   create({ id, name, email }: User, expiresIn: string) {
@@ -9,15 +9,5 @@ export const auth = {
     const access_token = createToken(user, expiresIn)
 
     return access_token
-  },
-
-  verify() {
-    try {
-      const authHeader = checkAuthHeader()
-    
-      return verifyToken(authHeader)
-    } catch (err) {
-      return err
-    }
   }
 }
