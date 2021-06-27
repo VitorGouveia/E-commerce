@@ -15,7 +15,7 @@
     "build:folder": "rimraf ./build",
     "build:babel": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
     "build": "npm-run-all build:*",
-    "start": "node build/server.js"
+    "start": "NODE_ENV=production node build/server.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.16",
