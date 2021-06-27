@@ -14,6 +14,12 @@ export default function (request: Request, response: Response, next: NextFunctio
 
     verify(token, JWT_REFRESH_TOKEN)
 
+    !authHeader && (
+      response.status(400).json({
+        message: "No JWT refresh token was found! Redirect to login."
+      })
+    )
+
     next()
   } catch (error) {
     console.log(error)
