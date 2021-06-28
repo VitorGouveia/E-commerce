@@ -77,13 +77,6 @@ export default async (request: Request, response: Response) => {
       user.userhash = randomNumber(4)
     )
 
-    // checks if user with that email already exists
-    if (userAlreadyExists) return ({
-      error: true,
-      status: 400,
-      message: "User already exists."
-    })
-
     // respond with user information
     return ({
       status: 201,
@@ -92,12 +85,12 @@ export default async (request: Request, response: Response) => {
       message: "User created with success!"
     })
 
-  } catch {
+  } catch (error) {
     // in case of error, send error details
     return ({
       error: true,
       status: 400,
-      message: "Failed to create user."
+      message: error.message
     })
   }
 }
