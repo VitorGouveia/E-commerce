@@ -2,7 +2,6 @@ import { Request, Response } from "express"
 
 import { prisma } from "@src/prisma"
 
-import auth from "@auth"
 import { handle } from "@utils/ErrorHandler"
 
 import CreateUser from "./user/CreateUser"
@@ -13,7 +12,6 @@ const UserController = {
   async create(request: Request, response: Response) {
     // executes create user service
     const { error, message, status, access_token, user } = await CreateUser(request, response)
-
     // in case of error
     if(error) return response.status(status).json(message)
 
@@ -72,7 +70,6 @@ const UserController = {
     
     try {
       // check if JWT authorization token is valid
-      auth.verify()
       
       // deletes all users addresses to avoid Prisma error
       await prisma.address.deleteMany({
