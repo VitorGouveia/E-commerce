@@ -4,8 +4,16 @@ import { User } from "../../entities/User"
 import { User as UserType } from "@prisma/client"
 import { prisma } from "@src/prisma"
 
+import validator from "validator"
+
 export class SqliteUsersRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<UserType[]> {
+    const isEmail = validator.isEmail(email)
+
+    if(!isEmail) {
+      throw new Error("Invalid email.")
+    }
+
     const user = await prisma.user.findMany({
       where: {
         email
