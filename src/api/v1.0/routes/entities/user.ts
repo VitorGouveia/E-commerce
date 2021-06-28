@@ -7,7 +7,7 @@ import authenticate from "../middlewares/auth"
 const router = Router()
 
 router.post("/", UserController.create) /* Creates user */
-router.get("/:id?", UserController.list) /* Lists users */
+router.get("/:id?", UserController.read) /* Lists users */
 
 router.post("/login", SessionController.create) /* Authenticate user / Login */
 
