@@ -11,10 +11,9 @@ export class SqliteUsersRepository implements IUsersRepository {
         email
       }
     })
-
     return user
   }
-
+  
   async findUserhash(name: string, userhash: string): Promise<UserType[]> {
     const user = await prisma.user.findMany({
       where: {
@@ -22,10 +21,10 @@ export class SqliteUsersRepository implements IUsersRepository {
         userhash
       }
     })
-
+    
     return user
   }
-
+  
   async save(user: User): Promise<void> {
     const {
       id,
