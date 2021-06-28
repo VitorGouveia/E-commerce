@@ -42,6 +42,7 @@ const create = async (userRequest: User) => {
       }
     })
     
+    // if user with same email exists
     if(userAlreadyExists.length) {
       return {
         userAlreadyExists
@@ -59,6 +60,7 @@ const create = async (userRequest: User) => {
         password
       }
     })
+    
     // creates JWT access token
     const access_token = auth.create(user, "24h")
     
