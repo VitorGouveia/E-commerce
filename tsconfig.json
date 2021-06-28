@@ -24,11 +24,13 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
-      "@controllers": ["src/api/v1.0/controllers"],
-      "@tests/*": ["src/tests/*"],
-      "@utils/*": ["src/api/v1.0/utils/*"],
-      "@auth": ["src/api/v1.0/auth"],
-      "@api/*": ["src/api/*"]
+      "@api/v1.0/*": ["src/api/v1.0/*"],
+      "@api/v1.0/auth": ["src/api/v1.0/auth"],
+      "@api/v1.0/routes": ["src/api/v1.0/routes"],
+      "@api/v1.0/utils/*": ["src/api/v1.0/utils/*"],
+      "@api/v1.0/entities/*": ["src/api/v1.0/entities/*"],
+      "@api/v1.0/repositories/*": ["src/api/v1.0/repositories/*"],
+      "@api/v1.0/controllers/*": ["src/api/v1.0/controllers/*"],
     }
   },
   "exclude": ["node_modules"],
