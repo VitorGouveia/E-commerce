@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-import { UserController, SessionController } from "@controllers"
+import { UserController, SessionController } from "@api/v1.0/controllers"
 
 import authenticate from "../middlewares/auth"
 

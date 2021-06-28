@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import { prisma } from "../../../prisma"
+import { prisma } from "@src/prisma"
 
 const DashboardController = {
   async deleteUser(request: Request, response: Response) {

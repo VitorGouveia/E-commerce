@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import jwt from "jsonwebtoken"
 import { compare } from "bcrypt"
 
-import { prisma } from "../../../prisma"
+import { prisma } from "@src/prisma"
 
 const SessionController = {
   async create(request: Request, response: Response) {

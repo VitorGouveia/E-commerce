@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-import { ItemController } from "@controllers"
+import { ItemController } from "@api/v1.0/controllers"
 
 const router = Router()
 

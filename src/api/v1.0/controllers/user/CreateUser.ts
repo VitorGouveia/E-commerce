@@ -1,11 +1,11 @@
 import { Request, Response} from "express"
 
-import { IUsersRepository } from "../../repositories/IUsersRepository"
-import { SqliteUsersRepository } from "../../repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@api/v1.0/repositories/IUsersRepository"
+import { SqliteUsersRepository } from "@api/v1.0/repositories/implementations/SqliteUsersRepository"
 
-import { User, randomNumber } from "../../entities/User"
+import { User, randomNumber } from "@api/v1.0/entities/User"
 
-import auth from "@auth"
+import auth from "@api/v1.0/auth"
 
 type createUserResponse = {
   userHashAlreadyExists: string

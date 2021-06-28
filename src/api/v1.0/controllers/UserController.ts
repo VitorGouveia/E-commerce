@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 
 import { prisma } from "@src/prisma"
 
-import { handle } from "@utils/ErrorHandler"
+import { handle } from "@api/v1.0/utils/ErrorHandler"
 
 import CreateUser from "./user/CreateUser"
 import UpdateUser from "./user/UpdateUser"

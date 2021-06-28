@@ -1,4 +1,4 @@
-import { User } from "../../entities/User"
+import { User } from "@api/v1.0/entities/User"
 
 import { createToken } from "./token"
 
