@@ -7,8 +7,18 @@ import { prisma } from "@src/prisma"
 import validator from "validator"
 
 export class SqliteUsersRepository implements IUsersRepository {
-  async findAllUsers(...props: any): Promise<UserType[]> {
-    const users = await prisma.user.findMany(...props)
+  async findAll(property?: string, sort?: "asc" | "desc" | string): Promise<UserType[]> {
+    const users = await prisma.user.findMany()
+
+    if(property != undefined && sort != "undefined") {
+      const users = await prisma.user.findMany({
+        orderBy: [{
+          [property]: sort
+        }]
+      })
+
+      return users
+    }
 
     return users
   }
@@ -47,6 +57,37 @@ export class SqliteUsersRepository implements IUsersRepository {
     })
     
     return user
+  }
+
+  async findAllPagination(page: number, quantity: number, property?: string, sort?: string): Promise<{}> {
+    const users = await prisma.user.findMany({
+      take: quantity,
+      skip: quantity * page,
+      select: {
+        id: true,
+        created_at: true,
+        name: true,
+        lastname: true,
+        username: true,
+        userhash: true,
+        cpf: true,
+        email: true
+      }
+    })
+
+    if(property != undefined && sort != "undefined") {
+      const users = await prisma.user.findMany({
+        take: quantity,
+        skip: quantity * page,
+        orderBy: {
+          [property]: sort
+        }
+      })
+
+      return users
+    }
+
+    return users
   }
   
   async save(user: User): Promise<void> {
