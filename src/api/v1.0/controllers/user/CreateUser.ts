@@ -26,11 +26,7 @@ export class CreateUserService {
       const userAlreadyExists = await this.usersRepository.findByEmail(userRequest.email)
 
       // if user with same email exists
-      if(userAlreadyExists.length) {
-        return {
-          userAlreadyExists
-        }
-      }
+      if(userAlreadyExists.length) throw new Error("User already exists.")
 
       // creates user
       const user = new User(userRequest)
@@ -50,6 +46,7 @@ export class CreateUserService {
         user
       }
     } catch (error) {
+      throw new Error(error.message)
       return error
     }
   }
