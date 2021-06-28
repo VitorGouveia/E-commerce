@@ -6,11 +6,10 @@ import { prisma } from "@src/prisma"
 import { hash, genSalt } from "bcrypt"
 
 import auth from "@auth"
-import { handle } from "@utils/ErrorHandler"
 
 type createUserResponse = {
   userHashAlreadyExists: string
-  userAlreadyExists: string
+  userAlreadyExists: User
   access_token: string
   user: User
 }
@@ -79,7 +78,6 @@ const create = async ({ name, email, cpf, password }: User) => {
     
     return {
       userHashAlreadyExists,
-      userAlreadyExists,
       access_token,
       user
     }
@@ -97,15 +95,12 @@ export default async (request: Request, response: Response) => {
       access_token,
       user 
     }: createUserResponse = await create(request.body)
-
-    // sends JWT through headers
-    response.header("authorization", access_token)
         
     // if user with name and hash already exist generate another hash
     userHashAlreadyExists && (
       user.userhash = randomNumber(4)
     )
-    
+
     // checks if user with that email already exists
     if (userAlreadyExists) return ({
       error: true,
@@ -114,7 +109,8 @@ export default async (request: Request, response: Response) => {
     })
 
     // respond with user information
-    return response.status(201).json({ 
+    return ({
+      status: 201,
       access_token,
       user,
       message: "User created with success!"
@@ -122,6 +118,10 @@ export default async (request: Request, response: Response) => {
 
   } catch (error) {
     // in case of error, send error details
-    return handle.express(400, "Failed to create user.")
+    return ({
+      error: true,
+      status: 400,
+      message: "Failed to create user."
+    })
   }
 }
