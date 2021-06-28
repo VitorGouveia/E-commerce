@@ -7,6 +7,22 @@ import { prisma } from "@src/prisma"
 import validator from "validator"
 
 export class SqliteUsersRepository implements IUsersRepository {
+  async findAllUsers(...props: any): Promise<UserType[]> {
+    const users = await prisma.user.findMany(...props)
+
+    return users
+  }
+  
+  async findById(id: string): Promise<UserType | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return user
+  }
+
   async findByEmail(email: string): Promise<UserType[]> {
     const isEmail = validator.isEmail(email)
 
