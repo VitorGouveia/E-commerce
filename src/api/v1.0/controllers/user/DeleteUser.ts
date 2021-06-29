@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { SqliteUsersRepository } from "@api/v1.0/repositories/implementations/SqliteUsersRepository"
-import { IUsersRepository } from "@api/v1.0/repositories/IUsersRepository"
+import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@v1/repositories/IUsersRepository"
 
 export class DeleteUserService {
   constructor(

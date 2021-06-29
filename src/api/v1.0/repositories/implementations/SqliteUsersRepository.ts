@@ -1,5 +1,5 @@
 import { IUsersRepository } from "../IUsersRepository"
-import { User } from "@api/v1.0/entities/User"
+import { User } from "@v1/entities/User"
 
 import { User as UserType } from "@prisma/client"
 import { prisma } from "@src/prisma"

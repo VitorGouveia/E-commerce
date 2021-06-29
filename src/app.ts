@@ -3,7 +3,7 @@ import compression from "compression"
 import cors from "cors"
 import helmet from "helmet"
 import { config as dotenv } from "dotenv"
-import { router as v1 } from "@api/v1.0/routes"
+import { router as v1 } from "@v1/routes"
 
 const app = express()
 

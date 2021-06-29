@@ -2,14 +2,11 @@ import { Request, Response } from "express"
 
 import { prisma } from "@src/prisma"
 
-import { handle } from "@api/v1.0/utils/ErrorHandler"
+import { handle } from "@v1/utils/ErrorHandler"
 
-import CreateUser from "./user/CreateUser"
-import UpdateUser from "./user/UpdateUser"
-import ReadUser from "./user/ReadUser"
-import DeleteUser from "./user/DeleteUser"
+import { CreateUser, ReadUser, UpdateUser, DeleteUser } from "./user"
 
-const UserController = {
+export const UserController = {
   async create(request: Request, response: Response) {
     // executes create user service
     const { error, message, status, access_token, user } = await CreateUser(request, response)
@@ -99,5 +96,3 @@ const UserController = {
     }
   }
 }
-
-export { UserController }

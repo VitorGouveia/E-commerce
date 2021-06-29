@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
 import { ParsedQs } from "qs"
 
-import { IUsersRepository } from "@api/v1.0/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "@api/v1.0/repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@v1/repositories/IUsersRepository"
+import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
 
-import { User } from "@api/v1.0/entities/User"
+import { User } from "@v1/entities/User"
 
 type readUserResponse = {
   users: User[]

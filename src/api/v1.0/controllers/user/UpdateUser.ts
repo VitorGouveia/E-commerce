@@ -1,9 +1,9 @@
 import { Request, Response} from "express"
 
-import { User } from "@api/v1.0/entities/User"
+import { User } from "@v1/entities/User"
 
-import { IUsersRepository } from "@api/v1.0/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "@api/v1.0/repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@v1/repositories/IUsersRepository"
+import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
 
 // create user service is responsible for authentication and some rules
 export class UpdateUserService {
