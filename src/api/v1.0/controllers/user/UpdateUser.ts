@@ -1,11 +1,10 @@
 import { Request, Response} from "express"
 
-import { User } from "@v1/entities/User"
+import { IUsersRepository } from "@v1/repositories"
+import { SqliteUsersRepository } from "@v1/repositories/implementations"
 
-import { IUsersRepository } from "@v1/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
+import { User } from "@v1/entities"
 
-// create user service is responsible for authentication and some rules
 export class UpdateUserService {
   constructor(
     private usersRepository: IUsersRepository
@@ -43,7 +42,7 @@ export class UpdateUserService {
 }
 
 // just return everything from create user service
-export default async (request: Request, response: Response) => {
+export default async (request: Request) => {
   try {
     const sqliteUsersRepository = new SqliteUsersRepository()
     const updateUser = new UpdateUserService(sqliteUsersRepository)

@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
-import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
-import { IUsersRepository } from "@v1/repositories/IUsersRepository"
+
+import { SqliteUsersRepository } from "@v1/repositories/implementations"
+import { IUsersRepository } from "@v1/repositories"
 
 export class DeleteUserService {
   constructor(
@@ -16,7 +17,7 @@ export class DeleteUserService {
   }
 }
 
-export default async (request: Request, response: Response) => {
+export default async (request: Request) => {
   try {
     const sqliteUsersRepository = new SqliteUsersRepository()
     const deleteUser = new DeleteUserService(sqliteUsersRepository)

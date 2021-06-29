@@ -1,15 +1,11 @@
 import { Request, Response } from "express"
 
-import { prisma } from "@src/prisma"
-
-import { handle } from "@v1/utils/ErrorHandler"
-
 import { CreateUser, ReadUser, UpdateUser, DeleteUser, CreateAddress } from "./user"
 
 export const UserController = {
   async create(request: Request, response: Response) {
     // executes create user service
-    const { error, message, status, access_token, user } = await CreateUser(request, response)
+    const { error, message, status, access_token, user } = await CreateUser(request)
     // in case of error
     if(error) return response.status(status).json(message)
 
@@ -26,7 +22,7 @@ export const UserController = {
 
   async read(request: Request, response: Response) {
     // executes read user service
-    const { error, message, status, users } = await ReadUser(request, response)
+    const { error, message, status, users } = await ReadUser(request)
 
     // in case of error
     if(error) return response.status(status).json(message)
@@ -40,7 +36,7 @@ export const UserController = {
   
   async update(request: Request, response: Response) {
     // executes update user service
-    const { error, message, status, available_usernames, user } = await UpdateUser(request, response)
+    const { error, message, status, available_usernames, user } = await UpdateUser(request)
 
     // in case of error
     if(error) return response.status(status).json({
@@ -57,12 +53,10 @@ export const UserController = {
     
   async delete(request: Request, response: Response) {
     // executes delete user service
-    const { error, status, message } = await DeleteUser(request, response)
+    const { error, status, message } = await DeleteUser(request)
 
     // in case of error
-    if(error) return response.status(status).json({
-      message
-    })
+    if(error) return response.status(status).json(message)
 
     // final response
     return response.status(status).json({
@@ -71,7 +65,7 @@ export const UserController = {
   },
   
   async createAddress(request: Request, response: Response) {
-    const { error, message, status, address } = await CreateAddress(request, response)
+    const { error, status, message, address } = await CreateAddress(request)
 
     if(error) return response.status(status).json(message)
 

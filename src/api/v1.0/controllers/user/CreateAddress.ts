@@ -1,9 +1,9 @@
 import { Request, Response} from "express"
 
-import { IAddressRepository } from "@v1/repositories/IAddressRepository"
-import { SqliteAddressRepository } from "@v1/repositories/implementations/SqliteAddressRepository"
+import { IAddressRepository } from "@v1/repositories"
+import { SqliteAddressRepository } from "@v1/repositories/implementations"
 
-import { Address } from "@v1/entities/Address"
+import { Address } from "@v1/entities"
 
 export class CreateAddressService {
   constructor(
@@ -25,7 +25,7 @@ export class CreateAddressService {
   }
 }
 
-export default async (request: Request, response: Response) => {
+export default async (request: Request) => {
   try {
     const sqliteAddressRepository = new SqliteAddressRepository()
     const createAddress = new CreateAddressService(sqliteAddressRepository)

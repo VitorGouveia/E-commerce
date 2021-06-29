@@ -1,9 +1,9 @@
 import { Request, Response} from "express"
 
-import { IUsersRepository } from "@v1/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@v1/repositories"
+import { SqliteUsersRepository } from "@v1/repositories/implementations"
 
-import { User, randomNumber } from "@v1/entities/User"
+import { User, randomNumber } from "@v1/entities"
 
 import auth from "@v1/auth"
 
@@ -53,7 +53,7 @@ export class CreateUserService {
 }
 
 // just return everything from create user service
-export default async (request: Request, response: Response) => {
+export default async (request: Request) => {
   try {
     // create sqlite repository
     const sqliteUsersRepository = new SqliteUsersRepository()
@@ -72,7 +72,7 @@ export default async (request: Request, response: Response) => {
     if(userHashAlreadyExists.length) (
       user.userhash = randomNumber(4)
     )
-    
+
     // respond with user information
     return ({
       status: 201,

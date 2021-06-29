@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
 import { ParsedQs } from "qs"
 
-import { IUsersRepository } from "@v1/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "@v1/repositories/implementations/SqliteUsersRepository"
+import { IUsersRepository } from "@v1/repositories"
+import { SqliteUsersRepository } from "@v1/repositories/implementations"
 
-import { User } from "@v1/entities/User"
+import { User } from "@v1/entities"
 
 type readUserResponse = {
   users: User[]
@@ -56,7 +56,7 @@ export class ReadUserService {
   }
 }
 
-export default async (request: Request, response: Response) => {
+export default async (request: Request) => {
   try {
     // create sqlite repository
     const sqliteUsersRepository = new SqliteUsersRepository()

@@ -1,5 +1,5 @@
-import { Address } from "@v1/entities/Address"
-import { IAddressRepository } from "../IAddressRepository"
+import { Address } from "@v1/entities"
+import { IAddressRepository } from "@v1/repositories"
 
 import { prisma } from "@src/prisma"
 
