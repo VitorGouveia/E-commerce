@@ -43,10 +43,4 @@ router.use("/item", item)
  *    utils/
  */
 
-/**
- * CREATE A ERROR CODES TABLE
- * certain errors codes and messages are used with error handler
- * ERROR 100: invalid input etc
- */
-
 export { router }
