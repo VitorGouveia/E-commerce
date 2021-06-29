@@ -1,56 +1,15 @@
 import { Request, Response } from "express"
 
 import { prisma } from "@src/prisma"
+import { CreateItem } from "@v1/services/item"
 
 const ItemController = {
   async create(request: Request, response: Response) {
-    let { name, short_name, description, price, shipping_price, discount, category, image, orders, rating } = request.body
+    const { error, status, message, item } = await CreateItem(request)
 
-    var one_star = rating["one_star"]
-    var two_star = rating["two_star"]
-    var three_star = rating["three_star"]
-    var four_star = rating["four_star"]
-    var five_star = rating["five_star"]
+    if(error) return response.status(status).json(message)
 
-    try {
-      const item = await prisma.item.create({
-        data: {
-          name,
-          short_name,
-          description,
-          price: String(price),
-          shipping_price: String(shipping_price),
-          discount: String(discount),
-          category,
-          image: {
-            create: {
-              link: image
-            }
-          },
-          orders: String(orders),
-          rating: {
-            create: {
-              one_star,
-              two_star,
-              three_star,
-              four_star,
-              five_star
-            }
-          }
-        },
-
-        include: {
-          rating: true,
-          image: true
-        }
-      })
-
-      return response.status(200).json({ item })
-
-    } catch (error) {
-
-      return response.status(500).json({ error: error.name, details: { message: error.message } })
-    }
+    return response.status(status).json(item)
   },
 
   async rateItem(request: Request, response: Response) {
@@ -276,8 +235,6 @@ const ItemController = {
         take: quantity,
         skip: (Number(page) * Number(quantity))
       })
-
-      console.log(items)
 
       return response.status(302).json({ items })
 
