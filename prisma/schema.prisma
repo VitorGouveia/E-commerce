@@ -32,34 +32,33 @@ model Address {
 }
 
 model Rating {
-  id         Int    @id @default(autoincrement())
-  itemId     String @unique
-  one_star   String
-  two_star   String
-  three_star String
-  four_star  String
-  five_star  String
-  item       Item   @relation(fields: [itemId], references: [id])
+  id         Int  @id @default(autoincrement())
+  itemId     Int  @unique
+  one_star   Int
+  two_star   Int
+  three_star Int
+  four_star  Int
+  five_star  Int
+  item       Item @relation(fields: [itemId], references: [id])
 }
 
 model Image {
   id     Int    @id @default(autoincrement())
-  itemId String
+  itemId Int
   link   String
   item   Item   @relation(fields: [itemId], references: [id])
 }
 
 model Item {
-  id             String   @id @default(uuid())
+  id             Int      @id @default(autoincrement())
   created_at     DateTime @default(now())
   name           String
   short_name     String
   description    String
-  price          String
-  shipping_price String
-  discount       String
+  price          Int
+  shipping_price Int
+  discount       Int
   category       String
-  orders         String
   image          Image[]
   rating         Rating?
 }
