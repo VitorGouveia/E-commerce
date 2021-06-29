@@ -9,7 +9,7 @@ import validator from "validator"
 export class SqliteUsersRepository implements IUsersRepository {
   async findAll(property?: string, sort?: "asc" | "desc" | string): Promise<UserType[]> {
     const users = await prisma.user.findMany()
-
+    
     if(property != undefined && sort != "undefined") {
       const users = await prisma.user.findMany({
         orderBy: [{
