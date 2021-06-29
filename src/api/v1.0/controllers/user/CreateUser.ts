@@ -64,7 +64,6 @@ export default async (request: Request, response: Response) => {
     // execute user service
     const {
       userHashAlreadyExists,
-      userAlreadyExists,
       access_token,
       user 
     }: createUserResponse = await createUser.create(request.body)

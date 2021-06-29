@@ -7,6 +7,7 @@ export interface IUsersRepository {
   findUserhash(name: string, userhash: string): Promise<UserType[]>
   findUsername(username: string, userhash: string | undefined): Promise<{ id: string; username: string; userhash: string; }[]>
   findAllPagination(page: number, quantity: number, property?: string, sort?: string): Promise<{}>
-  update({ id, created_at, ...props }: User): Promise<void> 
+  update({ id, created_at, ...props }: User): Promise<void>
   save(user: User): Promise<void>
+  delete(id: string): Promise<void>
 }

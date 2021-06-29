@@ -158,4 +158,18 @@ export class SqliteUsersRepository implements IUsersRepository {
       }
     })
   }
+
+  async delete(id: string): Promise<void> {
+    await prisma.address.deleteMany({
+      where: {
+        userId: id
+      }
+    })
+
+    await prisma.user.delete({
+      where: {
+        id
+      }
+    })
+  }
 }

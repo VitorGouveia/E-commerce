@@ -7,6 +7,7 @@ import { handle } from "@api/v1.0/utils/ErrorHandler"
 import CreateUser from "./user/CreateUser"
 import UpdateUser from "./user/UpdateUser"
 import ReadUser from "./user/ReadUser"
+import DeleteUser from "./user/DeleteUser"
 
 const UserController = {
   async create(request: Request, response: Response) {
@@ -58,41 +59,18 @@ const UserController = {
   },
     
   async delete(request: Request, response: Response) {
-    const { id } = request.params
-    
-    // searches a JWT authorization token in client's headers
-    const authorizationHeader = request.headers.authorization
-    
-    if (!authorizationHeader) {
-      // if JWT authorization token doesn't exist, send error
-      return response.status(400).json({ auth: false, message: "No JWT token was found! Redirect to login" })
-    }
-    
-    try {
-      // check if JWT authorization token is valid
-      
-      // deletes all users addresses to avoid Prisma error
-      await prisma.address.deleteMany({
-        where: {
-          userId: id
-        }
-      })
-      
-      // deletes user
-      const user = await prisma.user.delete({
-        where: {
-          id
-        }
-      })
-      
-      // respond with user information
-      return response.status(200).json({ auth: false, user, message: "User deleted with success!" })
-      
-    } catch (error) {
-      
-      // in case of error send error details
-      return handle.express(500, { auth: false, message: "failed to delete user." })
-    }
+    // executes delete user service
+    const { error, status, message } = await DeleteUser(request, response)
+
+    // in case of error
+    if(error) return response.status(status).json({
+      message
+    })
+
+    // final response
+    return response.status(status).json({
+      message
+    })
   },
   
   async createAddress(request: Request, response: Response) {

@@ -3,7 +3,7 @@ import { Request, Response} from "express"
 import { User } from "@api/v1.0/entities/User"
 
 import { IUsersRepository } from "@api/v1.0/repositories/IUsersRepository"
-import { SqliteUsersRepository } from "../../repositories/implementations/SqliteUsersRepository"
+import { SqliteUsersRepository } from "@api/v1.0/repositories/implementations/SqliteUsersRepository"
 
 // create user service is responsible for authentication and some rules
 export class UpdateUserService {
@@ -75,7 +75,7 @@ export default async (request: Request, response: Response) => {
     return ({
       error: true,
       status: 400,
-      message: "Failed to create user."
+      message: error.message
     })
   }
 }
