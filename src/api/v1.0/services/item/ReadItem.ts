@@ -56,15 +56,15 @@ export default async (request: Request) => {
     // create sqlite repository
     const sqliteItemsRepository = new SqliteItemsRepository()
 
-    // create read user service
+    // create read item service
     const readItem = new ReadItemService(sqliteItemsRepository)
 
-    // execute user service
+    // execute item service
     const { items } = await readItem.read(request.params.id, request)
-    // respond with user information
+    // respond with item information
     return ({
       status: 202,
-      message: "Listed users with success!",
+      message: "Listed items with success!",
       items
     })
 
@@ -73,7 +73,7 @@ export default async (request: Request) => {
     return ({
       error: true,
       status: 400,
-      message: "Failed to read user."
+      message: "Failed to read item."
     })
   }
 }

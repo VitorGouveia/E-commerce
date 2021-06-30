@@ -92,5 +92,11 @@ export class SqliteItemsRepository implements IItemsRepository {
     })
   }
 
-  async delete(id: number): Promise<void> {}
+  async delete(id: number): Promise<void> {
+    await prisma.item.delete({
+      where: {
+        id
+      }
+    })
+  }
 }
