@@ -43,10 +43,10 @@ model Rating {
 }
 
 model Image {
-  id     Int    @id @default(autoincrement())
-  itemId Int
-  link   String
-  item   Item   @relation(fields: [itemId], references: [id])
+  id      Int    @id @default(autoincrement())
+  item_id Int
+  link    String
+  item    Item   @relation(fields: [item_id], references: [id])
 }
 
 model Item {
