@@ -5,20 +5,15 @@ import { SqliteImageRepository } from "@v1/repositories/implementations"
 
 import { Image } from "@v1/entities"
 
-export class CreateImageService {
+export class DeleteImageService {
   constructor(
     private imageRepository: IImageRepository
   ) {}
 
-  async create(id: number, createImageRequest: Image) {
+  async create({ id }: any, item_id: number) {
     try {
-      const image = new Image(createImageRequest)
-
-      await this.imageRepository.save(id, image)
-
-      return {
-        image
-      }
+      console.log(id)
+      await this.imageRepository.delete(Number(id), item_id)
     } catch (error) {
       throw new Error(error.message)
     }
@@ -28,20 +23,19 @@ export class CreateImageService {
 export default async (request: Request) => {
   try {
     const sqliteImageRepository = new SqliteImageRepository()
-    const CreateImage = new CreateImageService(sqliteImageRepository)
+    const CreateImage = new DeleteImageService(sqliteImageRepository)
 
-    const { image } = await CreateImage.create(Number(request.params.id), request.body)
+    await CreateImage.create(request.body, Number(request.params.id))
 
     return ({
       status: 200,
-      message: "Create item image with success!",
-      image
+      message: "Deleted item image with success!",
     })
   } catch (error) {
     return ({
       error: true,
       status: 400,
-      message: "Failed when creating image."
+      message: "Failed when deleting image."
     })
   }
 }

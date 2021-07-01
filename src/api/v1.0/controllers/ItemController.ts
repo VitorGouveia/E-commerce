@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
 import { prisma } from "@src/prisma"
-import { CreateItem, ReadItem, UpdateItem, DeleteItem, RateItem, CreateImage } from "@v1/services/item"
+import { CreateItem, ReadItem, UpdateItem, DeleteItem, RateItem, CreateImage, DeleteImage } from "@v1/services/item"
 
 export const ItemController = {
   async create(request: Request, response: Response) {
@@ -69,20 +69,10 @@ export const ItemController = {
   },
 
   async removeImage(request: Request, response: Response) {
-    const { id } = request.body
+    const { error, status, message } = await DeleteImage(request)
 
-    try {
-      const image = await prisma.image.delete({
-        where: {
-          id
-        }
-      })
+    if(error) return response.status(status).json(message)
 
-      return response.status(200).json({ image })
-
-    } catch (error) {
-
-      return response.status(500).json({ error: error.name, details: { message: error.message } })
-    }
+    return response.status(status).json(message)
   }
 }

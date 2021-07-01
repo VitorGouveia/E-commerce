@@ -22,10 +22,11 @@ export class SqliteImageRepository implements IImageRepository {
     })
   }
 
-  async delete(id: number): Promise<void> {
-    await prisma.item.delete({
+  async delete(id: number, item_id: number): Promise<void> {
+    await prisma.image.deleteMany({
       where: {
-        id
+        id,
+        item_id
       }
     })
   }

@@ -4,7 +4,9 @@ import UpdateItem from "./UpdateItem"
 import DeleteItem from "./DeleteItem"
 
 import RateItem from "./RateItem"
+
 import CreateImage from "./CreateImage"
+import DeleteImage from "./DeleteImage"
 
 export { 
   CreateItem,
@@ -12,5 +14,6 @@ export {
   UpdateItem,
   DeleteItem,
   RateItem,
-  CreateImage
+  CreateImage,
+  DeleteImage
 }
