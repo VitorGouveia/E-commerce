@@ -14,44 +14,59 @@ export class ReadItemService {
       // listing options
       let page: number = Number(query.page)
       let quantity: number = Number(query.quantity)
-  
+      
       let category: string = String(query.category)
       let sort: any = String(query.sort)
       let property: any = String(query.property)
-      
-      // if id is supplied search item with that id
-      if(id != undefined) {
-        const items = await this.itemsRepository.findById(Number(id))
-  
-        return {
-          items
-        }
-      }
-      
-      // if no page and no quantity are supplied, list all items
-      if(category != undefined && property != "undefined" && sort != "undefined") {
-        const items = await this.itemsRepository.findAll(category, property, sort)
-        
-        return {
-          items
-        }
-      }
 
-      if(property != "undefined" && sort != "undefined") {
-        const items = await this.itemsRepository.findAll(undefined, property, sort)
+      if(!page && !quantity) {
+        // without pagination
+        if(category != "undefined" && property != "undefined" && sort != "undefined") {
+          // category and property sort
+          const items = await this.itemsRepository.findAll(category, property, sort)
+          return { items }
+        }
         
-        return {
-          items
+        if(property != "undefined" && sort != "undefined") {
+          // property sort
+          const items = await this.itemsRepository.findAll(undefined, property, sort)
+          return { items }
         }
-      }
-      
-      // if category is supplied search items with that category
-      if(category != undefined) {
-        const items = await this.itemsRepository.findAll(category, undefined, undefined)
+        
+        if(category != "undefined") {
+          // category
+          const items = await this.itemsRepository.findAll(category, undefined, undefined)
+          return { items }
+        }
+        const items = await this.itemsRepository.findAll()
 
-        return {
-          items
+        return { items }
+      } else {  
+        // with pagination
+        console.log("pagination")
+        if(category != "undefined" && property != "undefined" && sort != "undefined") {
+          // category and property sort
+          console.log("a")
+          const items = await this.itemsRepository.findAllPagination(page, quantity, category, property, sort)
+          return { items }
         }
+        
+        if(property != "undefined" && sort != "undefined") {
+          // property sort
+          console.log("b")
+          const items = await this.itemsRepository.findAllPagination(page, quantity, undefined, property, sort)
+          return { items }
+        }
+        
+        if(category != "undefined") {
+          // category
+          console.log("c")
+          const items = await this.itemsRepository.findAllPagination(page, quantity, category, undefined, undefined)
+          return { items }
+        }
+        
+        const items = await this.itemsRepository.findAllPagination(page, quantity)
+        return { items }
       }
       
     } catch (error) {
