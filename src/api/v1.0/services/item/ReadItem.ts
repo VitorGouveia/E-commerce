@@ -46,25 +46,22 @@ export class ReadItemService {
         console.log("pagination")
         if(category != "undefined" && property != "undefined" && sort != "undefined") {
           // category and property sort
-          console.log("a")
           const items = await this.itemsRepository.findAllPagination(page, quantity, category, property, sort)
           return { items }
         }
         
         if(property != "undefined" && sort != "undefined") {
           // property sort
-          console.log("b")
           const items = await this.itemsRepository.findAllPagination(page, quantity, undefined, property, sort)
           return { items }
         }
         
         if(category != "undefined") {
           // category
-          console.log("c")
           const items = await this.itemsRepository.findAllPagination(page, quantity, category, undefined, undefined)
           return { items }
         }
-        
+
         const items = await this.itemsRepository.findAllPagination(page, quantity)
         return { items }
       }
