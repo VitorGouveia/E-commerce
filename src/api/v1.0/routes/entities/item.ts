@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-import { ItemController } from "@v1/controllers"
+import { ItemController, DashboardController } from "@v1/controllers"
 
 const router = Router()
 
@@ -15,5 +15,7 @@ router.delete("/image/:id?", ItemController.removeImage)
 
 /* Rating realted */
 router.post("/rate/:id?", ItemController.rateItem) /* Lists an especific item's ratings */
+
+router.post("/load", DashboardController.loadFromFile)
 
 export default router

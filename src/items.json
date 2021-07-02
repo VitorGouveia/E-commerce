@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Headset Gamer RGB",
+    "brand": "Logitech",
+    "short_name": "Headset",
+    "description": "Headset que brilha surround 7.1 som otimo bom demais",
+    "price": 1000,
+    "shipping_price": 20,
+    "discount": 0,
+    "category": "gadgets"
+  },
+  {
+    "name": "Mouse RGB",
+    "brand": "Razer",
+    "short_name": "Mouse",
+    "description": "Mouse que brilha e possui 20 botões",
+    "price": 200,
+    "shipping_price": 10,
+    "discount": 0,
+    "category": "gadgets"
+  }
+]

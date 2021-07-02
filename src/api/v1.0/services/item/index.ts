@@ -8,6 +8,8 @@ import RateItem from "./RateItem"
 import CreateImage from "./CreateImage"
 import DeleteImage from "./DeleteImage"
 
+import LoadFile from "./LoadFile"
+
 export { 
   CreateItem,
   ReadItem,
@@ -15,5 +17,6 @@ export {
   DeleteItem,
   RateItem,
   CreateImage,
-  DeleteImage
+  DeleteImage,
+  LoadFile
 }
