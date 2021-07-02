@@ -12,8 +12,22 @@ export class SqliteItemsRepository implements IItemsRepository {
       },
 
       include: {
-        rating: true,
-        image: true
+        rating: {
+          select: {
+            id: true,
+            one_star: true,
+            two_star: true,
+            three_star: true,
+            four_star: true,
+            five_star: true,
+          }
+        },
+        image: {
+          select: {
+            id: true,
+            link: true
+          }
+        }
       }
     })
     

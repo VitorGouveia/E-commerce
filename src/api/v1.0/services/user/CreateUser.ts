@@ -55,18 +55,14 @@ export class CreateUserService {
 // just return everything from create user service
 export default async (request: Request) => {
   try {
-    // create sqlite repository
-    const sqliteUsersRepository = new SqliteUsersRepository()
+    const UsersRepository = new SqliteUsersRepository()
+    const CreateUser = new CreateUserService(UsersRepository)
 
-    // create user service
-    const createUser = new CreateUserService(sqliteUsersRepository)
-
-    // execute user service
     const {
       userHashAlreadyExists,
       access_token,
       user 
-    }: createUserResponse = await createUser.create(request.body)
+    }: createUserResponse = await CreateUser.create(request.body)
 
     // if user with name and hash already exist generate another hash
     if(userHashAlreadyExists.length) (
