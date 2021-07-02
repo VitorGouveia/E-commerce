@@ -1,6 +1,14 @@
 import { Request, Response } from "express"
 
-import { CreateUser, ReadUser, UpdateUser, DeleteUser, CreateAddress, DeleteAddress } from "@v1/services/user"
+import { 
+  CreateUser,
+  ReadUser,
+  UpdateUser,
+  DeleteUser,
+  CreateAddress,
+  DeleteAddress,
+  CreateCart
+} from "@v1/services/user"
 
 export const UserController = {
   async create(request: Request, response: Response) {
@@ -70,5 +78,16 @@ export const UserController = {
     if(error) return response.status(status).json(message)
 
     return response.status(status).json(message)
+  },
+
+  async createCart(request: Request, response: Response) {
+    const { error, status, message } = await CreateCart(request)
+
+    if(error) return response.status(status).json(message)
+
+    return response.status(status).json(message)
+  },
+
+  async deleteCart(request: Request, response: Response) {
   }
 }

@@ -30,7 +30,22 @@ export class SqliteUsersRepository implements IUsersRepository {
       },
 
       include: {
-        address: true
+        address: {
+          select: {
+            id: true,
+            postal_code: true,
+            city: true,
+            state: true,
+            street: true,
+            number: true
+          }
+        },
+        cart: {
+          select: {
+            id: true,
+            item_id: true
+          }
+        }
       }
     })
 

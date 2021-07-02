@@ -17,4 +17,6 @@ router.delete("/:id?", authenticate, UserController.delete) /* Deletes an especi
 router.post("/address", authenticate, UserController.createAddress) /* Creates an address for an especific user */
 router.delete("/address/:id?", authenticate, UserController.deleteAddress) /* Creates an address for an especific user */
 
+router.post("/cart/:id?", authenticate, UserController.createCart)
+
 export default router
