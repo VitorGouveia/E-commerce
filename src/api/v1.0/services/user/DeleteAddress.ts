@@ -21,10 +21,10 @@ export class DeleteAddressService {
 
 export default async (request: Request) => {
   try {
-    const sqliteAddressRepository = new SqliteAddressRepository()
-    const createAddress = new DeleteAddressService(sqliteAddressRepository)
+    const AddressRepository = new SqliteAddressRepository()
+    const CreateAddress = new DeleteAddressService(AddressRepository)
 
-    await createAddress.delete(request.body, request.params.id)
+    await CreateAddress.delete(request.body, request.params.id)
 
     return ({
       status: 202,

@@ -90,10 +90,14 @@ export class CreateSessionService {
 
 export default async (request: Request) => {
   try {
-    const sqliteUsersRepository = new SqliteUsersRepository()
-    const createSession = new CreateSessionService(sqliteUsersRepository)
+    const UsersRepository = new SqliteUsersRepository()
+    const CreateSession = new CreateSessionService(UsersRepository)
 
-    const { refresh_token, jwt_login, social_login } = await createSession.create(request.body, request.headers["authorization"])
+    const {
+      refresh_token,
+      jwt_login,
+      social_login
+    } = await CreateSession.create(request.body, request.headers["authorization"])
 
     return ({
       jwt_login,

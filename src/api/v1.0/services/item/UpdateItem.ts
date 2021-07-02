@@ -26,13 +26,13 @@ export class UpdateItemService {
 export default async (request: Request) => {
   try {
     // create sqlite repository
-    const sqliteItemsRepository = new SqliteItemsRepository()
+    const ItemsRepository = new SqliteItemsRepository()
 
     // create update item service
-    const updateItem = new UpdateItemService(sqliteItemsRepository)
+    const UpdateItem = new UpdateItemService(ItemsRepository)
 
     // execute item service
-    const { item } = await updateItem.read(Number(request.params.id), request.body)
+    const { item } = await UpdateItem.read(Number(request.params.id), request.body)
     // respond with item information
     return ({
       status: 202,

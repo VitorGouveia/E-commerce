@@ -27,8 +27,8 @@ export class CreateImageService {
 
 export default async (request: Request) => {
   try {
-    const sqliteImageRepository = new SqliteImageRepository()
-    const CreateImage = new CreateImageService(sqliteImageRepository)
+    const ImageRepository = new SqliteImageRepository()
+    const CreateImage = new CreateImageService(ImageRepository)
 
     const { image } = await CreateImage.create(Number(request.params.id), request.body)
 

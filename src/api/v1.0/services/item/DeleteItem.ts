@@ -19,10 +19,10 @@ export class DeleteItemService {
 
 export default async (request: Request) => {
   try {
-    const sqliteItemsRepository = new SqliteItemsRepository()
-    const deleteItem = new DeleteItemService(sqliteItemsRepository)
+    const ItemsRepository = new SqliteItemsRepository()
+    const DeleteItem = new DeleteItemService(ItemsRepository)
 
-    await deleteItem.delete(Number(request.params.id))
+    await DeleteItem.delete(Number(request.params.id))
 
     return ({
       status: 200,

@@ -28,8 +28,8 @@ export class CreateItemService {
 
 export default async (request: Request) => {
   try {
-    const sqliteItemsRepository = new SqliteItemsRepository()
-    const CreateItem = new CreateItemService(sqliteItemsRepository)
+    const ItemsRepository = new SqliteItemsRepository()
+    const CreateItem = new CreateItemService(ItemsRepository)
 
     const { item } = await CreateItem.create(request.body)
 

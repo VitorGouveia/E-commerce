@@ -28,10 +28,10 @@ export class CreateAddressService {
 
 export default async (request: Request) => {
   try {
-    const sqliteAddressRepository = new SqliteAddressRepository()
-    const createAddress = new CreateAddressService(sqliteAddressRepository)
+    const AddressRepository = new SqliteAddressRepository()
+    const CreateAddress = new CreateAddressService(AddressRepository)
 
-    const { address } = await createAddress.create(request.body)
+    const { address } = await CreateAddress.create(request.body)
 
     return ({
       status: 201,

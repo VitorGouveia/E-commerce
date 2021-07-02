@@ -48,10 +48,10 @@ export class RateItemService {
 
 export default async (request: Request) => {
   try {
-    const sqliteItemsRepository = new SqliteItemsRepository()
-    const rateItem = new RateItemService(sqliteItemsRepository)
+    const ItemsRepository = new SqliteItemsRepository()
+    const RateItem = new RateItemService(ItemsRepository)
 
-    const { item, average } = await rateItem.rate(Number(request.params.id), request.body)
+    const { item, average } = await RateItem.rate(Number(request.params.id), request.body)
 
     return ({
       status: 200,

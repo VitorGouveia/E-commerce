@@ -93,13 +93,13 @@ export class ReadItemService {
 export default async (request: Request) => {
   try {
     // create sqlite repository
-    const sqliteItemsRepository = new SqliteItemsRepository()
+    const ItemsRepository = new SqliteItemsRepository()
 
     // create read item service
-    const readItem = new ReadItemService(sqliteItemsRepository)
+    const ReadItem = new ReadItemService(ItemsRepository)
 
     // execute item service
-    const { items } = await readItem.read(request.params.id, request)
+    const { items } = await ReadItem.read(request.params.id, request)
     // respond with item information
     return ({
       status: 202,

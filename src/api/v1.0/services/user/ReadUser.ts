@@ -59,13 +59,13 @@ export class ReadUserService {
 export default async (request: Request) => {
   try {
     // create sqlite repository
-    const sqliteUsersRepository = new SqliteUsersRepository()
+    const UsersRepository = new SqliteUsersRepository()
 
     // create read user service
-    const readUser = new ReadUserService(sqliteUsersRepository)
+    const ReadUser = new ReadUserService(UsersRepository)
 
     // execute user service
-    const { users }: readUserResponse = await readUser.read(request.params.id, request)
+    const { users }: readUserResponse = await ReadUser.read(request.params.id, request)
 
     // respond with user information
     return ({

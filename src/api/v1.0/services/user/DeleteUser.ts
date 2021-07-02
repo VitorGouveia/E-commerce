@@ -19,10 +19,10 @@ export class DeleteUserService {
 
 export default async (request: Request) => {
   try {
-    const sqliteUsersRepository = new SqliteUsersRepository()
-    const deleteUser = new DeleteUserService(sqliteUsersRepository)
+    const UsersRepository = new SqliteUsersRepository()
+    const DeleteUser = new DeleteUserService(UsersRepository)
 
-    await deleteUser.delete(request.params.id)
+    await DeleteUser.delete(request.params.id)
 
     return ({
       status: 200,

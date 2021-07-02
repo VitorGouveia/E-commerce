@@ -20,7 +20,6 @@ class LoadFileService {
       return
     } catch (error) {
       throw new Error(error.message)
-      return error
     }
   }
 }

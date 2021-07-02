@@ -5,7 +5,7 @@ import { SqliteUsersRepository } from "@v1/repositories/implementations"
 
 import { User } from "@v1/entities"
 
-export class UpdateUserService {
+class UpdateUserService {
   constructor(
     private usersRepository: IUsersRepository
   ) {}
@@ -44,14 +44,14 @@ export class UpdateUserService {
 // just return everything from create user service
 export default async (request: Request) => {
   try {
-    const sqliteUsersRepository = new SqliteUsersRepository()
-    const updateUser = new UpdateUserService(sqliteUsersRepository)
+    const UsersRepository = new SqliteUsersRepository()
+    const UpdateUser = new UpdateUserService(UsersRepository)
 
     const { 
       usernameAlreadyExists,
       available_usernames, 
       user
-    } = await updateUser.update(request.params.id, request.body)
+    } = await UpdateUser.update(request.params.id, request.body)
     
     if(usernameAlreadyExists?.length) {
       return ({

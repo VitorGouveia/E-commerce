@@ -19,8 +19,8 @@ export class DeleteImageService {
 
 export default async (request: Request) => {
   try {
-    const sqliteImageRepository = new SqliteImageRepository()
-    const DeleteImage = new DeleteImageService(sqliteImageRepository)
+    const ImageRepository = new SqliteImageRepository()
+    const DeleteImage = new DeleteImageService(ImageRepository)
 
     await DeleteImage.delete(request.body, Number(request.params.id))
 
