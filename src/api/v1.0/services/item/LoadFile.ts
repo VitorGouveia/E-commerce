@@ -13,7 +13,7 @@ class LoadFileService {
   async load(items: Item[]) {
     try {
       items.forEach(async (item: Item) => {
-        const newItem = new Item(item)
+        const newItem = new Item(item, item.image)
         await this.itemsRepository.save(newItem)
       })
 

@@ -7,7 +7,8 @@
     "price": 1000,
     "shipping_price": 20,
     "discount": 0,
-    "category": "gadgets"
+    "category": "gadgets",
+    "image": []
   },
   {
     "name": "Mouse RGB",
@@ -17,6 +18,11 @@
     "price": 200,
     "shipping_price": 10,
     "discount": 0,
-    "category": "gadgets"
+    "category": "gadgets",
+    "image": [
+      {
+        "link": "www.google.com"
+      }
+    ]
   }
 ]

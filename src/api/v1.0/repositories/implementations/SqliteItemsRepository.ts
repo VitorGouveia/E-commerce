@@ -186,32 +186,54 @@ export class SqliteItemsRepository implements IItemsRepository {
   }
 
   async save(item: Item): Promise<void> {
-    const {
-      created_at,
-      name,
-      short_name,
-      description,
-      price,
-      shipping_price,
-      discount,
-      category
-    } = item
+    if(item.image.length > 0) {
+      const { image, ...props } = item
+
+      const newItem = await prisma.item.create({
+        data: {
+          ...props,
+        }
+      })
+
+      image.forEach(async imageInfo => {
+        await prisma.item.update({
+          where: {
+            id: newItem.id
+          },
+            
+          data: {
+            image: {
+              create: {
+                link: imageInfo.link
+              }
+            }
+          }
+        })
+      })
+    }
+
+    const { image, ...props } = item
 
     await prisma.item.create({
       data: {
-        created_at,
-        name,
-        short_name,
-        description,
-        price,
-        shipping_price,
-        discount,
-        category
+        ...props
       }
     })
   }
 
   async delete(id: number): Promise<void> {
+    await prisma.rating.deleteMany({
+      where: {
+        item_id: id
+      }
+    })
+
+    await prisma.image.deleteMany({
+      where: {
+        item_id: id
+      }
+    })
+
     await prisma.item.delete({
       where: {
         id
