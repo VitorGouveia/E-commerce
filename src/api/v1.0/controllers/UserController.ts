@@ -8,7 +8,6 @@ import {
   CreateAddress,
   DeleteAddress,
   CreateCart,
-  LoadAdmin
 } from "@v1/services/user"
 
 export const UserController = {
@@ -90,13 +89,5 @@ export const UserController = {
   },
 
   async deleteCart(request: Request, response: Response) {
-  },
-
-  async loadAdmin(request: Request, response: Response) {
-    const { error, status, message } = await LoadAdmin(request)
-
-    if(error) return response.status(status).json(message)
-
-    return response.status(status).json(message)
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-import { UserController, SessionController } from "@v1/controllers"
+import { UserController, SessionController, DashboardController } from "@v1/controllers"
 
 import authenticate from "../middlewares/auth"
 
@@ -19,6 +19,6 @@ router.delete("/address/:id?", authenticate, UserController.deleteAddress) /* Cr
 
 router.post("/cart/:id?", authenticate, UserController.createCart)
 
-router.post("/admin", UserController.loadAdmin)
+router.post("/admin", DashboardController.loadAdmin)
 
 export default router
