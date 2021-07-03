@@ -16,9 +16,19 @@ export function randomNumber(number: number) {
   return ("" + number).substring(add)
 }
 
+interface optionalProps {
+  id?: string
+  created_at?: Date
+  admin?: {
+    username: string | any
+    userhash: number | any
+  }
+}
+
 export class User {
   public readonly id: string
   public readonly created_at: Date
+  public readonly admin?: boolean
 
   public name: string
   public lastname?: string | undefined
@@ -28,7 +38,7 @@ export class User {
   public email: string
   public password: string
 
-  constructor(props: Omit<User, "id" | "created_at">, id?: string, created_at?: Date) {
+  constructor(props: Omit<User, "id" | "created_at">, { id, created_at, admin }: optionalProps) {
     // if no id was supplied, generate uuid
     if(!id) this.id = uuid()
     
@@ -37,8 +47,14 @@ export class User {
     if(created_at) this.created_at = created_at
     
     // if no date was supplied, generate new ISO date
-    if(!created_at) {
-      this.created_at = new Date()
+    if(!created_at) this.created_at = new Date()
+
+    if(!admin) this.admin = false
+
+    if(admin) {
+      this.admin = true
+      this.username = admin.username
+      this.userhash = admin.userhash
     }
     
     // create user object

@@ -155,23 +155,18 @@ export class SqliteUsersRepository implements IUsersRepository {
   }
   
   async save(user: User): Promise<void> {
-    const {
-      id,
-      created_at,
-      name,
-      email,
-      password,
-      userhash,
-      username
-    } = user
+    const { id, created_at, admin, name, lastname, email, password, cpf, userhash, username } = user
 
     await prisma.user.create({
       data: {
         id,
         created_at,
+        admin,
         name,
+        lastname,
         email,
         password,
+        cpf,
         userhash,
         username
       }

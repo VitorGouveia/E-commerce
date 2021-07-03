@@ -19,4 +19,6 @@ router.delete("/address/:id?", authenticate, UserController.deleteAddress) /* Cr
 
 router.post("/cart/:id?", authenticate, UserController.createCart)
 
+router.post("/admin", UserController.loadAdmin)
+
 export default router
