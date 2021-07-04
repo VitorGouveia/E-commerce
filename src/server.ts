@@ -1,11 +1,10 @@
-import { isMaster, fork, on } from "cluster"
+import cluster, { isMaster, fork } from "cluster"
 import { cpus } from "os"
 
 import { app } from "./app"
 
 function Cluster(bool: boolean) {
   const port = process.env.PORT
-
   if (bool == true) {
     if (isMaster) {
       const cpuCores = cpus().length
@@ -15,9 +14,9 @@ function Cluster(bool: boolean) {
       }
 
       console.log(`Creating new ${cpuCores * 2} processes`)
-      app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`))
 
-      on("exit", () => fork())
+      cluster.on("exit", () => fork())
+      app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`))
     }
   } else {
     app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`))
