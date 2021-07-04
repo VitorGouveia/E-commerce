@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["es6"],
     "sourceMap": false,
-    "outDir": "./dist",
+    "outDir": "./build",
     "moduleResolution": "node",
     "removeComments": true,
     "noImplicitAny": false,
@@ -25,13 +25,13 @@
     "paths": {
       "@src/*": ["src/*"],
       "@v1/*": ["src/api/v1.0/*"],
-      "@v1/auth": ["src/api/v1.0/auth"],
-      "@v1/routes": ["src/api/v1.0/routes"],
+      "@v1/auth/*": ["src/api/v1.0/auth/*"],
+      "@v1/routes/*": ["src/api/v1.0/routes/*"],
       "@v1/utils/*": ["src/api/v1.0/utils/*"],
       "@v1/entities/*": ["src/api/v1.0/entities/*"],
       "@v1/repositories/*": ["src/api/v1.0/repositories/*"],
       "@v1/controllers/*": ["src/api/v1.0/controllers/*"],
-      "@v1/services/*": ["src/api/v1.0/services/*"],
+      "@v1/services/*": ["src/api/v1.0/services/*"]
     }
   },
   "exclude": ["node_modules"],

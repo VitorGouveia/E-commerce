@@ -8,7 +8,7 @@ import { router as v1 } from "@v1/routes"
 const app = express()
 
 const router = express.Router()
-router.use("/v1.0", v1)
+router.use("/v1", v1)
 
 dotenv({ path: '.env' })
 
