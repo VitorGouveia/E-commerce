@@ -22,6 +22,6 @@ export default (request: Request, response: Response, next: NextFunction) => {
 
     next()
   } catch (error) {
-    return response.json("Failed to verify Admin user JWT token.")
+    return response.status(401).json("Failed to verify Admin user JWT token.")
   }
 }

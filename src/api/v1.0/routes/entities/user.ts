@@ -2,11 +2,11 @@ import { Router } from "express"
 
 import { UserController, SessionController, DashboardController } from "@v1/controllers"
 
-import authenticate from "../middlewares/auth"
+import { authenticate, dashAuthenticate, isIpBanned } from "../middlewares"
 
 const router = Router()
 
-router.post("/", UserController.create) /* Creates user */
+router.post("/", isIpBanned, UserController.create) /* Creates user */
 router.get("/:id?", UserController.read) /* Lists users */
 
 router.post("/login", SessionController.create) /* Authenticate user / Login */
@@ -20,6 +20,7 @@ router.delete("/address/:id?", authenticate, UserController.deleteAddress) /* Cr
 
 router.post("/cart/:id?", authenticate, UserController.createCart)
 
-router.post("/admin", DashboardController.loadAdmin)
+router.post("/admin", dashAuthenticate, DashboardController.loadAdmin)
+router.get("/ban/:id?", dashAuthenticate, DashboardController.banUser)
 
 export default router
