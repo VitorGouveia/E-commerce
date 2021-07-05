@@ -10,7 +10,11 @@ datasource db {
 model User {
   id         String    @id
   created_at DateTime
-  admin      Boolean?
+  admin      Boolean? @default(false)
+  shadow_ban Boolean? @default(false)
+  ban        Boolean? @default(false)
+  reason_for_ban String? @default("")
+  ip         String?
   name       String
   lastname   String?
   username   String
