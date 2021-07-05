@@ -13,7 +13,6 @@ class DeleteAddressService {
       await this.addressRepository.delete(id, user_id)
 
     } catch (error) {
-      console.log(error)
       throw new Error(error.message)
     }
   }

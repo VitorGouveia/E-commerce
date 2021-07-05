@@ -20,7 +20,6 @@ class CreateAddressService {
         address
       }
     } catch (error) {
-      console.log(error)
       throw new Error(error.message)
     }
   }
