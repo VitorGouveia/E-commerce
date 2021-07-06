@@ -1,76 +1,78 @@
-import { genSaltSync, hashSync } from "bcrypt"
-import { v4 as uuid } from "uuid"
+import { genSaltSync, hashSync } from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 
 export function randomNumber(number: number) {
-  var add: number = 1
-  var max: number = 12 - add
+	var add: number = 1;
+	var max: number = 12 - add;
 
-  if(number > max) {
-    return randomNumber(max) + randomNumber(add - max)
-  }
+	if (number > max) {
+		return randomNumber(max) + randomNumber(add - max);
+	}
 
-  max = Math.pow(10, number + add)
-  var min = max / 10
-  var number = Math.floor(Math.random() * (max - min + 1)) + min
+	max = Math.pow(10, number + add);
+	var min = max / 10;
+	var number = Math.floor(Math.random() * (max - min + 1)) + min;
 
-  return ("" + number).substring(add)
+	return ('' + number).substring(add);
 }
 
 interface optionalProps {
-  id?: string
-  created_at?: Date
-  admin?: {
-    username: string | any
-    userhash: number | any
-  }
+	id?: string;
+	created_at?: Date;
+	admin?: {
+		username: string | any;
+		userhash: number | any;
+	};
 }
 
 export class User {
-  public readonly id: string
-  public readonly created_at: Date
-  public readonly admin?: boolean
-  public readonly ip?: string
-  public readonly shadow_ban?: boolean
-  public readonly ban?: boolean
-  public readonly reason_for_ban?: string
+	public readonly id: string;
+	public readonly created_at: Date;
+	public readonly admin?: boolean;
+	public readonly ip?: string;
+	public readonly shadow_ban?: boolean;
+	public readonly ban?: boolean;
+	public readonly reason_for_ban?: string;
 
-  public name: string
-  public lastname?: string | undefined
-  public username?: string | any
-  public userhash?: number | any
-  public cpf?: string
-  public email: string
-  public password: string
+	public name: string;
+	public lastname?: string | undefined;
+	public username?: string | any;
+	public userhash?: number | any;
+	public cpf?: string;
+	public email: string;
+	public password: string;
 
-  constructor(props: Omit<User, "id" | "created_at">, { id, created_at, admin }: optionalProps = {}) {
-    // if no id was supplied, generate uuid
-    if(!id) this.id = uuid()
-    
-    if(id) this.id = id
-    
-    if(created_at) this.created_at = created_at
-    
-    // if no date was supplied, generate new ISO date
-    if(!created_at) this.created_at = new Date()
+	constructor(
+		props: Omit<User, 'id' | 'created_at'>,
+		{ id, created_at, admin }: optionalProps = {}
+	) {
+		// if no id was supplied, generate uuid
+		if (!id) this.id = uuid();
 
-    if(!admin) this.admin = false
+		if (id) this.id = id;
 
-    if(admin) {
-      this.admin = true
-      this.username = admin.username
-      this.userhash = admin.userhash
-    }
-    
-    // create user object
-    Object.assign(this, props)
+		if (created_at) this.created_at = created_at;
 
-    // generate user hash
-    if(!props.username) this.username =`${this.name}`
-    if(!props.userhash) this.userhash = randomNumber(4)
+		// if no date was supplied, generate new ISO date
+		if (!created_at) this.created_at = new Date();
 
-    // encrypt password and ip
-    const salt = genSaltSync(10)
-    this.ip = hashSync(this.ip, salt)
-    this.password = hashSync(this.password, salt)
-  }
+		if (!admin) this.admin = false;
+
+		if (admin) {
+			this.admin = true;
+			this.username = admin.username;
+			this.userhash = admin.userhash;
+		}
+
+		// create user object
+		Object.assign(this, props);
+		// generate user hash
+		if (!props.username) this.username = `${this.name}`;
+		if (!props.userhash) this.userhash = randomNumber(4);
+
+		// encrypt password and ip
+		const salt = genSaltSync(10);
+		this.ip = hashSync(this.ip, 4);
+		this.password = hashSync(this.password, salt);
+	}
 }
