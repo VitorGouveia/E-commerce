@@ -1,26 +1,30 @@
-import { Router } from "express"
+import { Router } from 'express';
+import {
+	UserController,
+	SessionController,
+	DashboardController,
+} from '@v1/controllers';
 
-import { UserController, SessionController, DashboardController } from "@v1/controllers"
+import { authenticate, dashAuthenticate, isIpBanned } from '../middlewares';
 
-import { authenticate, dashAuthenticate, isIpBanned } from "../middlewares"
+const router = Router();
 
-const router = Router()
+router.post('/login', SessionController.create);
+router.post('/admin/login', DashboardController.login);
 
-router.post("/", isIpBanned, UserController.create) /* Creates user */
-router.get("/:id?", UserController.read) /* Lists users */
+router.post('/', isIpBanned, UserController.create);
+router.get('/:id?', UserController.read);
 
-router.post("/login", SessionController.create) /* Authenticate user / Login */
-router.post("/admin/login", DashboardController.login) /* Authenticate user / Login */
+router.patch('/:id?', authenticate, UserController.update);
+router.delete('/:id?', authenticate, UserController.delete);
 
-/** Require JWT to execute */
-router.patch("/:id?", authenticate, UserController.update) /* Updates an especific user */
-router.delete("/:id?", authenticate, UserController.delete) /* Deletes an especific user */
-router.post("/address", authenticate, UserController.createAddress) /* Creates an address for an especific user */
-router.delete("/address/:id?", authenticate, UserController.deleteAddress) /* Creates an address for an especific user */
+router.post('/address', authenticate, UserController.createAddress);
+router.delete('/address/:id?', authenticate, UserController.deleteAddress);
 
-router.post("/cart/:id?", authenticate, UserController.createCart)
+router.post('/cart/:id?', authenticate, UserController.createCart);
 
-router.post("/admin", dashAuthenticate, DashboardController.loadAdmin)
-router.get("/ban/:id?", dashAuthenticate, DashboardController.banUser)
+router.post('/admin', dashAuthenticate, DashboardController.loadAdmin);
+router.get('/ban/:id?', dashAuthenticate, DashboardController.banUser);
+router.get('/invalidate/:id?', DashboardController.InvalidateToken);
 
-export default router
+export default router;

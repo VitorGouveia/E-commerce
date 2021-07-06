@@ -29,10 +29,11 @@ export class User {
 	public readonly id: string;
 	public readonly created_at: Date;
 	public readonly admin?: boolean;
-	public readonly ip?: string;
-	public readonly shadow_ban?: boolean;
-	public readonly ban?: boolean;
-	public readonly reason_for_ban?: string;
+	public ip?: string;
+	public shadow_ban?: boolean;
+	public ban?: boolean;
+	public reason_for_ban?: string;
+	public token_version: number;
 
 	public name: string;
 	public lastname?: string | undefined;

@@ -8,22 +8,23 @@ datasource db {
 }
 
 model User {
-  id         String    @id
-  created_at DateTime
-  admin      Boolean? @default(false)
-  shadow_ban Boolean? @default(false)
-  ban        Boolean? @default(false)
-  reason_for_ban String? @default("")
-  ip         String?
-  name       String
-  lastname   String?
-  username   String
-  userhash   String
-  cpf        String?
-  email      String
-  password   String
-  address    Address[]
-  cart       Cart[]
+  id             String    @id
+  created_at     DateTime
+  admin          Boolean?  @default(false)
+  shadow_ban     Boolean?  @default(false)
+  ban            Boolean?  @default(false)
+  reason_for_ban String?   @default("")
+  token_version  Int?      @default(0)
+  ip             String?
+  name           String
+  lastname       String?
+  username       String
+  userhash       String
+  cpf            String?
+  email          String
+  password       String
+  address        Address[]
+  cart           Cart[]
 }
 
 model Address {
