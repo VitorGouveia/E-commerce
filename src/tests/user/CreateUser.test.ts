@@ -1,55 +1,66 @@
-import request from "supertest"
-import { compare } from "bcrypt"
+import request from 'supertest';
+import { compare } from 'bcrypt';
 
-import { app } from "@src/app"
-import { User } from "@v1/entities"
+import { app } from '@src/app';
+import { prisma } from '@src/prisma';
+import { User } from '@v1/entities';
 
 type CreateUserRequestType = {
-  name: string
-  email: string
-  password: string
-}
+	name: string;
+	email: string;
+	password: string;
+};
 
 type CreateUserResponseType = {
-  status: number
+	status: number;
 
-  body: {
-    message: string
-    user: User
-    access_token: string
-  }
+	body: {
+		message: string;
+		user: User;
+		access_token: string;
+	};
 
-  headers: {
-    authorization: string
-  }
-}
+	headers: {
+		authorization: string;
+	};
+};
 
 const CreateUserRequest: CreateUserRequestType = {
-  name: "vitor",
-  email: "vitor@gmail.com",
-  password: "123"
-}
+	name: 'vitor',
+	email: 'vitor@gmail.com',
+	password: '123',
+};
 
-describe("User Register", () => {
-  test("should create a new user", async () => {
-    const { name, email, password } = CreateUserRequest
+describe('User Register', () => {
+	beforeAll(async () => {
+		await prisma.user.deleteMany();
+		await prisma.$disconnect();
+	});
 
-    const { status, body, headers }: CreateUserResponseType = await request(app)
-      .post("/v1/user")
-      .send({
-        name,
-        email,
-        password
-      })
-    
-    const { user } = body
-    expect(status).toBe(201)
+	afterAll(async () => {
+		await prisma.user.deleteMany();
+		await prisma.$disconnect();
+	});
 
-    expect(headers.authorization).toHaveLength(241)
-    expect(user.name).toEqual(name)
-    expect(user.email).toEqual(email)
+	it('should create a new user', async () => {
+		const { name, email, password } = CreateUserRequest;
 
-    const comparePassword = await compare(password, user.password)
-    expect(comparePassword).toBeTruthy()
-  })
-})
+		const { status, body, headers }: CreateUserResponseType = await request(app)
+			.post('/v1/user')
+			.send({
+				name,
+				email,
+				password,
+			});
+
+		const { user } = body;
+		expect(status).toBe(201);
+
+		expect(headers.authorization).toHaveLength(241);
+		expect(user.name).toEqual(name);
+		expect(user.email).toEqual(email);
+
+		const comparePassword = await compare(password, user.password);
+		expect(comparePassword).toBeTruthy();
+	});
+});
