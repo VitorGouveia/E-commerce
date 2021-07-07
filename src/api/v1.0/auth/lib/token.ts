@@ -11,7 +11,7 @@ export const createToken = (
 ) => {
 	const JWT_ACCESS_TOKEN: string = String(process.env.JWT_ACCESS_TOKEN);
 
-	const access_token = sign([id, token_version], JWT_ACCESS_TOKEN, {
+	const access_token = sign({ id, token_version }, JWT_ACCESS_TOKEN, {
 		expiresIn,
 	});
 
