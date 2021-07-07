@@ -44,6 +44,8 @@ class CreateSessionService {
 				throw new Error('Your session was invalidated.');
 			}
 
+			isBanned(user.ban, user.shadow_ban);
+
 			const jwt_user = {
 				id: access_token['id'],
 				token_version: access_token['token_version'],
