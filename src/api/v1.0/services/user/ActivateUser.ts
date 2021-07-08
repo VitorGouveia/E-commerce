@@ -23,6 +23,11 @@ class ActivateUserService {
 			if (!token) throw new Error('Your token must include Bearer');
 
 			const { name, email, password }: any = verify(token, access_token_secret);
+
+			const userAlreadyExists = await this.usersRepository.findByEmail(email);
+
+			if (userAlreadyExists.length) throw new Error('User already exists.');
+
 			ip = ip.slice(7);
 			const user = new User({
 				name,
