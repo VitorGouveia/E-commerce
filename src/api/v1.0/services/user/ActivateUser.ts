@@ -35,6 +35,7 @@ class ActivateUserService {
 				password,
 				ip,
 				shadow_ban: false,
+				confirmed: true,
 				ban: false,
 				reason_for_ban: '',
 				token_version: 0,

@@ -37,6 +37,8 @@ class CreateSessionService {
 
 			const user = await this.usersRepository.findById(id);
 
+			if (user && user.confirmed == false) throw new Error('Activate your account first.');
+
 			if (user == null) throw new Error("User with payload id doesn't exist.");
 
 			if (user.token_version !== token_version) throw new Error('Your session was invalidated.');

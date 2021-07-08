@@ -7,10 +7,7 @@ import { prisma } from '@src/prisma';
 import validator from 'validator';
 
 export class SqliteUsersRepository implements IUsersRepository {
-	async findAll(
-		property?: string,
-		sort?: 'asc' | 'desc' | string
-	): Promise<UserType[]> {
+	async findAll(property?: string, sort?: 'asc' | 'desc' | string): Promise<UserType[]> {
 		const users = await prisma.user.findMany();
 
 		if (property != undefined && sort != 'undefined') {
@@ -98,10 +95,7 @@ export class SqliteUsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	async usernameLogin(
-		username: string | undefined,
-		password: string
-	): Promise<UserType[]> {
+	async usernameLogin(username: string | undefined, password: string): Promise<UserType[]> {
 		const user = await prisma.user.findMany({
 			where: {
 				username,
@@ -177,6 +171,7 @@ export class SqliteUsersRepository implements IUsersRepository {
 			reason_for_ban,
 			shadow_ban,
 			token_version,
+			confirmed,
 		} = user;
 
 		await prisma.user.create({
@@ -196,6 +191,7 @@ export class SqliteUsersRepository implements IUsersRepository {
 				username,
 				userhash,
 				token_version,
+				confirmed,
 			},
 		});
 	}
