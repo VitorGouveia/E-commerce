@@ -75,7 +75,9 @@ class CreateSessionService {
 				if (!user) throw new Error('Wrong username!');
 
 				if (user.failed_attemps && user.failed_attemps >= 5) {
-					const { id, created_at, name, email, password } = user;
+					const { id, created_at, name, email, password, token_version } = user;
+
+					if (token_version == null) return {};
 
 					await this.usersRepository.update({
 						id,
@@ -84,6 +86,7 @@ class CreateSessionService {
 						email,
 						password,
 						failed_attemps: 0,
+						token_version: token_version + 1,
 					});
 
 					await this.mailProvider.sendMail({
@@ -151,7 +154,9 @@ class CreateSessionService {
 
 			// check if user failed login 5 or more times consecutively
 			if (user.failed_attemps && user.failed_attemps >= 5) {
-				const { id, created_at, name, email, password } = user;
+				const { id, created_at, name, email, password, token_version } = user;
+
+				if (token_version == null) return {};
 
 				await this.usersRepository.update({
 					id,
@@ -160,6 +165,7 @@ class CreateSessionService {
 					email,
 					password,
 					failed_attemps: 0,
+					token_version: token_version + 1,
 				});
 
 				await this.mailProvider.sendMail({
