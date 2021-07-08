@@ -33,7 +33,7 @@ class CreateUserService {
 				{ expiresIn: '15m' }
 			);
 
-			this.mailProvider.sendMail({
+			await this.mailProvider.sendMail({
 				to: {
 					name,
 					email,
