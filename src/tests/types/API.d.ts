@@ -9,6 +9,7 @@ export interface ApiResponse<T> {
 		refresh_token: string;
 		user: T;
 		users: T;
+		social_login: boolean;
 		jwt_login: boolean;
 	};
 }
