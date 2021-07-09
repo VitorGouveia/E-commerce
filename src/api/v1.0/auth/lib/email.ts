@@ -56,6 +56,7 @@ export class emailLogin {
 						name,
 						email: user.email,
 						password: user.password,
+						token_version,
 						failed_attemps: failed_attemps + 1,
 					},
 				};
