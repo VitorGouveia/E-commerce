@@ -12,14 +12,10 @@ class LoadAdminService {
 	async load(users: User[]) {
 		try {
 			for (let user of users) {
-				const userAlreadyExists = await this.usersRepository.findByEmail(
-					user.email
-				);
+				const userAlreadyExists = await this.usersRepository.findByEmail(user.email);
 
 				if (userAlreadyExists.length) {
-					throw new Error(
-						'This user already exists or have already been loaded.'
-					);
+					throw new Error('This user already exists or have already been loaded.');
 				}
 
 				const newUser = new User(user, {
@@ -29,7 +25,9 @@ class LoadAdminService {
 					},
 				});
 
-				const access_token = auth.create(newUser, '24h');
+				const { id, token_version } = newUser;
+				if (!token_version) throw new Error('');
+				const access_token = auth.access_token({ id, token_version }, '24h');
 
 				await this.usersRepository.save(newUser);
 

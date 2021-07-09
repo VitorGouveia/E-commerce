@@ -53,7 +53,9 @@ class ActivateUserService {
 			await this.usersRepository.save(user);
 
 			// create jwt
-			const access_token = auth.create(user, '24h');
+			const { id, token_version } = user;
+			if (token_version == undefined) throw new Error('a');
+			const access_token = auth.access_token({ id, token_version }, '24h');
 
 			this.mailRepository.sendMail({
 				to: {

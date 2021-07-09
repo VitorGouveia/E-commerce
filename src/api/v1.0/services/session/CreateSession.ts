@@ -1,4 +1,6 @@
 import { Request } from 'express';
+import { compare } from 'bcrypt';
+import { verify, sign } from 'jsonwebtoken';
 
 import { SqliteUsersRepository } from '@v1/repositories/implementations';
 import { IUsersRepository } from '@v1/repositories';
@@ -6,9 +8,8 @@ import { IUsersRepository } from '@v1/repositories';
 import { IMailProvider } from '@v1/providers';
 import { MailTrapMailProvider } from '@v1/providers/implementations';
 
-import { verify, sign } from 'jsonwebtoken';
-import { compare } from 'bcrypt';
 import { isBanned } from '@v1/utils/IsBanned';
+import auth from '@v1/auth';
 
 type loginRequestType = {
 	email?: string;
@@ -20,76 +21,61 @@ type loginRequestType = {
 class CreateSessionService {
 	constructor(private usersRepository: IUsersRepository, private mailProvider: IMailProvider) {}
 
-	async create(loginRequest: loginRequestType, authHeader: string | undefined) {
+	async create(loginRequest: loginRequestType, authHeader: string | undefined, ip: string) {
 		try {
-			// jwt refresh token secret
-			const jwt_access_token = String(process.env.JWT_ACCESS_TOKEN);
-			const jwt_refresh_token = String(process.env.JWT_REFRESH_TOKEN);
-
-			if (authHeader == undefined) throw new Error('No token was found.');
-			// jwt access token from headers
-			const token = authHeader && authHeader.split(' ')[1];
-
-			if (token == undefined) throw new Error(`Your token must include Bearer`);
-
-			// get information from authorization header
-			const { id, token_version }: any = verify(token, jwt_access_token);
+			const { id, token_version }: any = auth.verify(authHeader, 'access');
 
 			const user = await this.usersRepository.findById(id);
 
-			if (user && user.confirmed == false) throw new Error('Activate your account first.');
+			if (user.ip == null) throw new Error('IP not provided.');
+			ip = ip.slice(7);
+			const compareIPs = await compare(ip, user.ip);
+
+			if (compareIPs == false) {
+				await this.mailProvider.sendMail({
+					to: {
+						name: user.name,
+						email: user.email,
+					},
+					from: {
+						name: 'NeoExpensive Team',
+						email: 'equipe@neoexpensive.com',
+					},
+
+					subject: `You logged in from a different IP!.`,
+					body: `
+						<p>${user.name} is this your ip: ${user.ip}</p>
+					`,
+				});
+			}
 
 			if (user == null) throw new Error("User with payload id doesn't exist.");
+
+			if (user && user.confirmed == false) throw new Error('Activate your account first.');
 
 			if (user.token_version !== token_version) throw new Error('Your session was invalidated.');
 
 			isBanned(user.ban, user.shadow_ban);
 
-			const jwt_info = {
-				id,
-				token_version,
-			};
-
 			// giving the user a refresh token
-			const refresh_token = sign(
-				jwt_info, // embbeding user info in jwt
-				jwt_refresh_token, // refresh token secret
-				{ expiresIn: '168h' } // 7 days
-			);
+			const token = auth.refresh_token({ id, token_version }, '7d');
 
 			return {
 				jwt_login: true,
-				refresh_token,
+				refresh_token: token,
 			};
 		} catch (error) {
 			if (error.message == 'Your session was invalidated.') {
 				throw new Error(error.message);
 			}
-
-			const { username, userhash, email, password } = loginRequest;
-
-			if (email == undefined) {
-				const jwt_refresh_token = String(process.env.JWT_REFRESH_TOKEN);
-
+			if (loginRequest.email == undefined) {
 				// find user
-				const [user] = await this.usersRepository.findUsername(username, userhash);
+				const { user, failed_too_many, matchPassword } = await auth.loginUsername(loginRequest);
 
-				if (!user) throw new Error('Wrong username!');
+				if (failed_too_many) {
+					const { name, email, failed_attemps } = failed_too_many;
 
-				if (user.failed_attemps && user.failed_attemps >= 5) {
-					const { id, created_at, name, email, password, token_version } = user;
-
-					if (token_version == null) return {};
-
-					await this.usersRepository.update({
-						id,
-						created_at,
-						name,
-						email,
-						password,
-						failed_attemps: 0,
-						token_version: token_version + 1,
-					});
+					await this.usersRepository.update(failed_too_many);
 
 					await this.mailProvider.sendMail({
 						to: {
@@ -101,8 +87,8 @@ class CreateSessionService {
 							email: 'equipe@neoexpensive.com',
 						},
 
-						subject: `${user.failed_attemps} Failed login attemps were made to your account ${user.name}.`,
-						body: `<p>${user.name} contact us if it wasn't trying to login.</p>`,
+						subject: `${failed_attemps} Failed login attemps were made to your account ${name}.`,
+						body: `<p>${name} contact us if it wasn't trying to login.</p>`,
 					});
 
 					throw new Error(
@@ -110,65 +96,31 @@ class CreateSessionService {
 					);
 				}
 
-				// check if user is banned
-				isBanned(user.ban, user.shadow_ban);
-				const { id, created_at, name, token_version, failed_attemps } = user;
-
-				const comparePassword = await compare(password, user.password);
-				if (comparePassword != true) {
-					if (failed_attemps == null) return {};
-
-					await this.usersRepository.update({
-						id,
-						created_at,
-						name,
-						email: user.email,
-						password: user.password,
-						failed_attemps: failed_attemps + 1,
-					});
+				if (matchPassword) {
+					await this.usersRepository.update(matchPassword);
 
 					throw new Error('Wrong password!');
 				}
 
-				await this.usersRepository.update({
-					id,
-					created_at,
-					name,
-					email: user.email,
-					password: user.password,
-					failed_attemps: 0,
-				});
+				if (user == null) return {};
 
-				const refresh_token = sign({ id, token_version }, jwt_refresh_token, {
-					expiresIn: '168h',
-				});
+				const { id, token_version } = user;
+
+				await this.usersRepository.update(user);
+
+				const token = auth.refresh_token({ id, token_version }, '7d');
 
 				return {
 					social_login: true,
-					refresh_token,
+					refresh_token: token,
 				};
 			}
-			// searches user with input email
-			const [user] = await this.usersRepository.findByEmail(email);
 
-			// if there isn't a user with input email
-			if (!user) throw new Error('Wrong e-mail!');
+			const { user, failed_too_many, matchPassword } = await auth.loginEmail(loginRequest);
 
-			// check if user failed login 5 or more times consecutively
-			if (user.failed_attemps && user.failed_attemps >= 5) {
-				const { id, created_at, name, email, password, token_version } = user;
-
-				if (token_version == null) return {};
-
-				await this.usersRepository.update({
-					id,
-					created_at,
-					name,
-					email,
-					password,
-					failed_attemps: 0,
-					token_version: token_version + 1,
-				});
+			if (failed_too_many) {
+				const { name, email, password, failed_attemps } = failed_too_many;
+				await this.usersRepository.update(failed_too_many);
 
 				await this.mailProvider.sendMail({
 					to: {
@@ -180,8 +132,11 @@ class CreateSessionService {
 						email: 'equipe@neoexpensive.com',
 					},
 
-					subject: `${user.failed_attemps} Failed login attemps were made to your account ${user.name}.`,
-					body: `<p>${user.name} contact us if it wasn't trying to login.</p>`,
+					subject: `${failed_attemps} Failed login attemps were made to your account ${name}.`,
+					body: `
+						<p>${name} contact us if it wasn't trying to login.</p>
+						<button>Click here to end all your active sessions</button>
+					`,
 				});
 
 				throw new Error(
@@ -189,54 +144,23 @@ class CreateSessionService {
 				);
 			}
 
-			// check if user is banned
-			isBanned(user.ban, user.shadow_ban);
-			const { id, created_at, name, token_version, failed_attemps } = user;
-
-			// compare from input password and database password
-			const comparePassword = await compare(password, user.password);
-			// if passwords do not match up
-			if (comparePassword != true) {
-				if (failed_attemps == null) return {};
-				await this.usersRepository.update({
-					id,
-					created_at,
-					name,
-					email: user.email,
-					password: user.password,
-					failed_attemps: failed_attemps + 1,
-				});
+			if (matchPassword) {
+				await this.usersRepository.update(matchPassword);
 
 				throw new Error('Wrong password!');
 			}
 
-			await this.usersRepository.update({
-				id,
-				created_at,
-				name,
-				email: user.email,
-				password: user.password,
-				failed_attemps: 0,
-			});
+			if (user == null) return {};
 
-			// if everything goes as normal
-			// jwt refresh token secret
-			const jwt_refresh_token = String(process.env.JWT_REFRESH_TOKEN);
-			const jwt_user = {
-				id,
-				token_version,
-			};
+			const { id, token_version } = user;
 
-			// giving the user a refresh token
-			const refresh_token = sign(
-				jwt_user, // embbeding user info in jwt
-				jwt_refresh_token, // refresh token secret
-				{ expiresIn: '168h' } // 7 days
-			);
+			await this.usersRepository.update(user);
+
+			const token = auth.refresh_token({ id, token_version }, '7d');
 
 			return {
 				social_login: true,
-				refresh_token,
+				refresh_token: token,
 			};
 		}
 	}
@@ -250,7 +174,8 @@ export default async (request: Request) => {
 
 		const { refresh_token, jwt_login, social_login } = await CreateSession.create(
 			request.body,
-			request.headers['authorization']
+			request.headers['authorization'],
+			request.ip
 		);
 
 		return {
