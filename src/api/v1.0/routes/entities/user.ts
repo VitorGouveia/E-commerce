@@ -18,8 +18,13 @@ router.post('/', [isIpBanned, CreateUserRateLimiter()], UserController.create);
 router.post('/activate', UserController.activate);
 router.get('/:id?', UserController.read);
 router.patch('/:id?', [UpdateUserRateLimiter(), authenticate], UserController.update);
-
 router.delete('/:id?', authenticate, UserController.delete);
+
+router.post(
+	'/forgot-password/:id?',
+	[isIpBanned, UpdateUserRateLimiter()],
+	UserController.forgotPassword
+);
 
 router.post('/address', authenticate, UserController.createAddress);
 router.delete('/address/:id?', authenticate, UserController.deleteAddress);
