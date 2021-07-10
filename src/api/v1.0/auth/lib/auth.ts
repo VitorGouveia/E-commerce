@@ -58,7 +58,7 @@ export const auth = {
 	 * @function loginEmail
 	 */
 	async loginEmail({ email, password }: LoginType) {
-		if (email == undefined) throw new Error('a');
+		if (email == undefined) throw new Error('Could not find an e-mail to auth.');
 		const UsersRepository = new SqliteUsersRepository();
 		const EmailLogin = new emailLogin(UsersRepository);
 		const { user, matchPassword, failed_too_many } = await EmailLogin.handle(email, password);
@@ -75,7 +75,8 @@ export const auth = {
 	 * @function loginUsername
 	 */
 	async loginUsername({ username, userhash, password }: LoginType) {
-		if (username == undefined || userhash == undefined) return {};
+		if (username == undefined || userhash == undefined)
+			throw new Error('Could not find an username and userhash to auth.');
 
 		const UsersRepository = new SqliteUsersRepository();
 		const UsernameLogin = new usernameLogin(UsersRepository);

@@ -9,7 +9,18 @@ import { ApiResponse } from '../../types/API';
 import { User } from '@v1/entities';
 import { compare } from 'bcrypt';
 
-describe('email login', () => {
+export const emailTest = () => {
+	it('should fail to find e-mail', async () => {
+		try {
+			await auth.loginEmail({
+				email: undefined,
+				password: '1',
+			});
+		} catch (error) {
+			expect(error.message).toBe('Could not find an e-mail to auth.');
+		}
+	});
+
 	it('should fail to login with e-mail', async () => {
 		try {
 			const loginInfo = {
@@ -64,31 +75,63 @@ describe('email login', () => {
 	});
 
 	it('should fail too many times when trying to login with wrong password', async () => {
-		const loginInfo = {
-			name: 'test',
-			email: 'test@test.com',
-			password: '1',
-		};
-
 		try {
-			const { matchPassword } = await auth.loginEmail(loginInfo);
+			const loginInfo = {
+				email: 'test@test.com',
+				password: 'a',
+			};
 
-			expect(matchPassword?.failed_attemps).toBe(1);
-		} catch (error) {
-			console.log(error);
-		}
+			await prisma.user.updateMany({
+				where: {
+					email: 'test@test.com',
+				},
+				data: {
+					failed_attemps: 20,
+				},
+			});
+
+			const { failed_too_many } = await auth.loginEmail(loginInfo);
+
+			expect(failed_too_many?.id?.length).toBeGreaterThan(1);
+			expect(failed_too_many?.created_at).toBeTruthy();
+			expect(failed_too_many?.name?.length).toBeGreaterThan(1);
+			expect(failed_too_many?.token_version).toBe(1);
+		} catch (error) {}
 	});
 
-	it('should login with e-mail successfully', async () => {
+	it('should have session invalidated', async () => {
 		const loginInfo = {
 			email: 'test@test.com',
 			password: '123',
 		};
 
-		const { body }: ApiResponse<void> = await request(app).post('/v1/user/login').send(loginInfo);
+		const { status, body }: ApiResponse<void> = await request(app)
+			.post('/v1/user/login')
+			.send(loginInfo);
+		expect(status).toBe(400);
+		expect(body).toBe('You failed to login more than 5 times, we sent you a confirmation e-mail.');
+	});
 
-		expect(body.social_login).toBe(true);
-		expect(body.refresh_token.length).toBeGreaterThan(1);
+	it('should login with e-mail successfully', async () => {
+		await prisma.user.updateMany({
+			where: {
+				email: 'test@test.com',
+			},
+			data: {
+				token_version: 0,
+			},
+		});
+
+		const loginInfo = {
+			name: 'test',
+			email: 'test@test.com',
+			password: '123',
+		};
+
+		const { user } = await auth.loginEmail(loginInfo);
+		expect(user?.name).toBe(loginInfo.name);
+		expect(user?.email).toBe(loginInfo.email);
+		expect(user?.failed_attemps).toBe(0);
 	});
 
 	beforeAll(async () => {
@@ -100,4 +143,4 @@ describe('email login', () => {
 		await prisma.user.deleteMany();
 		await prisma.$disconnect();
 	});
-});
+};

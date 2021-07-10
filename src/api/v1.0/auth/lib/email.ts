@@ -28,6 +28,8 @@ export class emailLogin {
 				}
 
 				return {
+					user: {},
+					matchPassword: {},
 					failed_too_many: {
 						id,
 						created_at,
@@ -59,10 +61,14 @@ export class emailLogin {
 						token_version,
 						failed_attemps: failed_attemps + 1,
 					},
+					failed_too_many: {},
+					user: {},
 				};
 			}
 
 			return {
+				matchPassword: {},
+				failed_too_many: {},
 				user: {
 					id,
 					created_at,

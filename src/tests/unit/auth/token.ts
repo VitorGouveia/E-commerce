@@ -1,7 +1,7 @@
 import auth from '@v1/auth';
 import { sign, verify } from 'jsonwebtoken';
 
-describe('jwt creation', () => {
+export const tokenTest = () => {
 	it('should create an access_token', async () => {
 		const access_token_secret = String(process.env.JWT_ACCESS_TOKEN);
 
@@ -79,10 +79,9 @@ describe('jwt creation', () => {
 		const jwt_payload = verify(test_token, access_token_secret);
 
 		test_token = `Bearer ${test_token}`;
-		test_token = `Bearer ${test_token}`;
 		const test_payload = auth.verify(test_token, 'access');
 
 		expect(jwt_payload['id']).toBe(test_payload['id']);
 		expect(jwt_payload['token_version']).toBe(test_payload['token_version']);
 	});
-});
+};
