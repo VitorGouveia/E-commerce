@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.74% </span>
+                <span class="strong">25.58% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/46</span>
+                <span class='fraction'>11/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.74% </span>
+                <span class="strong">25.58% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/46</span>
+                <span class='fraction'>11/43</span>
             </div>
         
             
@@ -100,22 +100,17 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -131,7 +126,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -147,59 +143,57 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request } from "express"
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request } from 'express';
 &nbsp;
-import { IAddressRepository } from "@v1/repositories"
-import { SqliteAddressRepository } from "@v1/repositories/implementations"
+import { IAddressRepository } from '@v1/repositories';
+import { SqliteAddressRepository } from '@v1/repositories/implementations';
 &nbsp;
-import { Address } from "@v1/entities"
+import { Address } from '@v1/entities';
 &nbsp;
-class CreateAddressS<span class="fstat-no" title="function not covered" >ervice {</span>
-<span class="cstat-no" title="statement not covered" >  constructor(</span>
-<span class="cstat-no" title="statement not covered" >    private addressRepository: IAddressRepository</span>
-<span class="cstat-no" title="statement not covered" >  ) {}</span>
+class CreateAddr<span class="fstat-no" title="function not covered" >essService {</span>
+<span class="cstat-no" title="statement not covered" >	constructor(private addressRepository: IAddressRepository) {}</span>
 <span class="cstat-no" title="statement not covered" ></span>
-  async creat<span class="fstat-no" title="function not covered" >e(addressRequest: Address) {</span>
-<span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      const address = new Address(addressRequest)</span>
-<span class="cstat-no" title="statement not covered" >      </span>
-<span class="cstat-no" title="statement not covered" >      await this.addressRepository.save(address)</span>
-<span class="cstat-no" title="statement not covered" >      </span>
-<span class="cstat-no" title="statement not covered" >      return {</span>
-<span class="cstat-no" title="statement not covered" >        address</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error(error.message)</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+	async create(addr<span class="fstat-no" title="function not covered" >essRequest: Address) {</span>
+<span class="cstat-no" title="statement not covered" >		try {</span>
+<span class="cstat-no" title="statement not covered" >			const address = new Address(addressRequest);</span>
+<span class="cstat-no" title="statement not covered" >			await this.addressRepository.save(address);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >			return {</span>
+<span class="cstat-no" title="statement not covered" >				address,</span>
+<span class="cstat-no" title="statement not covered" >			};</span>
+<span class="cstat-no" title="statement not covered" >		} catch (error) {</span>
+<span class="cstat-no" title="statement not covered" >			throw new Error(error.message);</span>
+<span class="cstat-no" title="statement not covered" >		}</span>
+<span class="cstat-no" title="statement not covered" >	}</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >export default async (request: Request) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const AddressRepository<span class="fstat-no" title="function not covered" > = new SqliteAddressRepository()</span>
-<span class="cstat-no" title="statement not covered" >    const CreateAddress = new CreateAddressService(AddressRepository)</span>
+<span class="cstat-no" title="statement not covered" >	try {</span>
+		const AddressRepository = new SqliteAddressRepository();
+		const Cr<span class="fstat-no" title="function not covered" >eateAddress = new CreateAddressService(AddressRepository);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const { address } = await CreateAddress.create(request.body)</span>
+<span class="cstat-no" title="statement not covered" >		const { address } = await CreateAddress.create(request.body);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return ({</span>
-<span class="cstat-no" title="statement not covered" >      status: 201,</span>
-<span class="cstat-no" title="statement not covered" >      address</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
-<span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >    return ({</span>
-<span class="cstat-no" title="statement not covered" >      error: true,</span>
-<span class="cstat-no" title="statement not covered" >      status: 400,</span>
-<span class="cstat-no" title="statement not covered" >      message: error.message</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >		return {</span>
+<span class="cstat-no" title="statement not covered" >			status: 201,</span>
+<span class="cstat-no" title="statement not covered" >			address,</span>
+<span class="cstat-no" title="statement not covered" >		};</span>
+<span class="cstat-no" title="statement not covered" >	} catch (error) {</span>
+<span class="cstat-no" title="statement not covered" >		return {</span>
+<span class="cstat-no" title="statement not covered" >			error: true,</span>
+<span class="cstat-no" title="statement not covered" >			status: 400,</span>
+<span class="cstat-no" title="statement not covered" >			message: error.message,</span>
+<span class="cstat-no" title="statement not covered" >		};</span>
+<span class="cstat-no" title="statement not covered" >	}</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jul 09 2021 21:58:55 GMT-0300 (Brasilia Standard Time)
+                at Sat Jul 10 2021 20:14:35 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
