@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.92% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/37</span>
+                <span class='fraction'>37/37</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.92% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/37</span>
+                <span class='fraction'>37/37</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -99,80 +99,80 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Address } from "@v1/entities"
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">import { Address } from "@v1/entities"
 import { IAddressRepository } from "@v1/repositories"
 &nbsp;
 import { prisma } from "@src/prisma"
 &nbsp;
-export class SqliteAddressRepository implements IAddressReposito<span class="fstat-no" title="function not covered" >ry {</span>
-<span class="cstat-no" title="statement not covered" >  async save(address: Address): Promise&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const {</span>
-<span class="cstat-no" title="statement not covered" >      city,</span>
-<span class="cstat-no" title="statement not covered" >      number,</span>
-<span class="cstat-no" title="statement not covered" >      postal_code,</span>
-<span class="cstat-no" title="statement not covered" >      state,</span>
-<span class="cstat-no" title="statement not covered" >      street,</span>
-<span class="cstat-no" title="statement not covered" >      user_id</span>
-<span class="cstat-no" title="statement not covered" >    } = address</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    await prisma.address.create({</span>
-<span class="cstat-no" title="statement not covered" >      data: {</span>
-<span class="cstat-no" title="statement not covered" >        user_id,</span>
-<span class="cstat-no" title="statement not covered" >        city,</span>
-<span class="cstat-no" title="statement not covered" >        number,</span>
-<span class="cstat-no" title="statement not covered" >        postal_code,</span>
-<span class="cstat-no" title="statement not covered" >        state,</span>
-<span class="cstat-no" title="statement not covered" >        street</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-  async delete(i<span class="fstat-no" title="function not covered" >d: number, user_id: string): Promise&lt;void&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    await prisma.address.deleteMany({</span>
-<span class="cstat-no" title="statement not covered" >      where: {</span>
-<span class="cstat-no" title="statement not covered" >        id,</span>
-<span class="cstat-no" title="statement not covered" >        user_id</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    })</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
+export class SqliteAddressRepository implements IAddressRepository {
+  async save(address: Address): Promise&lt;void&gt; {
+    const {
+      city,
+      number,
+      postal_code,
+      state,
+      street,
+      user_id
+    } = address
+&nbsp;
+    await prisma.address.create({
+      data: {
+        user_id,
+        city,
+        number,
+        postal_code,
+        state,
+        street
+      }
+    })
+  }
+&nbsp;
+  async delete(id: number, user_id: string): Promise&lt;void&gt; {
+    await prisma.address.deleteMany({
+      where: {
+        id,
+        user_id
+      }
+    })
+  }
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Jul 10 2021 20:14:35 GMT-0300 (Brasilia Standard Time)
+                at Sat Jul 10 2021 22:31:23 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

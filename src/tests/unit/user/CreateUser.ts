@@ -50,6 +50,22 @@ export const CreateUserTest = () => {
 		expect(body).toBe('Sent verification message to your e-mail!');
 	});
 
+	it('should fail to activate user', async () => {
+		const access_token_secret = String(process.env.JWT_ACCESS_TOKEN);
+
+		let token = sign(CreateUserRequest, access_token_secret);
+
+		try {
+			const { body }: ApiResponse<User> = await request(app)
+				.post('/v1/user/activate')
+				.set('authorization', token);
+			expect(body).toBe('Your token must include Bearer');
+		} catch (error) {
+			console.log(error);
+			expect(error).toBeTruthy();
+		}
+	});
+
 	it('should create user with e-mail token', async () => {
 		const access_token_secret = String(process.env.JWT_ACCESS_TOKEN);
 		const { name, email, password } = CreateUserRequest;
