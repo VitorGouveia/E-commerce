@@ -16,8 +16,6 @@ class ForgotPasswordService {
 
 			const user = await this.usersRepository.findById(id);
 
-			if (user == null) throw new Error('Cannot find user with that id.');
-
 			if (user.token_version == null) throw new Error('Unexpected error.');
 
 			await this.usersRepository.update({
@@ -51,6 +49,9 @@ class ForgotPasswordService {
 				body: `<p>You forgot your password? No trouble, use this token:\n ${refresh_token}</p>`,
 			});
 		} catch (error) {
+			if (error.message == 'FindUserById method failed.') {
+				throw new Error('Cannot find user with that id.');
+			}
 			throw new Error(error.message);
 		}
 	}
@@ -72,7 +73,7 @@ export default async (request: Request) => {
 		return {
 			error: true,
 			status: 400,
-			message: 'Failed to reedem password',
+			message: error.message,
 		};
 	}
 };
