@@ -24,6 +24,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@src/*": ["src/*"],
+			"@tests/*": ["src/tests/*"],
 			"@v1/*": ["src/api/v1.0/*"],
 			"@v1/auth/*": ["src/api/v1.0/auth/*"],
 			"@v1/routes/*": ["src/api/v1.0/routes/*"],
