@@ -1,0 +1,11 @@
+[
+	{
+		"name": "admin",
+		"email": "admin@gmail.com",
+		"password": "123",
+		"ip": "0.0.0.0",
+		"token_version": 0,
+		"username": "admin",
+		"userhash": "0000"
+	}
+]
