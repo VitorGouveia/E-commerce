@@ -20,9 +20,10 @@ var UserDTO = {
 	name: 'test',
 	email: 'test@test.com',
 	password: '123',
+	refresh_token: '',
 };
 
-export const CreateAddressTest = () => {
+export const AddressTest = () => {
 	it('should create an address entity', async () => {
 		const { city, state, number, postal_code, street } = AddressDTO;
 
@@ -41,7 +42,7 @@ export const CreateAddressTest = () => {
 		expect(address.street).toBe(street);
 	});
 
-	it('should create address', async () => {
+	it('should create an address', async () => {
 		const access_token_secret = String(process.env.JWT_ACCESS_TOKEN);
 		const { city, state, number, postal_code, street } = AddressDTO;
 
@@ -62,8 +63,10 @@ export const CreateAddressTest = () => {
 			.post('/v1/user/login')
 			.set('authorization', `Bearer ${access_token}`);
 
+		UserDTO.refresh_token = refresh_token;
+
 		const { status, body }: ApiResponse<Address> = await request(app)
-			.post(`/v1/user/address`)
+			.post(`/v1/user/address/${id}`)
 			.set('authorization', `Bearer ${refresh_token}`)
 			.send({
 				user_id: id,
@@ -73,9 +76,27 @@ export const CreateAddressTest = () => {
 				postal_code,
 				street,
 			});
-		console.log(body);
 
 		expect(status).toBe(201);
+	});
+
+	it('should delete an address', async () => {
+		const { user_id } = AddressDTO;
+		const { refresh_token } = UserDTO;
+
+		const { status, body }: ApiResponse<User> = await request(app)
+			.delete(`/v1/user/address/${AddressDTO.user_id}`)
+			.set('authorization', `Bearer ${refresh_token}`)
+			.send({ id: 1 });
+
+		expect(status).toBe(202);
+		expect(body).toBe('Address deleted with success!');
+
+		await prisma.address.deleteMany({
+			where: {
+				user_id,
+			},
+		});
 	});
 
 	beforeAll(async () => {
