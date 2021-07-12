@@ -47,3 +47,13 @@ export const verifyToken = (token: string, type: string): string | JwtPayload =>
 
 	return payload;
 };
+
+const token = {
+	createAccessToken,
+	createRefreshToken,
+	createAdminAccessToken,
+	createAdminRefreshToken,
+	verifyToken,
+};
+
+export default token;
