@@ -25,10 +25,10 @@ export class usernameLogin {
 			if (failed_too_many) {
 				const { id, created_at, name, email, password, token_version } = user;
 
-				if (!token_version) throw new Error('Something went wrong, try again');
-
 				return {
-					failed_too_many: {
+					failed_too_many: true,
+					matchPassword: false,
+					user: {
 						id,
 						created_at,
 						name,
@@ -45,23 +45,25 @@ export class usernameLogin {
 			const { id, created_at, name, token_version, failed_attemps } = user;
 
 			const matchPassword = await compare(password, user.password);
-			if (token_version == null) throw new Error('Something went wrong, try again');
 			if (matchPassword == false) {
-				if (failed_attemps == null) throw new Error('Something went wrong, try again');
-
 				return {
-					matchPassword: {
+					failed_too_many: false,
+					matchPassword: true,
+					user: {
 						id,
 						created_at,
 						name,
 						email: user.email,
 						password: user.password,
+						token_version,
 						failed_attemps: failed_attemps + 1,
 					},
 				};
 			}
 
 			return {
+				failed_too_many: false,
+				matchPassword: false,
 				user: {
 					id,
 					created_at,

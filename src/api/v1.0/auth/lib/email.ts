@@ -23,10 +23,6 @@ export class emailLogin {
 			if (failed_too_many) {
 				const { id, created_at, name, email, password, token_version } = user;
 
-				if (token_version == null) {
-					return {};
-				}
-
 				return {
 					failed_too_many: true,
 					matchPassword: false,
@@ -47,10 +43,7 @@ export class emailLogin {
 			const { id, created_at, name, token_version, failed_attemps } = user;
 
 			const matchPassword = await compare(password, user.password);
-			if (token_version == null) return {};
 			if (matchPassword == false) {
-				if (failed_attemps == null) return {};
-
 				return {
 					failed_too_many: false,
 					matchPassword: true,
@@ -80,7 +73,7 @@ export class emailLogin {
 				},
 			};
 		} catch (error) {
-			throw new Error(error);
+			throw new Error(error.message);
 		}
 	}
 }

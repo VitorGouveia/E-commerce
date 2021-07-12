@@ -80,9 +80,9 @@ class CreateSessionService {
 				const { user, failed_too_many, matchPassword } = await auth.loginUsername(loginRequest);
 
 				if (failed_too_many) {
-					const { name, email, failed_attemps } = failed_too_many;
+					const { name, email, failed_attemps } = user;
 
-					await this.usersRepository.update(failed_too_many);
+					await this.usersRepository.update(user);
 
 					await this.mailProvider.sendMail({
 						to: {
@@ -104,7 +104,7 @@ class CreateSessionService {
 				}
 
 				if (matchPassword) {
-					await this.usersRepository.update(matchPassword);
+					await this.usersRepository.update(user);
 
 					throw new Error('Wrong password!');
 				}
@@ -114,7 +114,6 @@ class CreateSessionService {
 				const { id, token_version } = user;
 
 				await this.usersRepository.update(user);
-
 				const token = auth.refresh_token({ id, token_version }, '7d');
 
 				return {
