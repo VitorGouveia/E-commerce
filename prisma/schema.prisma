@@ -14,8 +14,8 @@ model User {
   shadow_ban     Boolean?  @default(false)
   ban            Boolean?  @default(false)
   reason_for_ban String?   @default("")
-  token_version  Int?      @default(0)
-  failed_attemps Int?      @default(0)
+  token_version  Int       @default(0)
+  failed_attemps Int       @default(0)
   confirmed      Boolean?  @default(false)
   ip             String?
   name           String

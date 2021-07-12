@@ -33,8 +33,8 @@ export class User {
 	public shadow_ban?: boolean;
 	public ban?: boolean;
 	public reason_for_ban?: string;
-	public token_version?: number | null;
-	public failed_attemps?: number | null;
+	public token_version?: number;
+	public failed_attemps?: number;
 	public confirmed?: boolean | null;
 
 	public name: string;
@@ -69,6 +69,9 @@ export class User {
 
 		// create user object
 		Object.assign(this, props);
+		this.failed_attemps = 0;
+		this.token_version = 0;
+
 		// generate user hash
 		if (!props.username) this.username = `${this.name}`;
 		if (!props.userhash) this.userhash = randomNumber(4);
