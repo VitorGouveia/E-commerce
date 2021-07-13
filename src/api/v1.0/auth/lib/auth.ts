@@ -15,10 +15,14 @@ type info = {
 	token_version: number;
 };
 
-type LoginType = {
-	email?: string;
-	username?: string;
-	userhash?: string;
+type LoginEmailType = {
+	email: string | null;
+	password: string;
+};
+
+type LoginUsernameType = {
+	username: string | null;
+	userhash: string | null;
 	password: string;
 };
 
@@ -83,8 +87,8 @@ export const auth = {
 	 * Login with e-mail service
 	 * @function loginEmail
 	 */
-	async loginEmail({ email, password }: LoginType) {
-		if (email == undefined) throw new Error('Could not find an e-mail to auth.');
+	async loginEmail({ email, password }: LoginEmailType) {
+		if (email == null) throw new Error('Could not find an e-mail to auth.');
 		const UsersRepository = new SqliteUsersRepository();
 		const EmailLogin = new emailLogin(UsersRepository);
 		const { user, failed_too_many, matchPassword } = await EmailLogin.handle(email, password);
@@ -100,10 +104,9 @@ export const auth = {
 	 * Login with username
 	 * @function loginUsername
 	 */
-	async loginUsername({ username, userhash, password }: LoginType) {
-		if (username == undefined || userhash == undefined)
+	async loginUsername({ username, userhash, password }: LoginUsernameType) {
+		if (username == null || userhash == null)
 			throw new Error('Could not find an username and userhash to auth.');
-
 		const UsersRepository = new SqliteUsersRepository();
 		const UsernameLogin = new usernameLogin(UsersRepository);
 		const { user, failed_too_many, matchPassword } = await UsernameLogin.handle(

@@ -122,7 +122,7 @@ describe('auth', () => {
 	it('should not be able to find an e-mail to auth to', async () => {
 		try {
 			await auth.loginEmail({
-				email: undefined,
+				email: null,
 				password: userInfo.password,
 			});
 		} catch (error) {
@@ -152,8 +152,8 @@ describe('auth', () => {
 	it('should not be able to find an username to auth to', async () => {
 		try {
 			await auth.loginUsername({
-				username: undefined,
-				userhash: undefined,
+				username: null,
+				userhash: null,
 				password: '123',
 			});
 		} catch (error) {
