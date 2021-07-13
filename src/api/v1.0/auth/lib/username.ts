@@ -32,6 +32,8 @@ export class usernameLogin {
 						id,
 						created_at,
 						name,
+						username,
+						userhash,
 						email,
 						password: user.password,
 						failed_attemps: 0,
@@ -53,6 +55,8 @@ export class usernameLogin {
 						id,
 						created_at,
 						name,
+						username,
+						userhash,
 						email: user.email,
 						password: user.password,
 						token_version,
@@ -68,6 +72,8 @@ export class usernameLogin {
 					id,
 					created_at,
 					name,
+					username,
+					userhash,
 					email: user.email,
 					password: user.password,
 					token_version,
@@ -75,7 +81,7 @@ export class usernameLogin {
 				},
 			};
 		} catch (error) {
-			throw new Error(error);
+			throw new Error(error.message);
 		}
 	}
 }
