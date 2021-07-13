@@ -1,19 +1,14 @@
 import { genSaltSync, hashSync } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
-export function randomNumber(number: number) {
-	var add: number = 1;
-	var max: number = 12 - add;
+export function randomNumber(length: number, chars?: string) {
+	var chars: string | undefined = '0123456789';
 
-	if (number > max) {
-		return randomNumber(max) + randomNumber(add - max);
-	}
+	const number = [...Array(length)]
+		.map(i => chars[Math.floor(Math.random() * chars.length)])
+		.join('');
 
-	max = Math.pow(10, number + add);
-	var min = max / 10;
-	var number = Math.floor(Math.random() * (max - min + 1)) + min;
-
-	return ('' + number).substring(add);
+	return number;
 }
 
 interface optionalProps {
