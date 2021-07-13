@@ -61,20 +61,20 @@ export class User {
 
 		if (!admin) this.admin = false;
 
-		if (admin) {
-			this.admin = true;
-			this.username = admin.username;
-			this.userhash = admin.userhash;
-		}
-
 		// create user object
 		Object.assign(this, props);
 		this.failed_attemps = 0;
 		this.token_version = 0;
 
-		// generate user hash
-		if (!props.username) this.username = `${this.name}`;
-		if (!props.userhash) this.userhash = randomNumber(4);
+		if (admin) {
+			this.admin = true;
+			this.username = admin.username;
+			this.userhash = admin.userhash;
+		} else {
+			// generate user hash
+			if (!props.username) this.username = `${this.name}`;
+			if (!props.userhash) this.userhash = randomNumber(4);
+		}
 
 		// encrypt password and ip
 		const salt = genSaltSync(10);
