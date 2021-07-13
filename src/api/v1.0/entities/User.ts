@@ -24,7 +24,7 @@ export class User {
 	public readonly id: string;
 	public readonly created_at: number;
 	public readonly admin?: boolean;
-	public ip?: string;
+	public ip: string;
 	public shadow_ban?: boolean;
 	public ban?: boolean;
 	public reason_for_ban?: string;
