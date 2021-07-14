@@ -1,7 +1,7 @@
 [
 	{
 		"name": "admin",
-		"email": "admin@gmail.com",
+		"email": "admin@admin.com",
 		"password": "123",
 		"ip": "0.0.0.0",
 		"token_version": 0,
