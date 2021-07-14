@@ -9,7 +9,7 @@
 		"dev:database": "prisma migrate dev",
 		"dev:server": "NODE_ENV=development ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify --exit-child -r tsconfig-paths/register src/server.ts",
 		"dev": "npm-run-all dev:*",
-		"test": "jest --runInBand --watchAll --coverage --detectOpenHandles",
+		"test": "jest --watchAll --coverage --detectOpenHandles --verbose",
 		"build:folder": "rimraf ./build",
 		"build:babel": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
 		"build": "npm-run-all build:*",
