@@ -34,7 +34,7 @@ export default async (request: Request) => {
     const { item } = await CreateItem.create(request.body)
 
     return ({
-      status: 200,
+      status: 201,
       item,
       message: "Item created with success!"
     })
