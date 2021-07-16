@@ -13,7 +13,7 @@ class InvalidateSessionService {
 			const userInfo = await this.usersRepository.findById(id);
 
 			if (userInfo == null || userInfo.ip == null || userInfo.token_version == null) {
-				return {};
+				throw new Error('Could not find user with token id.');
 			}
 
 			await this.usersRepository.update({
@@ -26,6 +26,10 @@ class InvalidateSessionService {
 				ip: userInfo.ip,
 			});
 		} catch (error) {
+			if (error.message == 'FindUserById method failed.') {
+				throw new Error('Could not find user with token id.');
+			}
+
 			throw new Error(error.message);
 		}
 	}
