@@ -9,6 +9,7 @@ import users from '@src/users.json';
 import items from '@src/items.json';
 
 describe('Dashboard controller', () => {
+	const dummy_id = '00000000-0000-0000-0000-000000000000';
 	const jwt_access_token_secret = String(process.env.JWT_ACCESS_TOKEN);
 
 	type User = {
@@ -80,6 +81,38 @@ describe('Dashboard controller', () => {
 
 		userInfo.id = activate.body.user.id;
 		userInfo.access = activate.body.access_token;
+	});
+
+	it('should fail to invalidate session', async () => {
+		const { body }: ApiResponse<void> = await request(app).get(`/v1/user/ban/${userInfo.id}`);
+
+		expect(body.message).toBe('No Dash JWT refresh token was found! Redirect to login.');
+	});
+
+	it('should invalidate user session', async () => {
+		const { status, body }: ApiResponse<void> = await request(app)
+			.get(`/v1/user/invalidate/${userInfo.id}`)
+			.set('authorization', `Bearer ${admin.refresh}`);
+
+		expect(status).toBe(200);
+		expect(body).toBe('User session invalidated');
+
+		const login: ApiResponse<void> = await request(app)
+			.post('/v1/user/login')
+			.set('authorization', `Bearer ${userInfo.access}`);
+
+		expect(login.status).toBe(400);
+		expect(login.body).toBe('Your session was invalidated.');
+	});
+
+	it('should fail to invalidate user session', async () => {
+		const { status, body }: ApiResponse<void> = await request(app)
+			.get(`/v1/user/invalidate/${dummy_id}`)
+			.set('authorization', `Bearer ${admin.refresh}`)
+			.query({ reason: 'test ban' });
+
+		expect(status).toBe(400);
+		expect(body).toBe('Could not find user with token id.');
 	});
 
 	it('should ban user', async () => {
