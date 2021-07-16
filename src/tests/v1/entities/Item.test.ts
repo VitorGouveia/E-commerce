@@ -5,6 +5,7 @@ describe('Item entity', () => {
 		const ratingDTO = [
 			{
 				item_id: 1,
+				average: 0,
 				one_star: 1,
 				two_star: 1,
 				three_star: 1,
