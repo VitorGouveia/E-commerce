@@ -1,37 +1,25 @@
-import { Address } from "@v1/entities"
-import { IAddressRepository } from "@v1/repositories"
+import { Address } from '@v1/entities';
+import { IAddressRepository } from '@v1/repositories';
 
-import { prisma } from "@src/prisma"
+import { prisma } from '@src/prisma';
 
 export class SqliteAddressRepository implements IAddressRepository {
-  async save(address: Address): Promise<void> {
-    const {
-      city,
-      number,
-      postal_code,
-      state,
-      street,
-      user_id
-    } = address
+	async save(address: Address): Promise<void> {
+		const { ...props } = address;
 
-    await prisma.address.create({
-      data: {
-        user_id,
-        city,
-        number,
-        postal_code,
-        state,
-        street
-      }
-    })
-  }
+		await prisma.address.create({
+			data: {
+				...props,
+			},
+		});
+	}
 
-  async delete(id: number, user_id: string): Promise<void> {
-    await prisma.address.deleteMany({
-      where: {
-        id,
-        user_id
-      }
-    })
-  }
+	async delete(id: number, user_id: string): Promise<void> {
+		await prisma.address.deleteMany({
+			where: {
+				id,
+				user_id,
+			},
+		});
+	}
 }

@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { compare } from 'bcrypt';
-import validator from "validator"
 
 import { SqliteUsersRepository } from '@v1/repositories/implementations';
 import { IUsersRepository } from '@v1/repositories';
@@ -54,7 +53,6 @@ class CreateSessionService {
 			if (user && user.confirmed == false) throw new Error('Activate your account first.');
 
 			isBanned(user.ban, user.shadow_ban);
-
 			if (user.token_version !== token_version) throw new Error('Your session was invalidated.');
 
 			// giving the user a refresh token
@@ -76,7 +74,7 @@ class CreateSessionService {
 			}
 
 			// if (loginRequest.email == undefined) throw new Error('please insert e-mail');
-			
+
 			// const isEmail = validator.isEmail(loginRequest.email)
 			// if (!isEmail) throw new Error('please insert a valid e-mail');
 

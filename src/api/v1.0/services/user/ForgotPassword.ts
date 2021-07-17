@@ -16,7 +16,8 @@ class ForgotPasswordService {
 
 			const user = await this.usersRepository.findById(id);
 
-			if (user.token_version == null || user.ip == null) throw new Error('Unexpected error.');
+			if (user == null || user.token_version == null || user.ip == null)
+				throw new Error('Unexpected error.');
 
 			await this.usersRepository.update({
 				id: user.id,
@@ -28,10 +29,12 @@ class ForgotPasswordService {
 				token_version: user.token_version + 1,
 			});
 
-			const refresh_token = sign(
+			const newUser = await this.usersRepository.findById(id);
+
+			const access_token = sign(
 				{
 					id: user.id,
-					token_version: user.token_version,
+					token_version: newUser.token_version,
 				},
 				access_token_secret,
 				{ expiresIn: '7d' }
@@ -47,7 +50,7 @@ class ForgotPasswordService {
 					email: 'equipe@neoexpensive.com',
 				},
 				subject: 'Forgot password.',
-				body: `<p>You forgot your password? No trouble, use this token:\n ${refresh_token}</p>`,
+				body: `<p>You forgot your password? No trouble, use this token:\n ${access_token}</p>`,
 			});
 		} catch (error) {
 			if (error.message == 'FindUserById method failed.') {

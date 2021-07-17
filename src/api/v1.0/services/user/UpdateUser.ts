@@ -8,11 +8,7 @@ import { User } from '@v1/entities';
 class UpdateUserService {
 	constructor(private usersRepository: IUsersRepository) {}
 
-	async update(
-		id: string,
-		{ name, lastname, username, cpf, email, password }: User,
-		ip: string
-	) {
+	async update(id: string, { name, lastname, username, cpf, email, password }: User, ip: string) {
 		try {
 			// middleware already checks for JWT
 			const userInfo = await this.usersRepository.findById(id, 'userhash');
@@ -21,10 +17,7 @@ class UpdateUserService {
 			}
 			const userhash = userInfo?.userhash;
 			// searches user with the same username and userhash
-			const usernameAlreadyExists = await this.usersRepository.findUsername(
-				username,
-				userhash
-			);
+			const usernameAlreadyExists = await this.usersRepository.findUsername(username, userhash);
 			if (usernameAlreadyExists.length) return { usernameAlreadyExists };
 
 			// if there is a user with the same username and userhash respond with other available usernames
@@ -69,8 +62,11 @@ export default async (request: Request) => {
 		const UsersRepository = new SqliteUsersRepository();
 		const UpdateUser = new UpdateUserService(UsersRepository);
 
-		const { usernameAlreadyExists, available_usernames, user } =
-			await UpdateUser.update(request.params.id, request.body, request.ip);
+		const { usernameAlreadyExists, available_usernames, user } = await UpdateUser.update(
+			request.params.id,
+			request.body,
+			request.ip
+		);
 
 		if (usernameAlreadyExists?.length) {
 			return {
