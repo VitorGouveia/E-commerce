@@ -7,6 +7,7 @@ export class Rating {
 	public three_star: number;
 	public four_star: number;
 	public five_star: number;
+	public message: string;
 
 	constructor(props: Rating, id: number) {
 		Object.assign(this, props);

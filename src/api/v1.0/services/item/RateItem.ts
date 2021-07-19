@@ -11,10 +11,9 @@ class RateItemService {
 	async rate(id: number, rateItemRequest: Rating) {
 		try {
 			const rating = new Rating(rateItemRequest, id);
-			const { average, one_star, two_star, three_star, four_star, five_star } =
-				await this.itemsRepository.rate(rating);
+			const { average, ...props } = await this.itemsRepository.rate(rating);
 
-			const item = { one_star, two_star, three_star, four_star, five_star };
+			const item = { ...props };
 
 			return {
 				item,

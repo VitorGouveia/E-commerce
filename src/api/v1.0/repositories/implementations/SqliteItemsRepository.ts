@@ -141,24 +141,38 @@ export class SqliteItemsRepository implements IItemsRepository {
 	}
 
 	async rate(rating: Rating): Promise<Rating> {
-		const { item_id, one_star, two_star, three_star, four_star, five_star } = rating;
-		const oldRating = await prisma.rating.findMany({
+		const { item_id, one_star, two_star, three_star, four_star, five_star, message } = rating;
+		const oldRating = await prisma.rating.findFirst({
 			where: {
 				item_id,
 			},
 		});
 
 		const allNumberRatings =
-			one_star * 1 + two_star * 2 + three_star * 3 + four_star * 4 + five_star * 5;
-
+			one_star + two_star * 2 + three_star * 3 + four_star * 4 + five_star * 5;
 		const allRatings = one_star + two_star + three_star + four_star + five_star;
+
 		const average = allNumberRatings / allRatings;
 
-		if (oldRating == undefined || oldRating == null || oldRating.length == 0) {
+		if (!oldRating) {
 			const itemRating = await prisma.rating.create({
 				data: {
 					item_id,
 					average,
+					message,
+					one_star,
+					two_star,
+					three_star,
+					four_star,
+					five_star,
+				},
+			});
+
+			await prisma.rating.create({
+				data: {
+					item_id,
+					average,
+					message,
 					one_star,
 					two_star,
 					three_star,
@@ -170,19 +184,32 @@ export class SqliteItemsRepository implements IItemsRepository {
 			return itemRating;
 		}
 
+		await prisma.rating.create({
+			data: {
+				item_id,
+				average,
+				message,
+				one_star,
+				two_star,
+				three_star,
+				four_star,
+				five_star,
+			},
+		});
+
 		const itemRating = await prisma.rating.update({
 			where: {
-				id: oldRating[0].id,
+				id: oldRating.id,
 			},
 
 			data: {
 				item_id,
 				average,
-				one_star: one_star + oldRating[0].one_star,
-				two_star: two_star + oldRating[0].two_star,
-				three_star: three_star + oldRating[0].three_star,
-				four_star: four_star + oldRating[0].four_star,
-				five_star: five_star + oldRating[0].five_star,
+				one_star: one_star + oldRating.one_star,
+				two_star: two_star + oldRating.two_star,
+				three_star: three_star + oldRating.three_star,
+				four_star: four_star + oldRating.four_star,
+				five_star: five_star + oldRating.five_star,
 			},
 		});
 
