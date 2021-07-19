@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 describe('User entity', () => {
 	it('should create user entity', async () => {
-		const userDTO = {
+		const userDTO: Omit<User, 'id' | 'created_at'> = {
 			name: 'test',
 			lastname: 'jest',
 			email: 'test@test.com',
@@ -50,7 +50,9 @@ describe('User entity', () => {
 	});
 
 	it('should create an admin user', async () => {
-		const userDTO = {
+		const userDTO: User = {
+			id: '00000000-0000-0000-0000-000000000000',
+			created_at: Date.now(),
 			name: 'test',
 			lastname: 'jest',
 			email: 'test@test.com',
@@ -61,15 +63,18 @@ describe('User entity', () => {
 			ban: false,
 			reason_for_ban: '',
 			confirmed: false,
+			username: 'testJest',
+			userhash: 1000,
 		};
 
+		const { username, userhash, id, created_at } = userDTO;
 		const user = new User(userDTO, {
 			admin: {
-				username: 'test',
-				userhash: 1000,
+				username,
+				userhash,
 			},
-			id: '0',
-			created_at: 0,
+			id,
+			created_at,
 		});
 
 		expect(user).toBeTruthy();

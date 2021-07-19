@@ -2,7 +2,7 @@ import { Image } from '@v1/entities';
 
 describe('Image entity', () => {
 	it('should create an image entity', () => {
-		const imageDTO = {
+		const imageDTO: Image = {
 			item_id: 0,
 			link: 'www.test.com/img',
 		};

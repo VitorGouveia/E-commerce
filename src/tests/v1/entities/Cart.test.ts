@@ -2,7 +2,7 @@ import { Cart } from '@v1/entities';
 
 describe('Cart entity', () => {
 	it('should create a cart entity', () => {
-		const { user_id, item_id } = {
+		const { user_id, item_id }: Cart = {
 			user_id: '00000000-0000-0000-0000-000000000000',
 			item_id: 0,
 		};

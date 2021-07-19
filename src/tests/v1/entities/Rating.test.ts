@@ -2,13 +2,15 @@ import { Rating } from '@v1/entities';
 
 describe('Rating entity', () => {
 	it('should create a rating entity', () => {
-		const ratingDTO = {
+		const ratingDTO: Rating = {
 			item_id: 1,
 			one_star: 1,
 			two_star: 1,
 			three_star: 1,
 			four_star: 1,
 			five_star: 1,
+			average: 0,
+			message: 'Test message.',
 		};
 
 		const rating = new Rating(ratingDTO, ratingDTO.item_id);

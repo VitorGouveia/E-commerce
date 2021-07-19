@@ -2,7 +2,7 @@ import { Address } from '@v1/entities';
 
 describe('Address entity', () => {
 	it('should create an address entity', () => {
-		const addressDTO = {
+		const addressDTO: Address = {
 			user_id: '00000000-0000-0000-0000-000000000000',
 			postal_code: '00000-000',
 			city: 'test city',

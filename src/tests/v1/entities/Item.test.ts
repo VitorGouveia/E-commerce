@@ -1,8 +1,8 @@
-import { Item } from '@v1/entities';
+import { Image, Item, Rating } from '@v1/entities';
 
 describe('Item entity', () => {
 	it('should create an item entity', () => {
-		const ratingDTO = [
+		const ratingDTO: Rating[] = [
 			{
 				item_id: 1,
 				average: 0,
@@ -11,17 +11,18 @@ describe('Item entity', () => {
 				three_star: 1,
 				four_star: 1,
 				five_star: 1,
+				message: 'Test message.',
 			},
 		];
 
-		const imageDTO = [
+		const imageDTO: Image[] = [
 			{
 				item_id: 1,
 				link: 'www.test.com/img',
 			},
 		];
 
-		const itemDTO = {
+		const itemDTO: Item = {
 			created_at: Date.now(),
 			name: 'test jest',
 			short_name: 'test',
