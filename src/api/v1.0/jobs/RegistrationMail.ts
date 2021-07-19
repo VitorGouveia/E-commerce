@@ -6,6 +6,7 @@ export const RegistrationMail: Job<JobsData> = {
 	key: 'RegistrationMail',
 	options: {
 		delay: 0,
+		priority: 1,
 		attempts: 3,
 	},
 	async handle({ data }) {
