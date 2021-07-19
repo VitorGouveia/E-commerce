@@ -1,16 +1,7 @@
-import { Address } from "./Address"
-import { User, randomNumber } from "./User"
-import { Item } from "./Item"
-import { Rating } from "./Rating"
-import { Image } from "./Image"
-import { Cart } from "./Cart"
-
-export { 
-  Address,
-  User,
-  randomNumber,
-  Item,
-  Rating,
-  Image,
-  Cart
-}
+export { Address } from './Address';
+export { User, randomNumber } from './User';
+export { Item } from './Item';
+export { Rating } from './Rating';
+export { Image } from './Image';
+export { Cart } from './Cart';
+export { Payment } from './Payment';

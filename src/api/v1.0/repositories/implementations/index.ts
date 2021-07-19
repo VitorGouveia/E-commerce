@@ -1,13 +1,6 @@
-import { SqliteAddressRepository } from "./SqliteAddressRepository"
-import { SqliteUsersRepository } from "./SqliteUsersRepository"
-import { SqliteItemsRepository } from "./SqliteItemsRepository"
-import { SqliteImageRepository } from "./SqliteImageRepository"
-import { SqliteCartRepository } from "./SqliteCartRepository"
-
-export { 
-  SqliteAddressRepository,
-  SqliteUsersRepository,
-  SqliteItemsRepository,
-  SqliteImageRepository,
-  SqliteCartRepository
-}
+export { SqliteAddressRepository } from './SqliteAddressRepository';
+export { SqliteUsersRepository } from './SqliteUsersRepository';
+export { SqliteItemsRepository } from './SqliteItemsRepository';
+export { SqliteImageRepository } from './SqliteImageRepository';
+export { SqliteCartRepository } from './SqliteCartRepository';
+export { SqlitePaymentRepository } from './SqlitePaymentRepository';

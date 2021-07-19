@@ -1,31 +1,19 @@
-import CreateUser from './CreateUser';
-import ReadUser from './ReadUser';
-import UpdateUser from './UpdateUser';
-import DeleteUser from './DeleteUser';
+export { default as CreateUser } from './CreateUser';
+export { default as ReadUser } from './ReadUser';
+export { default as UpdateUser } from './UpdateUser';
+export { default as DeleteUser } from './DeleteUser';
 
-import ActivateUser from './ActivateUser';
-import ForgotPassword from './ForgotPassword';
+export { default as ActivateUser } from './ActivateUser';
+export { default as ForgotPassword } from './ForgotPassword';
 
-import CreateAddress from './CreateAddress';
-import DeleteAddress from './DeleteAddress';
+export { default as CreateAddress } from './CreateAddress';
+export { default as DeleteAddress } from './DeleteAddress';
 
-import CreateCart from './CreateCart';
-import DeleteCart from './DeleteCart';
+export { default as CreateCart } from './CreateCart';
+export { default as DeleteCart } from './DeleteCart';
 
-import LoadAdmin from './LoadAdmin';
-import BanUser from './BanUser';
+export { default as LoadAdmin } from './LoadAdmin';
+export { default as BanUser } from './BanUser';
 
-export {
-	CreateUser,
-	ReadUser,
-	UpdateUser,
-	DeleteUser,
-	ActivateUser,
-	CreateAddress,
-	DeleteAddress,
-	CreateCart,
-	DeleteCart,
-	LoadAdmin,
-	BanUser,
-	ForgotPassword,
-};
+export { default as Checkout } from './Checkout';
+export { default as CreatePayment } from './CreatePayment';
