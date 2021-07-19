@@ -9,6 +9,7 @@ import { MailTrapMailProvider } from '@v1/providers/implementations';
 
 import { User, randomNumber } from '@v1/entities';
 import auth from '@v1/auth';
+import Queue from '@v1/config/queue';
 
 class ActivateUserService {
 	constructor(private usersRepository: IUsersRepository, private mailRepository: IMailProvider) {}
@@ -57,19 +58,8 @@ class ActivateUserService {
 			if (token_version == undefined) throw new Error('a');
 			const access_token = auth.access_token({ id, token_version }, '24h');
 
-			this.mailRepository.sendMail({
-				to: {
-					name,
-					email,
-				},
-				from: {
-					name: 'NeoExpensive Team',
-					email: 'equipe@neoexpensive.com',
-				},
-
-				subject: `Welcome to NeoExpensive ${user.name}`,
-				body: `<h1>Hi there ${user.name}, welcome!</h1>`,
-			});
+			const data = { user };
+			Queue.add('ActivationMail', data);
 
 			return {
 				access_token,
