@@ -7,6 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev:database": "prisma migrate dev",
+		"dev:queue": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify --exit-child -r tsconfig-paths/register src/api/v1.0/queue.ts",
 		"dev:server": "NODE_ENV=development ts-node-dev --respawn --transpile-only --ignore-watch node_modules,tests --no-notify --exit-child -r tsconfig-paths/register src/server.ts",
 		"dev": "npm-run-all dev:*",
 		"test": "jest --watchAll --coverage --detectOpenHandles --verbose",
