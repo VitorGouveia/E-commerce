@@ -1,26 +1,26 @@
-import cluster, { isMaster, fork } from "cluster"
-import { cpus } from "os"
+import cluster from 'cluster';
+import { cpus } from 'os';
 
-import { app } from "./app"
+import { app } from './app';
 
 function Cluster(bool: boolean) {
-  const port = process.env.PORT
-  if (bool == true) {
-    if (isMaster) {
-      const cpuCores = cpus().length
+	const port = process.env.PORT;
+	if (bool == true) {
+		if (cluster.isPrimary) {
+			const cpuCores = cpus().length;
 
-      for (let i = 0; i < cpuCores; i += 0.5) {
-        fork()
-      }
+			for (let i = 0; i < cpuCores; i += 0.5) {
+				cluster.fork();
+			}
 
-      console.log(`Creating new ${cpuCores * 2} processes`)
+			console.log(`Creating new ${cpuCores * 2} processes`);
 
-      cluster.on("exit", () => fork())
-      app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`))
-    }
-  } else {
-    app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`))
-  }
+			cluster.on('exit', () => cluster.fork());
+			app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`));
+		}
+	} else {
+		app.listen(port, () => console.log(`[server]⚡🚀 up and steady on http://localhost:${port}`));
+	}
 }
 
-Cluster(false)
+Cluster(false);
