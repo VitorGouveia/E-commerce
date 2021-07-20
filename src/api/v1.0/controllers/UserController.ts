@@ -67,11 +67,11 @@ export const UserController = {
 	},
 
 	async createCart(request: Request, response: Response) {
-		const { error, status, message } = await service.CreateCart(request);
+		const { error, status, message, cart } = await service.CreateCart(request);
 
 		if (error) return response.status(status).json(message);
 
-		return response.status(status).json(message);
+		return response.status(status).json({ cart, message });
 	},
 
 	async deleteCart(request: Request, response: Response) {
@@ -118,5 +118,13 @@ export const UserController = {
 		if (error) return response.status(status).json(message);
 
 		return response.status(status).json({ message, prices });
+	},
+
+	async order(request: Request, response: Response) {
+		const { error, status, message, orders } = await service.Order(request);
+
+		if (error) return response.status(status).json(message);
+
+		return response.status(status).json({ message, orders });
 	},
 };

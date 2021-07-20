@@ -29,6 +29,8 @@ router.post(
 router.post('/payment/:id?', authenticate, UserController.createPayment);
 router.post('/checkout/:id?', authenticate, UserController.checkout);
 
+router.post('/order', UserController.order);
+
 router.post('/address/:id?', authenticate, UserController.createAddress);
 router.delete('/address/:id?', authenticate, UserController.deleteAddress);
 

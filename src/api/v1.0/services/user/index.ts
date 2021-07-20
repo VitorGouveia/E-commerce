@@ -17,3 +17,5 @@ export { default as BanUser } from './BanUser';
 
 export { default as Checkout } from './Checkout';
 export { default as CreatePayment } from './CreatePayment';
+
+export { default as Order } from './Order';
