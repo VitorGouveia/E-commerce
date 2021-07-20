@@ -33,20 +33,10 @@ export class SqliteCartRepository implements ICartRepository {
 		});
 	}
 
-	async delete(user_id: string, id?: number): Promise<void> {
-		if (id !== undefined) {
-			await prisma.cart.deleteMany({
-				where: {
-					id,
-					user_id,
-				},
-			});
-
-			return;
-		}
-
+	async delete(user_id: string, id: number): Promise<void> {
 		await prisma.cart.deleteMany({
 			where: {
+				id,
 				user_id,
 			},
 		});
