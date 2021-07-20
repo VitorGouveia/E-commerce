@@ -49,6 +49,18 @@ export class SqliteUsersRepository implements IUsersRepository {
 						item_id: true,
 					},
 				},
+
+				payment: {
+					select: {
+						id: true,
+						method: true,
+						card_brand: true,
+						card_code: true,
+						card_month: true,
+						card_number: true,
+						card_year: true,
+					},
+				},
 			},
 		});
 
