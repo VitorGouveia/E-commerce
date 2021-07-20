@@ -13,11 +13,11 @@ export class Item {
 	public discount: number;
 
 	public category: string;
-	public image: Image[];
 
-	public rating: Rating[];
+	public image?: Image[];
+	public rating?: Rating[];
 
-	constructor(props: Omit<Item, 'id'>, image?: Image[]) {
+	constructor(props: Item, image: Image[]) {
 		this.created_at = Date.now();
 		if (image) {
 			this.image = image;
