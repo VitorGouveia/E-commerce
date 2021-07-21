@@ -73,15 +73,16 @@ class CheckoutService {
 			const user: userResponse = await this.usersRepository.findById(id);
 			const userAddress = user.address!.find((address: Address) => address.id === address_id);
 
+			const postal_code = userAddress!.postal_code.split('-').join('');
+
 			// single-item checkout
 			if (!!item_id === true) {
 				const item = await this.itemsRepository.findById(Number(item_id));
 				if (!item) throw new Error("This item doesn't exist.");
 
-				//
 				const [{ valor, prazoEntrega }]: FreteResponse[] = await Frete()
 					.cepOrigem('02228240')
-					.cepDestino(userAddress!.postal_code.split('-').join(''))
+					.cepDestino(postal_code)
 					.peso(1)
 					.formato(Frete.formatos.caixaPacote)
 					.comprimento(27)
@@ -149,24 +150,77 @@ class CheckoutService {
 
 			// get user address and use it on frete API, get the shipping price and add on the item price
 			const cart = await this.cartRepository.list({ user_id: id });
-
 			if (cart.length === 0) throw new Error('Your cart is empty.');
+
 			var itemPrices: number[] = [];
 			var itemShipping: number[] = [];
+			var items: Object[] = [];
 
 			for (const { item_id } of cart) {
 				try {
 					const item = await this.itemsRepository.findById(item_id);
-
 					if (!item) throw new Error('Item on your cart is no longer valid.');
-					const percentagePrice = Math.floor(item.discount / 100);
 
+					const [{ valor, prazoEntrega }]: FreteResponse[] = await Frete()
+						.cepOrigem('02228240')
+						.cepDestino(postal_code)
+						.peso(1)
+						.formato(Frete.formatos.caixaPacote)
+						.comprimento(27)
+						.altura(8)
+						.largura(10)
+						.diametro(18)
+						.maoPropria('N')
+						.valorDeclarado(item.price / 10)
+						.avisoRecebimento('S')
+						.servico(Frete.servicos.sedex)
+						.precoPrazo('13466321');
+
+					const shipping_price = Number(valor.split(',').join(''));
+
+					const date = new Date();
+					date.setDate(date.getDate() + Number(prazoEntrega));
+
+					items.push({
+						item_id: item.id,
+						price: item.price,
+						shipping: {
+							shipping_price,
+							shipping_date: date,
+						},
+					});
+
+					const percentagePrice = Math.floor(item.discount / 100);
 					if (percentagePrice === 0) {
-						itemShipping.push(item.shipping_price);
+						// validate if address, payment exist
+						const order = new Order({
+							user_id: id,
+							address_id,
+							item_id: item_id,
+							payment_id,
+							shipping_price,
+							all_items_price: item.price,
+						});
+
+						await this.orderRepository.save(order);
+
+						itemShipping.push(shipping_price);
 						itemPrices.push(item.price);
 					} else {
 						const price: number = item.price - percentagePrice * item.price;
-						itemPrices.push(item.shipping_price);
+
+						const order = new Order({
+							user_id: id,
+							address_id,
+							item_id: item_id,
+							payment_id,
+							shipping_price,
+							all_items_price: item.price,
+						});
+
+						await this.orderRepository.save(order);
+
+						itemPrices.push(shipping_price);
 						itemPrices.push(price);
 					}
 				} catch (error) {
@@ -179,23 +233,17 @@ class CheckoutService {
 			const add = (a: number, b: number) => a + b;
 			const prices = itemPrices.reduce(add);
 			const shipping = itemShipping.reduce(add);
-			// validate if address, payment or item id exist
-			const order = new Order({
-				user_id: id,
-				address_id,
-				item_id,
-				payment_id,
-				// frete API
-				shipping_price: shipping,
-				all_items_price: prices,
-			});
-
-			await this.orderRepository.save(order);
 
 			return {
-				prices,
+				prices: {
+					total: prices,
+					total_shipping: shipping,
+					items,
+				},
 			};
 		} catch (error) {
+			console.log(error.message);
+
 			throw new Error(error.message);
 		}
 	}
