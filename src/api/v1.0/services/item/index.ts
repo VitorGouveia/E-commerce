@@ -1,22 +1,12 @@
-import CreateItem from "./CreateItem"
-import ReadItem from "./ReadItem"
-import UpdateItem from "./UpdateItem"
-import DeleteItem from "./DeleteItem"
+export { default as CreateItem } from './CreateItem';
+export { default as ReadItem } from './ReadItem';
+export { default as UpdateItem } from './UpdateItem';
+export { default as DeleteItem } from './DeleteItem';
 
-import RateItem from "./RateItem"
+export { default as RateItem } from './RateItem';
 
-import CreateImage from "./CreateImage"
-import DeleteImage from "./DeleteImage"
+export { default as CreateImage } from './CreateImage';
+export { default as DeleteImage } from './DeleteImage';
 
-import LoadFile from "./LoadFile"
-
-export { 
-  CreateItem,
-  ReadItem,
-  UpdateItem,
-  DeleteItem,
-  RateItem,
-  CreateImage,
-  DeleteImage,
-  LoadFile
-}
+export { default as LoadFile } from './LoadFile';
+export { default as getShipping } from './getShipping';

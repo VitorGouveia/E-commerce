@@ -1,78 +1,85 @@
-import { Request, Response } from "express"
+import { Request, Response } from 'express';
 
-import { prisma } from "@src/prisma"
-import { CreateItem, ReadItem, UpdateItem, DeleteItem, RateItem, CreateImage, DeleteImage } from "@v1/services/item"
+import * as service from '@v1/services/item';
 
 export const ItemController = {
-  async create(request: Request, response: Response) {
-    const { error, status, message, item } = await CreateItem(request)
+	async create(request: Request, response: Response) {
+		const { error, status, message, item } = await service.CreateItem(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json({
-      message,
-      item
-    })
-  },
+		return response.status(status).json({
+			message,
+			item,
+		});
+	},
 
-  async read(request: Request, response: Response) {
-    const { error, status, message, items } = await ReadItem(request)
+	async read(request: Request, response: Response) {
+		const { error, status, message, items } = await service.ReadItem(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json({
-      message,
-      items
-    })
-  },
+		return response.status(status).json({
+			message,
+			items,
+		});
+	},
 
-  async update(request: Request, response: Response) {
-    const { error, status, message, item } = await UpdateItem(request)
+	async update(request: Request, response: Response) {
+		const { error, status, message, item } = await service.UpdateItem(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json({
-      message,
-      item
-    })
-  },
+		return response.status(status).json({
+			message,
+			item,
+		});
+	},
 
-  async delete(request: Request, response: Response) {
-    const { error, status, message } = await DeleteItem(request)
+	async delete(request: Request, response: Response) {
+		const { error, status, message } = await service.DeleteItem(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json(message)
-  },
+		return response.status(status).json(message);
+	},
 
-  async rateItem(request: Request, response: Response) {
-    const { error, status, message, item, average } = await RateItem(request)
+	async rateItem(request: Request, response: Response) {
+		const { error, status, message, item, average } = await service.RateItem(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json({
-      message,
-      average,
-      item
-    })
-  },
+		return response.status(status).json({
+			message,
+			average,
+			item,
+		});
+	},
 
-  async createImage(request: Request, response: Response) {
-    const { error, status, message, image } = await CreateImage(request)
+	async createImage(request: Request, response: Response) {
+		const { error, status, message, image } = await service.CreateImage(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json({
-      message,
-      image
-    })
-  },
+		return response.status(status).json({
+			message,
+			image,
+		});
+	},
 
-  async removeImage(request: Request, response: Response) {
-    const { error, status, message } = await DeleteImage(request)
+	async removeImage(request: Request, response: Response) {
+		const { error, status, message } = await service.DeleteImage(request);
 
-    if(error) return response.status(status).json(message)
+		if (error) return response.status(status).json(message);
 
-    return response.status(status).json(message)
-  }
-}
+		return response.status(status).json(message);
+	},
+
+	async getShipping(request: Request, response: Response) {
+		const { error, status, message, shipping } = await service.getShipping(request);
+
+		if (error) return response.status(status).json(message);
+
+		return response.status(status).json(shipping);
+	},
+};
