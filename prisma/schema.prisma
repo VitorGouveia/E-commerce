@@ -24,7 +24,7 @@ model User {
   userhash       String
   cpf            String?   @unique
   email          String    @unique
-  password       String
+  password       String    @ignore
   address        Address[]
   cart           Cart[]
   payment        Payment[]
