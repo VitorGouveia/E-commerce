@@ -3,7 +3,7 @@ import { Item, Rating, Image } from '@v1/entities';
 import { Item as ItemType } from '@prisma/client';
 
 export interface IItemsRepository {
-	findById(id: number): Promise<Omit<ItemType, 'image' | 'rating'> | null>;
+	findById(id: number): Promise<Omit<ItemType, 'image' | 'rating'>>;
 	findAll(
 		category?: string,
 		property?: string,

@@ -5,7 +5,7 @@ import { Item as ItemType, Rating as RatingType } from '@prisma/client';
 import { prisma } from '@src/prisma';
 
 export class SqliteItemsRepository implements IItemsRepository {
-	async findById(id: number): Promise<Omit<ItemType, 'image' | 'rating'> | null> {
+	async findById(id: number): Promise<Omit<ItemType, 'image' | 'rating'>> {
 		const item = await prisma.item.findUnique({
 			where: {
 				id,
@@ -29,8 +29,22 @@ export class SqliteItemsRepository implements IItemsRepository {
 						link: true,
 					},
 				},
+				dimension: {
+					select: {
+						id: true,
+						weight: true,
+						length: true,
+						height: true,
+						width: true,
+						diameter: true,
+					},
+				},
+				Cart: true,
+				Order: true,
 			},
 		});
+
+		if (item === null) throw new Error('Could not find item by id.');
 
 		return item;
 	}
@@ -231,37 +245,46 @@ export class SqliteItemsRepository implements IItemsRepository {
 	}
 
 	async save(item: Item): Promise<void> {
-		if (item.image.length > 0) {
-			const { image, ...props } = item;
+		const { image, dimension, ...props } = item;
 
-			const newItem = await prisma.item.create({
-				data: {
-					...props,
-				},
-			});
+		const { width, weight, length, height, diameter } = dimension;
 
-			image.forEach(async imageInfo => {
-				await prisma.item.update({
-					where: {
-						id: newItem.id,
-					},
-
-					data: {
-						image: {
-							create: {
-								link: imageInfo.link,
-							},
-						},
-					},
-				});
-			});
-		}
-
-		const { image, ...props } = item;
-
-		await prisma.item.create({
+		const newItem = await prisma.item.create({
 			data: {
 				...props,
+			},
+		});
+
+		image.forEach(async imageInfo => {
+			await prisma.item.update({
+				where: {
+					id: newItem.id,
+				},
+
+				data: {
+					image: {
+						create: {
+							link: imageInfo.link,
+						},
+					},
+				},
+			});
+		});
+
+		await prisma.item.update({
+			where: {
+				id: newItem.id,
+			},
+			data: {
+				dimension: {
+					create: {
+						width,
+						weight,
+						length,
+						height,
+						diameter,
+					},
+				},
 			},
 		});
 	}
