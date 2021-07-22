@@ -3,5 +3,8 @@ build
 
 coverage
 
+app.db
+prisma/src/app.db
+
 .env
 .env.example
