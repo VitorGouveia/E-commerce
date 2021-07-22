@@ -98,8 +98,9 @@ model Item {
   image          Image[]
   dimension      Dimension?
   rating         Rating[]
-  Cart           Cart[]
-  Order          Order[]
+  cart           Cart[]
+  order          Order[]
+  coupon         Coupon[]
 }
 
 model Dimension {
@@ -125,4 +126,13 @@ model Order {
   address         Address @relation(fields: [address_id], references: [id])
   user            User    @relation(fields: [user_id], references: [id])
   item            Item    @relation(fields: [item_id], references: [id])
+}
+
+model Coupon {
+  id          Int    @id @default(autoincrement())
+  item_id     Int
+  code        String
+  expire_date Int
+  value       Int
+  item        Item   @relation(fields: [item_id], references: [id])
 }
