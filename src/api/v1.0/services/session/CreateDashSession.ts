@@ -77,26 +77,18 @@ class CreateDashSessionService {
 }
 
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const CreateDashSession = new CreateDashSessionService(UsersRepository);
+	const UsersRepository = new SqliteUsersRepository();
+	const CreateDashSession = new CreateDashSessionService(UsersRepository);
 
-		const { refresh_token, jwt_login, social_login } = await CreateDashSession.execute(
-			request.body,
-			request.headers['authorization']
-		);
+	const { refresh_token, jwt_login, social_login } = await CreateDashSession.execute(
+		request.body,
+		request.headers['authorization']
+	);
 
-		return {
-			jwt_login,
-			social_login,
-			status: 200,
-			refresh_token,
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		jwt_login,
+		social_login,
+		status: 200,
+		refresh_token,
+	};
 };

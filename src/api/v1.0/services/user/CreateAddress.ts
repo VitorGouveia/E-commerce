@@ -35,21 +35,13 @@ class CreateAddressService {
 }
 
 export default async (request: Request) => {
-	try {
-		const AddressRepository = new SqliteAddressRepository();
-		const CreateAddress = new CreateAddressService(AddressRepository);
+	const AddressRepository = new SqliteAddressRepository();
+	const CreateAddress = new CreateAddressService(AddressRepository);
 
-		const { address } = await CreateAddress.execute(request.body, request.params.id);
+	const { address } = await CreateAddress.execute(request.body, request.params.id);
 
-		return {
-			status: 201,
-			address,
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 201,
+		address,
+	};
 };

@@ -23,21 +23,13 @@ class LoadFileService {
 }
 
 export default async (request: Request) => {
-	try {
-		const itemsRepository = new SqliteItemsRepository();
-		const LoadFile = new LoadFileService(itemsRepository);
+	const itemsRepository = new SqliteItemsRepository();
+	const LoadFile = new LoadFileService(itemsRepository);
 
-		await LoadFile.execute(request.body);
+	await LoadFile.execute(request.body);
 
-		return {
-			status: 200,
-			message: 'Loaded items from file with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Loaded items from file with success!',
+	};
 };

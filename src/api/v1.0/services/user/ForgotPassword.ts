@@ -59,22 +59,14 @@ class ForgotPasswordService {
 }
 
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const MailProvider = new MailTrapMailProvider();
-		const ForgotPassword = new ForgotPasswordService(UsersRepository, MailProvider);
+	const UsersRepository = new SqliteUsersRepository();
+	const MailProvider = new MailTrapMailProvider();
+	const ForgotPassword = new ForgotPasswordService(UsersRepository, MailProvider);
 
-		await ForgotPassword.execute(request.params.id);
+	await ForgotPassword.execute(request.params.id);
 
-		return {
-			status: 200,
-			message: 'Sent you an e-mail.',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Sent you an e-mail.',
+	};
 };

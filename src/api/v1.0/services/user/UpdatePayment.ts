@@ -25,22 +25,14 @@ class UpdatePaymentService {
 }
 
 export default async (request: Request) => {
-	try {
-		const paymentRepository = new SqlitePaymentRepository();
-		const UpdatePayment = new UpdatePaymentService(paymentRepository);
+	const paymentRepository = new SqlitePaymentRepository();
+	const UpdatePayment = new UpdatePaymentService(paymentRepository);
 
-		const { payment } = await UpdatePayment.execute(request.params.id, request, request.body);
+	const { payment } = await UpdatePayment.execute(request.params.id, request, request.body);
 
-		return {
-			status: 200,
-			payment,
-			message: 'Updated payment with success.',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		payment,
+		message: 'Updated payment with success.',
+	};
 };

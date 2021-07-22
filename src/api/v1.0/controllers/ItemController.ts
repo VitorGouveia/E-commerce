@@ -4,9 +4,7 @@ import * as service from '@v1/services/item';
 
 export const ItemController = {
 	async create(request: Request, response: Response) {
-		const { error, status, message, item } = await service.CreateItem(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, item } = await service.CreateItem(request);
 
 		return response.status(status).json({
 			message,
@@ -15,9 +13,7 @@ export const ItemController = {
 	},
 
 	async read(request: Request, response: Response) {
-		const { error, status, message, items } = await service.ReadItem(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, items } = await service.ReadItem(request);
 
 		return response.status(status).json({
 			message,
@@ -26,9 +22,7 @@ export const ItemController = {
 	},
 
 	async update(request: Request, response: Response) {
-		const { error, status, message, item } = await service.UpdateItem(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, item } = await service.UpdateItem(request);
 
 		return response.status(status).json({
 			message,
@@ -37,17 +31,13 @@ export const ItemController = {
 	},
 
 	async delete(request: Request, response: Response) {
-		const { error, status, message } = await service.DeleteItem(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.DeleteItem(request);
 
 		return response.status(status).json(message);
 	},
 
 	async rateItem(request: Request, response: Response) {
-		const { error, status, message, item, average } = await service.RateItem(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, item, average } = await service.RateItem(request);
 
 		return response.status(status).json({
 			message,
@@ -57,9 +47,7 @@ export const ItemController = {
 	},
 
 	async createImage(request: Request, response: Response) {
-		const { error, status, message, image } = await service.CreateImage(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, image } = await service.CreateImage(request);
 
 		return response.status(status).json({
 			message,
@@ -68,17 +56,13 @@ export const ItemController = {
 	},
 
 	async removeImage(request: Request, response: Response) {
-		const { error, status, message } = await service.DeleteImage(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.DeleteImage(request);
 
 		return response.status(status).json(message);
 	},
 
 	async getShipping(request: Request, response: Response) {
-		const { error, status, message, shipping } = await service.getShipping(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, shipping } = await service.getShipping(request);
 
 		return response.status(status).json(shipping);
 	},

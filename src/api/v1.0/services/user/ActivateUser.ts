@@ -72,27 +72,19 @@ class ActivateUserService {
 }
 
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
+	const UsersRepository = new SqliteUsersRepository();
 
-		const ActivateUser = new ActivateUserService(UsersRepository);
+	const ActivateUser = new ActivateUserService(UsersRepository);
 
-		const { user, access_token } = await ActivateUser.execute(
-			request.headers['authorization'],
-			request.ip
-		);
+	const { user, access_token } = await ActivateUser.execute(
+		request.headers['authorization'],
+		request.ip
+	);
 
-		return {
-			status: 201,
-			user,
-			access_token,
-			message: 'User created with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 201,
+		user,
+		access_token,
+		message: 'User created with success!',
+	};
 };

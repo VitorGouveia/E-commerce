@@ -80,21 +80,13 @@ class getShippingService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const getShipping = new getShippingService(ItemsRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const getShipping = new getShippingService(ItemsRepository);
 
-		const { shipping } = await getShipping.execute(request);
+	const { shipping } = await getShipping.execute(request);
 
-		return {
-			status: 200,
-			shipping,
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		shipping,
+	};
 };

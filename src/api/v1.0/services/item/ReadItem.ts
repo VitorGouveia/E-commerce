@@ -100,37 +100,19 @@ class ReadItemService {
 			}
 		} catch (error) {
 			throw new Error(error.message);
-			return error;
 		}
 	}
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const ReadItem = new ReadItemService(ItemsRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const ReadItem = new ReadItemService(ItemsRepository);
 
-		const { items } = await ReadItem.execute(request.params.id, request);
-		// respond with item information
-		return {
-			status: 202,
-			message: 'Listed items with success!',
-			items,
-		};
-	} catch (error) {
-		if (error.message == 'items not found' || error.message == 'item not found') {
-			return {
-				error: true,
-				status: 404,
-				message: error.message,
-			};
-		}
-
-		// in case of error
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	const { items } = await ReadItem.execute(request.params.id, request);
+	// respond with item information
+	return {
+		status: 202,
+		message: 'Listed items with success!',
+		items,
+	};
 };

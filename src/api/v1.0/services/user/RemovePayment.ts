@@ -18,21 +18,13 @@ class RemovePaymentService {
 }
 
 export default async (request: Request) => {
-	try {
-		const paymentRepository = new SqlitePaymentRepository();
-		const RemovePayment = new RemovePaymentService(paymentRepository);
+	const paymentRepository = new SqlitePaymentRepository();
+	const RemovePayment = new RemovePaymentService(paymentRepository);
 
-		await RemovePayment.execute(request.params.id, request);
+	await RemovePayment.execute(request.params.id, request);
 
-		return {
-			status: 200,
-			message: 'Removed payment.',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Removed payment.',
+	};
 };

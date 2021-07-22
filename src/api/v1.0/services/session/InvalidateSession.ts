@@ -34,21 +34,13 @@ class InvalidateSessionService {
 }
 
 export default async (request: Request) => {
-	try {
-		const usersRepository = new SqliteUsersRepository();
-		const InvalidateSession = new InvalidateSessionService(usersRepository);
+	const usersRepository = new SqliteUsersRepository();
+	const InvalidateSession = new InvalidateSessionService(usersRepository);
 
-		await InvalidateSession.execute(request.params.id);
+	await InvalidateSession.execute(request.params.id);
 
-		return {
-			status: 200,
-			message: 'User session invalidated',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'User session invalidated',
+	};
 };

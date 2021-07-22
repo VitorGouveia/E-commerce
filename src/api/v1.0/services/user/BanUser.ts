@@ -87,22 +87,14 @@ class BanUserService {
 }
 
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const MailProvider = new MailTrapMailProvider();
-		const BanUser = new BanUserService(UsersRepository, MailProvider);
+	const UsersRepository = new SqliteUsersRepository();
+	const MailProvider = new MailTrapMailProvider();
+	const BanUser = new BanUserService(UsersRepository, MailProvider);
 
-		await BanUser.execute(request.params.id, request);
+	await BanUser.execute(request.params.id, request);
 
-		return {
-			status: 202,
-			message: 'Banned user with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 202,
+		message: 'Banned user with success!',
+	};
 };

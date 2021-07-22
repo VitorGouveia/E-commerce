@@ -55,28 +55,19 @@ class ReadUserService {
 }
 
 export default async (request: Request) => {
-	try {
-		// create sqlite repository
-		const UsersRepository = new SqliteUsersRepository();
+	// create sqlite repository
+	const UsersRepository = new SqliteUsersRepository();
 
-		// create read user service
-		const ReadUser = new ReadUserService(UsersRepository);
+	// create read user service
+	const ReadUser = new ReadUserService(UsersRepository);
 
-		// execute user service
-		const { users }: readUserResponse = await ReadUser.execute(request.params.id, request);
+	// execute user service
+	const { users }: readUserResponse = await ReadUser.execute(request.params.id, request);
 
-		// respond with user information
-		return {
-			status: 202,
-			users,
-			message: 'Listed users with success!',
-		};
-	} catch (error) {
-		// in case of error
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	// respond with user information
+	return {
+		status: 202,
+		users,
+		message: 'Listed users with success!',
+	};
 };

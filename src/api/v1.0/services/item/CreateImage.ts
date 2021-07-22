@@ -24,22 +24,14 @@ class CreateImageService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ImageRepository = new SqliteImageRepository();
-		const CreateImage = new CreateImageService(ImageRepository);
+	const ImageRepository = new SqliteImageRepository();
+	const CreateImage = new CreateImageService(ImageRepository);
 
-		const { image } = await CreateImage.execute(Number(request.params.id), request.body);
+	const { image } = await CreateImage.execute(Number(request.params.id), request.body);
 
-		return {
-			status: 200,
-			message: 'Create item image with success!',
-			image,
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Create item image with success!',
+		image,
+	};
 };

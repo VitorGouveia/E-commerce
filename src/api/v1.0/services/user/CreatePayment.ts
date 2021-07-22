@@ -22,29 +22,20 @@ class CreatePaymentService {
 				payment,
 			};
 		} catch (error) {
-			console.log(error);
 			throw new Error(error.message);
 		}
 	}
 }
 
 export default async (request: Request) => {
-	try {
-		const paymentRepository = new SqlitePaymentRepository();
-		const CreatePayment = new CreatePaymentService(paymentRepository);
+	const paymentRepository = new SqlitePaymentRepository();
+	const CreatePayment = new CreatePaymentService(paymentRepository);
 
-		const { payment } = await CreatePayment.execute(request.params.id, request.body);
+	const { payment } = await CreatePayment.execute(request.params.id, request.body);
 
-		return {
-			status: 201,
-			payment,
-			message: 'Created a payment method with success!',
-		};
-	} catch (error) {
-		return {
-			status: 400,
-			error: true,
-			message: error.message,
-		};
-	}
+	return {
+		status: 201,
+		payment,
+		message: 'Created a payment method with success!',
+	};
 };

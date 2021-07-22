@@ -4,17 +4,13 @@ import * as service from '@v1/services/user';
 
 export const UserController = {
 	async create(request: Request, response: Response) {
-		const { error, status, message } = await service.CreateUser(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.CreateUser(request);
 
 		return response.status(status).json(message);
 	},
 
 	async read(request: Request, response: Response) {
-		const { error, message, status, users } = await service.ReadUser(request);
-
-		if (error) return response.status(status).json(message);
+		const { message, status, users } = await service.ReadUser(request);
 
 		return response.status(status).json({
 			message,
@@ -38,9 +34,7 @@ export const UserController = {
 	},
 
 	async delete(request: Request, response: Response) {
-		const { error, status, message } = await service.DeleteUser(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.DeleteUser(request);
 
 		return response.status(status).json({
 			message,
@@ -48,9 +42,7 @@ export const UserController = {
 	},
 
 	async createAddress(request: Request, response: Response) {
-		const { error, status, message, address } = await service.CreateAddress(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, address } = await service.CreateAddress(request);
 
 		return response.status(status).json({
 			message,
@@ -59,33 +51,25 @@ export const UserController = {
 	},
 
 	async deleteAddress(request: Request, response: Response) {
-		const { error, status, message } = await service.DeleteAddress(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.DeleteAddress(request);
 
 		return response.status(status).json(message);
 	},
 
 	async createCart(request: Request, response: Response) {
-		const { error, status, message, cart } = await service.CreateCart(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, cart } = await service.CreateCart(request);
 
 		return response.status(status).json({ cart, message });
 	},
 
 	async deleteCart(request: Request, response: Response) {
-		const { error, status, message } = await service.DeleteCart(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.DeleteCart(request);
 
 		return response.status(status).json(message);
 	},
 
 	async activate(request: Request, response: Response) {
-		const { error, status, message, user, access_token } = await service.ActivateUser(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, user, access_token } = await service.ActivateUser(request);
 
 		response.header('authorization', access_token);
 
@@ -97,49 +81,37 @@ export const UserController = {
 	},
 
 	async forgotPassword(request: Request, response: Response) {
-		const { error, status, message } = await service.ForgotPassword(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.ForgotPassword(request);
 
 		return response.status(status).json(message);
 	},
 
 	async createPayment(request: Request, response: Response) {
-		const { error, status, message, payment } = await service.CreatePayment(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, payment } = await service.CreatePayment(request);
 
 		return response.status(status).json({ message, payment });
 	},
 
 	async updatePayment(request: Request, response: Response) {
-		const { error, status, message, payment } = await service.UpdatePayment(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, payment } = await service.UpdatePayment(request);
 
 		return response.status(status).json({ message, payment });
 	},
 
 	async removePayment(request: Request, response: Response) {
-		const { error, status, message } = await service.RemovePayment(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await service.RemovePayment(request);
 
 		return response.status(status).json(message);
 	},
 
 	async checkout(request: Request, response: Response) {
-		const { error, status, message, prices } = await service.Checkout(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, prices } = await service.Checkout(request);
 
 		return response.status(status).json({ message, prices });
 	},
 
 	async order(request: Request, response: Response) {
-		const { error, status, message, orders } = await service.Order(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message, orders } = await service.Order(request);
 
 		return response.status(status).json({ message, orders });
 	},

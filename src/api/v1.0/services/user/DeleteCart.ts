@@ -19,21 +19,13 @@ class DeleteCartService {
 }
 
 export default async (request: Request) => {
-	try {
-		const CartRepository = new SqliteCartRepository();
-		const DeleteCart = new DeleteCartService(CartRepository);
+	const CartRepository = new SqliteCartRepository();
+	const DeleteCart = new DeleteCartService(CartRepository);
 
-		await DeleteCart.execute(request.params.id, request);
+	await DeleteCart.execute(request.params.id, request);
 
-		return {
-			status: 200,
-			message: 'Delete item from cart with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Delete item from cart with success!',
+	};
 };

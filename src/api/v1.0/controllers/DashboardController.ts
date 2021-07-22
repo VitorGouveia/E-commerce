@@ -6,9 +6,7 @@ import { CreateDashSession, InvalidateSession } from '@v1/services/session';
 
 export const DashboardController = {
 	async loadFromFile(request: Request, response: Response) {
-		const { error, status, message } = await LoadFile(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await LoadFile(request);
 
 		return response.status(status).json({
 			message,
@@ -16,9 +14,8 @@ export const DashboardController = {
 	},
 
 	async loadAdmin(request: Request, response: Response) {
-		const { error, status, message, user } = await LoadAdmin(request);
+		const { status, message, user } = await LoadAdmin(request);
 
-		if (error) return response.status(status).json(message);
 		if (user == null) return;
 		response.header('authorization', user?.access_token);
 
@@ -29,10 +26,7 @@ export const DashboardController = {
 	},
 
 	async login(request: Request, response: Response) {
-		const { error, status, message, jwt_login, social_login, refresh_token } =
-			await CreateDashSession(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, jwt_login, social_login, refresh_token } = await CreateDashSession(request);
 
 		response.header('authorization', refresh_token);
 
@@ -44,17 +38,13 @@ export const DashboardController = {
 	},
 
 	async banUser(request: Request, response: Response) {
-		const { error, status, message } = await BanUser(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await BanUser(request);
 
 		return response.status(status).json(message);
 	},
 
 	async InvalidateToken(request: Request, response: Response) {
-		const { error, status, message } = await InvalidateSession(request);
-
-		if (error) return response.status(status).json(message);
+		const { status, message } = await InvalidateSession(request);
 
 		return response.status(status).json(message);
 	},

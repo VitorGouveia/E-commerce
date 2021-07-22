@@ -34,22 +34,14 @@ class DeleteUserService {
 }
 
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const MailProvider = new MailTrapMailProvider();
-		const DeleteUser = new DeleteUserService(UsersRepository, MailProvider);
+	const UsersRepository = new SqliteUsersRepository();
+	const MailProvider = new MailTrapMailProvider();
+	const DeleteUser = new DeleteUserService(UsersRepository, MailProvider);
 
-		await DeleteUser.execute(request.params.id);
+	await DeleteUser.execute(request.params.id);
 
-		return {
-			status: 200,
-			message: 'User deleted with success',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'User deleted with success',
+	};
 };

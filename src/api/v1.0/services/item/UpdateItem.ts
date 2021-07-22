@@ -22,23 +22,14 @@ class UpdateItemService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const UpdateItem = new UpdateItemService(ItemsRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const UpdateItem = new UpdateItemService(ItemsRepository);
 
-		const { item } = await UpdateItem.execute(Number(request.params.id), request.body);
+	const { item } = await UpdateItem.execute(Number(request.params.id), request.body);
 
-		return {
-			status: 202,
-			message: 'Updated item with success!',
-			item,
-		};
-	} catch (error) {
-		// in case of error
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 202,
+		message: 'Updated item with success!',
+		item,
+	};
 };

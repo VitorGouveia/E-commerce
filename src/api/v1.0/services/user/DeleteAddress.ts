@@ -16,21 +16,13 @@ class DeleteAddressService {
 }
 
 export default async (request: Request) => {
-	try {
-		const AddressRepository = new SqliteAddressRepository();
-		const CreateAddress = new DeleteAddressService(AddressRepository);
+	const AddressRepository = new SqliteAddressRepository();
+	const CreateAddress = new DeleteAddressService(AddressRepository);
 
-		await CreateAddress.execute(request.body, request.params.id);
+	await CreateAddress.execute(request.body, request.params.id);
 
-		return {
-			status: 202,
-			message: 'Address deleted with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 202,
+		message: 'Address deleted with success!',
+	};
 };

@@ -263,31 +263,23 @@ class CheckoutService {
 }
 
 export default async (request: Request) => {
-	try {
-		const itemsRepository = new SqliteItemsRepository();
-		const cartRepository = new SqliteCartRepository();
-		const orderRepository = new SqliteOrderRepository();
-		const usersRepository = new SqliteUsersRepository();
+	const itemsRepository = new SqliteItemsRepository();
+	const cartRepository = new SqliteCartRepository();
+	const orderRepository = new SqliteOrderRepository();
+	const usersRepository = new SqliteUsersRepository();
 
-		const checkout = new CheckoutService(
-			itemsRepository,
-			cartRepository,
-			orderRepository,
-			usersRepository
-		);
+	const checkout = new CheckoutService(
+		itemsRepository,
+		cartRepository,
+		orderRepository,
+		usersRepository
+	);
 
-		const { prices } = await checkout.execute(request.params.id, request);
+	const { prices } = await checkout.execute(request.params.id, request);
 
-		return {
-			status: 200,
-			message: 'Checkout successful!',
-			prices,
-		};
-	} catch (error) {
-		return {
-			status: 400,
-			error: true,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Checkout successful!',
+		prices,
+	};
 };

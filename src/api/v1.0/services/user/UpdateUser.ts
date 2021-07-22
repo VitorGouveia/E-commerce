@@ -58,37 +58,28 @@ class UpdateUserService {
 
 // just return everything from create user service
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const UpdateUser = new UpdateUserService(UsersRepository);
+	const UsersRepository = new SqliteUsersRepository();
+	const UpdateUser = new UpdateUserService(UsersRepository);
 
-		const { usernameAlreadyExists, available_usernames, user } = await UpdateUser.execute(
-			request.params.id,
-			request.body,
-			request.ip
-		);
+	const { usernameAlreadyExists, available_usernames, user } = await UpdateUser.execute(
+		request.params.id,
+		request.body,
+		request.ip
+	);
 
-		if (usernameAlreadyExists?.length) {
-			return {
-				error: true,
-				status: 400,
-				message: 'Username already taken.',
-				available_usernames,
-			};
-		}
-
-		// respond with user information
-		return {
-			status: 200,
-			user,
-			message: 'User updated with success!',
-		};
-	} catch (error) {
-		// in case of error, send error details
+	if (usernameAlreadyExists?.length) {
 		return {
 			error: true,
 			status: 400,
-			message: error.message,
+			message: 'Username already taken.',
+			available_usernames,
 		};
 	}
+
+	// respond with user information
+	return {
+		status: 200,
+		user,
+		message: 'User updated with success!',
+	};
 };

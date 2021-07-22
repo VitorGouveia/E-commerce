@@ -16,21 +16,13 @@ class DeleteImageService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ImageRepository = new SqliteImageRepository();
-		const DeleteImage = new DeleteImageService(ImageRepository);
+	const ImageRepository = new SqliteImageRepository();
+	const DeleteImage = new DeleteImageService(ImageRepository);
 
-		await DeleteImage.execute(request.body, Number(request.params.id));
+	await DeleteImage.execute(request.body, Number(request.params.id));
 
-		return {
-			status: 200,
-			message: 'Deleted item image with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Deleted item image with success!',
+	};
 };

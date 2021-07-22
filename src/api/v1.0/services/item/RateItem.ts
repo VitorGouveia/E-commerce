@@ -26,23 +26,15 @@ class RateItemService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const RateItem = new RateItemService(ItemsRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const RateItem = new RateItemService(ItemsRepository);
 
-		const { item, average } = await RateItem.execute(Number(request.params.id), request.body);
+	const { item, average } = await RateItem.execute(Number(request.params.id), request.body);
 
-		return {
-			status: 200,
-			item,
-			average,
-			message: 'Rated item with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		item,
+		average,
+		message: 'Rated item with success!',
+	};
 };

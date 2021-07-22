@@ -25,7 +25,7 @@ class CreateUserService {
 			const [userAlreadyExists] = await this.usersRepository.findByEmail(email);
 
 			// if user with same email exists
-			// if (userAlreadyExists) throw new Error('User already exists.');
+			if (userAlreadyExists) throw new Error('User already exists.');
 
 			var token: string = '';
 			const hashPassword = await hash(password, 10);
@@ -63,23 +63,14 @@ class CreateUserService {
 
 // just return everything from create user service
 export default async (request: Request) => {
-	try {
-		const UsersRepository = new SqliteUsersRepository();
-		const CreateUser = new CreateUserService(UsersRepository);
+	const UsersRepository = new SqliteUsersRepository();
+	const CreateUser = new CreateUserService(UsersRepository);
 
-		await CreateUser.execute(request.body, request);
+	await CreateUser.execute(request.body, request);
 
-		// respond with user information
-		return {
-			status: 200,
-			message: 'Sent verification message to your e-mail!',
-		};
-	} catch (error) {
-		// in case of error, send error details
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	// respond with user information
+	return {
+		status: 200,
+		message: 'Sent verification message to your e-mail!',
+	};
 };

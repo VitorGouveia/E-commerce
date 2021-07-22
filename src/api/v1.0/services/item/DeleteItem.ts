@@ -10,7 +10,7 @@ class DeleteItemService {
 		try {
 			const confirmed = query.confirmed;
 
-			if (confirmed) {
+			if (!!confirmed) {
 				await this.itemsRepository.delete(id);
 			}
 
@@ -38,22 +38,14 @@ class DeleteItemService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const CartRepository = new SqliteCartRepository();
-		const DeleteItem = new DeleteItemService(ItemsRepository, CartRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const CartRepository = new SqliteCartRepository();
+	const DeleteItem = new DeleteItemService(ItemsRepository, CartRepository);
 
-		await DeleteItem.execute(Number(request.params.id), request);
+	await DeleteItem.execute(Number(request.params.id), request);
 
-		return {
-			status: 200,
-			message: 'Item deleted with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		message: 'Item deleted with success!',
+	};
 };

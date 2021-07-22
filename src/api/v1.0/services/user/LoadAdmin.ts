@@ -48,22 +48,14 @@ class LoadAdminService {
 }
 
 export default async (request: Request) => {
-	try {
-		const usersRepository = new SqliteUsersRepository();
-		const LoadAdmin = new LoadAdminService(usersRepository);
+	const usersRepository = new SqliteUsersRepository();
+	const LoadAdmin = new LoadAdminService(usersRepository);
 
-		const { user } = await LoadAdmin.execute(request.body);
+	const { user } = await LoadAdmin.execute(request.body);
 
-		return {
-			status: 200,
-			user,
-			message: 'Loaded admin users from file.',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 200,
+		user,
+		message: 'Loaded admin users from file.',
+	};
 };

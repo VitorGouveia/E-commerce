@@ -23,22 +23,14 @@ class CreateItemService {
 }
 
 export default async (request: Request) => {
-	try {
-		const ItemsRepository = new SqliteItemsRepository();
-		const CreateItem = new CreateItemService(ItemsRepository);
+	const ItemsRepository = new SqliteItemsRepository();
+	const CreateItem = new CreateItemService(ItemsRepository);
 
-		const { item } = await CreateItem.execute(request.body);
+	const { item } = await CreateItem.execute(request.body);
 
-		return {
-			status: 201,
-			item,
-			message: 'Item created with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 201,
+		item,
+		message: 'Item created with success!',
+	};
 };

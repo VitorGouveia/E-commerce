@@ -22,22 +22,14 @@ class CreateCartService {
 }
 
 export default async (request: Request) => {
-	try {
-		const cartRepository = new SqliteCartRepository();
-		const CartService = new CreateCartService(cartRepository);
+	const cartRepository = new SqliteCartRepository();
+	const CartService = new CreateCartService(cartRepository);
 
-		const { cart } = await CartService.execute(request.params.id, request.body);
+	const { cart } = await CartService.execute(request.params.id, request.body);
 
-		return {
-			status: 201,
-			cart,
-			message: 'Cart item created with success!',
-		};
-	} catch (error) {
-		return {
-			error: true,
-			status: 400,
-			message: error.message,
-		};
-	}
+	return {
+		status: 201,
+		cart,
+		message: 'Cart item created with success!',
+	};
 };
