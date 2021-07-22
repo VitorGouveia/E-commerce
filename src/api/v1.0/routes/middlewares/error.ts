@@ -12,7 +12,6 @@ export const errorHandler = (
 
 	status = 400;
 	if (!!isNotFound) {
-		console.log(error.message);
 		status = 404;
 	}
 
