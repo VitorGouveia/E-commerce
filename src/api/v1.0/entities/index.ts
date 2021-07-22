@@ -7,3 +7,4 @@ export { Cart } from './Cart';
 export { Payment } from './Payment';
 export { Order } from './Order';
 export { Dimension } from './Dimension';
+export { Coupon } from './Coupon';

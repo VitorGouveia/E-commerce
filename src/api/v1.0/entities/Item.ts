@@ -1,4 +1,4 @@
-import { Rating, Image, Dimension } from '.';
+import { Rating, Image, Dimension, Coupon } from '.';
 
 export class Item {
 	public readonly created_at: number;
@@ -16,6 +16,7 @@ export class Item {
 	public image: Image[];
 	public rating: Rating[];
 	public dimension: Dimension;
+	public coupon: Coupon[];
 
 	constructor(props: Item, image?: Image[]) {
 		this.created_at = Date.now();
