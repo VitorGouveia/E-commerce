@@ -3373,6 +3373,11 @@ expect@^27.0.6:
     jest-message-util "^27.0.6"
     jest-regex-util "^27.0.6"
 
+express-async-errors@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
+  integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
+
 express-async-router@^0.1.15:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/express-async-router/-/express-async-router-0.1.15.tgz#a58ab77f9e92c9b251f5d87479e15ef11ad5ec4f"

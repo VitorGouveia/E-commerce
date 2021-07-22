@@ -1,10 +1,11 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import compression from 'compression';
 import cors from 'cors';
 import { urlencoded, json } from 'body-parser';
 import helmet from 'helmet';
 import { config as dotenv } from 'dotenv';
 import { router as v1 } from '@v1/routes';
+import { errorHandler } from '@v1/routes/middlewares';
 
 import BullBoard from 'bull-board';
 import Queue from '@v1/config/queue';
@@ -26,6 +27,7 @@ app.use(
 	})
 );
 app.use(router);
+app.use(errorHandler);
 app.use(compression());
 app.use('/admin', BullBoard.UI);
 

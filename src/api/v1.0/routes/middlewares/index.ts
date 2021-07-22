@@ -1,12 +1,5 @@
-import authenticate from './auth';
-import dashAuthenticate from './dashAuth';
-import isIpBanned from './ipBanned';
-import { CreateUserRateLimiter, UpdateUserRateLimiter } from './rateLimit';
-
-export {
-	authenticate,
-	dashAuthenticate,
-	isIpBanned,
-	CreateUserRateLimiter,
-	UpdateUserRateLimiter,
-};
+export { default as authenticate } from './auth';
+export { default as dashAuthenticate } from './dashAuth';
+export { default as isIpBanned } from './ipBanned';
+export { errorHandler } from './error';
+export { CreateUserRateLimiter, UpdateUserRateLimiter } from './rateLimit';
