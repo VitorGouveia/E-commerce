@@ -16,17 +16,16 @@ export class SqliteCouponRepository implements ICouponRepository {
 		return coupons;
 	}
 
-	async findByCode(code: string): Promise<Coupon[]> {
-		return await prisma.coupon.findMany({
+	async findByCode(code: string): Promise<Coupon> {
+		const coupon = await prisma.coupon.findFirst({
 			where: {
 				code: {
 					equals: code,
-					contains: code,
-					endsWith: code,
-					startsWith: code,
 				},
 			},
 		});
+		if (!coupon) throw new Error('Could not find that coupon.');
+		return coupon;
 	}
 
 	async findByItemId(item_id: number): Promise<Coupon[]> {

@@ -10,7 +10,7 @@ type listType = {
 
 export interface ICouponRepository {
 	listAll(): Promise<Coupon[]>;
-	findByCode(code: string): Promise<Coupon[]>;
+	findByCode(code: string): Promise<Coupon>;
 	findByItemId(item_id: number): Promise<Coupon[]>;
 	findById(id: number): Promise<Coupon[]>;
 	list({ id, item_id, expire_date, code }: listType): Promise<Coupon[]>;

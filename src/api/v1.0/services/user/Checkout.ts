@@ -2,12 +2,14 @@ import { Request } from 'express';
 
 import {
 	ICartRepository,
+	ICouponRepository,
 	IItemsRepository,
 	IOrderRepository,
 	IUsersRepository,
 } from '@v1/repositories';
 import {
 	SqliteCartRepository,
+	SqliteCouponRepository,
 	SqliteItemsRepository,
 	SqliteOrderRepository,
 	SqliteUsersRepository,
@@ -16,7 +18,7 @@ import {
 import Frete from 'frete';
 
 import { Address, Dimension } from '@prisma/client';
-import { Order } from '@v1/entities';
+import { Coupon, Order } from '@v1/entities';
 
 type FreteResponse = {
 	codigo: number;
@@ -74,25 +76,41 @@ class CheckoutService {
 		private itemsRepository: IItemsRepository,
 		private cartRepository: ICartRepository,
 		private orderRepository: IOrderRepository,
-		private usersRepository: IUsersRepository
+		private usersRepository: IUsersRepository,
+		private couponRepository: ICouponRepository
 	) {}
 
 	async execute(id: string, { query }: Request) {
 		try {
 			const address_id = Number(query.address_id);
 			const payment_id = Number(query.payment_id);
+			const coupon_code = query.coupon_code;
 			const item_id = Number(query.item_id);
 
 			// One item checkout - could create a hook that does this.
 			const user: userResponse = await this.usersRepository.findById(id);
 			const userAddress = user.address!.find((address: Address) => address.id === address_id);
 
+			var discount: number = 0;
+			if (!!coupon_code === true) {
+				const couponInfo = await this.couponRepository.findByCode(String(coupon_code));
+				if (!couponInfo) throw new Error('Could not find that coupon.');
+
+				//check coupon date
+				const now_date = new Date().getTime();
+				const expire_date = new Date(couponInfo.expire_date).getTime();
+
+				if (now_date > expire_date) throw new Error('The coupon has expired.');
+
+				discount = couponInfo.value;
+			}
 			const postal_code = userAddress!.postal_code.split('-').join('');
 
 			// single-item checkout
 			if (!!item_id === true) {
 				const item: itemResponse = await this.itemsRepository.findById(Number(item_id));
 				if (!item) throw new Error("This item doesn't exist.");
+
 				const [{ valor, prazoEntrega }]: FreteResponse[] = await Frete()
 					.cepOrigem('02228240')
 					.cepDestino(postal_code)
@@ -113,7 +131,7 @@ class CheckoutService {
 				var date = new Date();
 				date.setDate(date.getDate() + Number(prazoEntrega));
 
-				const percentagePrice = Math.floor(item.discount / 100);
+				const percentagePrice = Math.floor(discount / 100);
 				if (percentagePrice === 0) {
 					const order = new Order({
 						user_id: id,
@@ -129,6 +147,7 @@ class CheckoutService {
 					return {
 						prices: {
 							price: item.price,
+							discount: `${discount}%`,
 							shipping: {
 								shipping_price,
 								shipping_date: date.getTime(),
@@ -153,6 +172,7 @@ class CheckoutService {
 				return {
 					prices: {
 						price,
+						discount: `${discount}%`,
 						shipping: {
 							shipping_price,
 							shipping_date: date.getTime(),
@@ -203,7 +223,7 @@ class CheckoutService {
 						},
 					});
 
-					const percentagePrice = Math.floor(item.discount / 100);
+					const percentagePrice = Math.floor(discount / 100);
 					if (percentagePrice === 0) {
 						// validate if address, payment exist
 						const order = new Order({
@@ -251,6 +271,7 @@ class CheckoutService {
 				prices: {
 					total: prices,
 					total_shipping: shipping,
+					discount: `${discount}%`,
 					items,
 				},
 			};
@@ -265,12 +286,14 @@ export default async (request: Request) => {
 	const cartRepository = new SqliteCartRepository();
 	const orderRepository = new SqliteOrderRepository();
 	const usersRepository = new SqliteUsersRepository();
+	const couponRepository = new SqliteCouponRepository();
 
 	const checkout = new CheckoutService(
 		itemsRepository,
 		cartRepository,
 		orderRepository,
-		usersRepository
+		usersRepository,
+		couponRepository
 	);
 
 	const { prices } = await checkout.execute(request.params.id, request);
