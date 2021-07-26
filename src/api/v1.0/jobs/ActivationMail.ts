@@ -11,7 +11,7 @@ export const ActivationMail: Job<JobsData> = {
 	},
 	async handle({ data }) {
 		const { user } = data;
-		const { name, email } = user;
+		const { name, email } = user!;
 
 		await mailProvider.sendMail({
 			to: {

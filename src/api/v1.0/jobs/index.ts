@@ -8,7 +8,7 @@ export { ForgotPasswordMail } from './ForgotPasswordMail';
 export { FailedLoginMail } from './FailedLoginMail';
 
 export type DataType = {
-	user: {
+	user?: {
 		name: string;
 		email: string;
 		ip?: string;
@@ -19,6 +19,14 @@ export type DataType = {
 		name?: string;
 	};
 	token?: string;
+	checkout?: {
+		discount: number;
+		item_id?: number;
+		user_id: string;
+		address_id: number;
+		payment_id: number;
+		postal_code: string;
+	};
 };
 
 export type JobsTypes =
@@ -29,7 +37,8 @@ export type JobsTypes =
 	| 'DeletionMail'
 	| 'ForgotPasswordMail'
 	| 'NewDeviceMail'
-	| 'FailedLoginMail';
+	| 'FailedLoginMail'
+	| 'SingleOrder';
 export type JobsData = DataType;
 export type JobsOptions = Queue.JobOptions;
 

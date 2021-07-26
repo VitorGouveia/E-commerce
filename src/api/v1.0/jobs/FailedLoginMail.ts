@@ -10,7 +10,7 @@ export const FailedLoginMail: Job<DataType> = {
 	},
 	handle: async ({ data }) => {
 		const { user } = data;
-		const { name, email, failed_attemps } = user;
+		const { name, email, failed_attemps } = user!;
 
 		await mailProvider.sendMail({
 			to: {

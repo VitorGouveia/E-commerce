@@ -9,15 +9,16 @@ export const DeletionMail: Job<DataType> = {
 	},
 	handle: async ({ data }) => {
 		const { user } = data;
+		const { name, email } = user!;
 
 		await mailProvider.sendMail({
 			to: {
-				name: user.name,
-				email: user.email,
+				name,
+				email,
 			},
 
-			subject: `Goodbye from NeoExpensive ${user.name}!`,
-			body: `We're so sad to see you go ${user.name}...`,
+			subject: `Goodbye from NeoExpensive ${name}!`,
+			body: `We're so sad to see you go ${name}...`,
 		});
 	},
 };

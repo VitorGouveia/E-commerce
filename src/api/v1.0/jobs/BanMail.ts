@@ -9,17 +9,18 @@ export const BanMail: Job<DataType> = {
 	},
 	handle: async ({ data }) => {
 		const { user, admin_user } = data;
+		const { name, email } = user!;
 
 		await mailProvider.sendMail({
 			to: {
-				name: user.name,
-				email: user.email,
+				name,
+				email,
 			},
-			subject: `You're banned ${user.name}!`,
+			subject: `You're banned ${name}!`,
 			body: `
 					<p>
-						${user.name} you were banned by admin <strong>${admin_user?.name}</strong>:<br>
-						reason: ${user.reason_for_ban}
+						${name} you were banned by admin <strong>${admin_user?.name}</strong>:<br>
+						reason: ${user!.reason_for_ban}
 					</p>
 				`,
 		});

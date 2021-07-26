@@ -10,14 +10,15 @@ export const NewDeviceMail: Job<DataType> = {
 	},
 	handle: async ({ data }) => {
 		const { user } = data;
+		const { name, email, ip } = user!;
 
 		await mailProvider.sendMail({
 			to: {
-				name: user.name,
-				email: user.email,
+				name,
+				email,
 			},
 			subject: `You logged in from a different IP!.`,
-			body: `<p>${user.name} is this your ip: ${user.ip}</p>`,
+			body: `<p>${name} is this your ip: ${ip}</p>`,
 		});
 	},
 };

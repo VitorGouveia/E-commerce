@@ -9,11 +9,12 @@ export const ForgotPasswordMail: Job<DataType> = {
 	},
 	handle: async ({ data }) => {
 		const { user, token } = data;
+		const { name, email } = user!;
 
 		await mailProvider.sendMail({
 			to: {
-				name: user.name,
-				email: user.email,
+				name,
+				email,
 			},
 			subject: 'Forgot password.',
 			body: `<p>You forgot your password? No trouble, use this token:\n ${token}</p>`,
