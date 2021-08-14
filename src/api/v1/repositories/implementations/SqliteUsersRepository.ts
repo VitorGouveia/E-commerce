@@ -69,19 +69,20 @@ export class SqliteUsersRepository implements IUsersRepository {
 		return user;
 	}
 
-	async findByEmail(email: string): Promise<UserType[]> {
+	async findByEmail(email: string): Promise<UserType> {
 		const isEmail = validator.isEmail(email);
 
 		if (!isEmail) {
 			throw new Error('Invalid email.');
 		}
 
-		const user = await prisma.user.findMany({
+		const user = await prisma.user.findFirst({
 			where: {
 				email,
 			},
 		});
-		return user;
+
+		return user!;
 	}
 
 	async findUserhash(name: string, userhash: string): Promise<UserType[]> {

@@ -3,7 +3,7 @@ import { User as UserType } from '@prisma/client';
 export interface IUsersRepository {
 	findAll(property?: string, sort?: 'asc' | 'desc' | string): Promise<UserType[]>;
 	findById(id: string, select?: string): Promise<UserType>;
-	findByEmail(email: string): Promise<UserType[]>;
+	findByEmail(email: string): Promise<UserType>;
 	findUserhash(name: string, userhash: string): Promise<UserType[]>;
 	findUsername(username: string | undefined, userhash: string | undefined): Promise<UserType[]>;
 	usernameLogin(username: string | undefined, password: string): Promise<UserType[]>;
