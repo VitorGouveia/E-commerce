@@ -30,23 +30,20 @@ export class CreateUserUseCase {
 			throw new Error('User already exists.');
 		}
 
-		/* creates the token to activate user account later */
-		let token = '';
-		password = await this.hashPassword.hash(password, 10);
-		const tokenProps = { name, email, password, isHash };
-
-		token = this.tokenProvider.create(tokenProps, access_token_secret, '15m');
-		/* if the password is already hashed */
-		if (isHash) {
-			token = this.tokenProvider.create(tokenProps, access_token_secret, '15m');
-		}
-
 		/* Creates an user entity */
 		const user = new User({
 			name,
 			email,
 			password,
 		});
+
+		/* creates the token to activate user account later */
+		let token = '';
+		token = this.tokenProvider.create({ user }, access_token_secret, '15m');
+		/* if the password is already hashed */
+		if (isHash) {
+			token = this.tokenProvider.create({ user }, access_token_secret, '15m');
+		}
 
 		/* Creates a mail entity and links the mail to the user */
 		const mail = new Mail(
