@@ -1,3 +1,4 @@
 export interface IHashPassword {
-	execute: (password: string, salt?: number) => Promise<string>;
+	hash: (password: string, salt?: number) => Promise<string>;
+	compare: (password: string, hashPassword: string) => Promise<boolean>;
 }

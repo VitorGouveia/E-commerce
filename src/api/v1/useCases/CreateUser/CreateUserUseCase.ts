@@ -29,7 +29,7 @@ export class CreateUserUseCase {
 
 		/* creates the token to activate user account later */
 		let token = '';
-		password = await this.hashPassword.execute(password, 10);
+		password = await this.hashPassword.hash(password, 10);
 		const tokenProps = { name, email, password, isHash };
 
 		token = this.tokenProvider.create(tokenProps, access_token_secret, '15m');

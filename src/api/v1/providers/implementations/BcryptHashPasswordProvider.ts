@@ -1,9 +1,9 @@
 import { IHashPassword } from '../';
 
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 
 export class BcryptHashPasswordProvider implements IHashPassword {
-	async execute(password: string, salt?: number): Promise<string> {
+	async hash(password: string, salt?: number): Promise<string> {
 		if (!salt) {
 			salt = 10;
 		}
@@ -11,5 +11,11 @@ export class BcryptHashPasswordProvider implements IHashPassword {
 		const hashedPassword = await hash(password, salt);
 
 		return hashedPassword;
+	}
+
+	async compare(password: string, hashPassword: string): Promise<boolean> {
+		const comparePassword = await compare(password, hashPassword);
+
+		return comparePassword;
 	}
 }
