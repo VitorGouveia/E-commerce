@@ -1,3 +1,5 @@
+import { User } from '../../entities';
+
 export interface ICreateUserRequestDTO {
 	name: string;
 	email: string;
@@ -7,5 +9,5 @@ export interface ICreateUserRequestDTO {
 
 export interface ICreateUserResponseDTO {
 	token: string;
-	user: ICreateUserRequestDTO;
+	user: User & ICreateUserRequestDTO;
 }
